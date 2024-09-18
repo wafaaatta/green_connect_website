@@ -9,11 +9,11 @@ const Header = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
     const sidebarItems = [
-        { label: 'Home', href: Routes.HOME },
-        { label: 'Announces', href: Routes.PAGES.POSTS },
-        { label: 'Events', href: Routes.PAGES.EVENTS },
-        { label: 'Blog', href: Routes.PAGES.BLOGS },
-        { label: 'About', href: Routes.PAGES.BLOGS },
+      { label: 'Home', href: Routes.HOME },
+      { label: 'Announces', href: Routes.PAGES.POSTS },
+      { label: 'Blog', href: Routes.PAGES.BLOGS },
+      { label: 'Events', href: Routes.PAGES.EVENTS },
+      { label: 'About', href: Routes.PAGES.ABOUT },
       ]
 
       const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen)

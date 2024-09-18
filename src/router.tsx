@@ -14,6 +14,7 @@ import PlantsWiki from "./pages/Wiki/PlantsWiki";
 import PlantDetails from "./pages/Wiki/PlantDetails.tsx/PlantDetails";
 import PostDetails from "./pages/Posts/PostDetails";
 import PolicyPage from "./pages/Privacy/PrivacyPolicy";
+import About from "./pages/About/About.tsx";
 
 const router =  createBrowserRouter([
     {
@@ -67,6 +68,10 @@ const router =  createBrowserRouter([
             {
                 path: Routes.PAGES.PRIVACY_POLICY,
                 element: <PolicyPage />
+            },
+            {
+                path: Routes.PAGES.ABOUT,  
+                element: <About />  
             },
         ]
     },
