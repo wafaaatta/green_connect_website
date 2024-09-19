@@ -49,7 +49,7 @@ const EventsPage = () => {
               <a href={Routes.PAGES.EVENT_DETAILS} className="cursor-pointer mt-4 mr-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors">
                     View Details
                 </a>
-                <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors">
+                <button className="mt-4 bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-900 transition-colors">
                     Register Now
                 </button>
               </div>

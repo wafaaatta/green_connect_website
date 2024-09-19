@@ -74,7 +74,7 @@ const PlantsWiki = () => {
           {["All", "Indoor", "Outdoor", "Succulent", "Herb"].map(category => (
             <button
               key={category}
-              className={`px-4 py-2 rounded-md ${filter === category ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-800'}`}
+              className={`px-4 py-2 rounded-md ${filter === category ? 'bg-green-700 text-white' : 'bg-gray-200 text-gray-800'}`}
               onClick={() => setFilter(category)}
             >
               {category}
@@ -106,7 +106,7 @@ const PlantsWiki = () => {
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">{plant.category}</span>
                   <span className={`font-medium ${
-                    plant.difficulty === 'Easy' ? 'text-green-600' :
+                    plant.difficulty === 'Easy' ? 'text-green-700' :
                     plant.difficulty === 'Moderate' ? 'text-yellow-600' : 'text-red-600'
                   }`}>
                     {plant.difficulty}
@@ -134,7 +134,7 @@ const PlantsWiki = () => {
               onClick={() => paginate(number + 1)}
               className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium
                 ${currentPage === number + 1
-                  ? 'z-10 bg-green-50 border-green-500 text-green-600'
+                  ? 'z-10 bg-green-100 border-green-500 text-green-700'
                   : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
                 }`}
             >

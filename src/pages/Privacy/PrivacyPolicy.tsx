@@ -17,16 +17,16 @@ const PolicyPage: React.FC = () => {
             animate={{ scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <FaLeaf className="w-24 h-24 text-green-600 mx-auto mb-6" />
+            <FaLeaf className="w-24 h-24 text-green-700 mx-auto mb-6" />
           </motion.div>
           <h1 className="text-5xl font-extrabold text-green-800 mb-4">GreenConnect Policies</h1>
-          <p className="text-xl text-green-600 max-w-3xl mx-auto">Nurturing a safe, sustainable, and thriving community of plant enthusiasts while protecting our users and the environment.</p>
+          <p className="text-xl text-green-700 max-w-3xl mx-auto">Nurturing a safe, sustainable, and thriving community of plant enthusiasts while protecting our users and the environment.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <PolicySection
             title="Community Guidelines"
-            icon={<FaHandshake size={40} className=" text-green-600" />}
+            icon={<FaHandshake size={40} className=" text-green-700" />}
             content={[
               "Respect all members of the GreenConnect community, regardless of their experience level or background.",
               "Share knowledge, experiences, and tips openly to help others grow in their plant care journey.",
@@ -41,7 +41,7 @@ const PolicyPage: React.FC = () => {
 
           <PolicySection
             title="Privacy Policy"
-            icon={<FaUserShield size={40} className=" text-green-600" />}
+            icon={<FaUserShield size={40} className=" text-green-700" />}
             content={[
               "We collect minimal personal information necessary for account creation and platform functionality.",
               "Your plant data and personal information are kept confidential and never sold to third parties.",
@@ -56,7 +56,7 @@ const PolicyPage: React.FC = () => {
 
           <PolicySection
             title="Vos droits et obligations"
-            icon={<FaBalanceScale size={40} className=" text-green-600" />}
+            icon={<FaBalanceScale size={40} className=" text-green-700" />}
             content={[
               "Droit d'accès et de rectification de vos données personnelles à tout moment.",
               "Obligation de respecter les droits d'auteur des contenus partagés sur la plateforme.",
@@ -71,7 +71,7 @@ const PolicyPage: React.FC = () => {
 
           <PolicySection
             title="Sustainability Commitment"
-            icon={<FaGlobeAmericas size={40} className=" text-green-600" />}
+            icon={<FaGlobeAmericas size={40} className=" text-green-700" />}
             content={[
               "We use eco-friendly hosting solutions powered by 100% renewable energy for our servers.",
               "Our office operations are carbon-neutral, utilizing energy-efficient equipment and practices.",
@@ -93,10 +93,10 @@ const PolicyPage: React.FC = () => {
         >
           <h2 className="text-3xl font-bold text-green-800 mb-8">Our Green Pledge</h2>
           <div className="flex flex-wrap justify-center gap-12">
-            <PledgeItem icon={<FaSeedling className="w-16 h-16 text-green-600 mb-4" />} text="Promote Biodiversity" />
-            <PledgeItem icon={<FaRecycle className="w-16 h-16 text-green-600 mb-4" />} text="Sustainable Practices" />
-            <PledgeItem icon={<FaTree className="w-16 h-16 text-green-600 mb-4" />} text="Environmental Education" />
-            <PledgeItem icon={<FaShieldAlt className="w-16 h-16 text-green-600 mb-4" />} text="User Data Protection" />
+            <PledgeItem icon={<FaSeedling className="w-16 h-16 text-green-700 mb-4" />} text="Promote Biodiversity" />
+            <PledgeItem icon={<FaRecycle className="w-16 h-16 text-green-700 mb-4" />} text="Sustainable Practices" />
+            <PledgeItem icon={<FaTree className="w-16 h-16 text-green-700 mb-4" />} text="Environmental Education" />
+            <PledgeItem icon={<FaShieldAlt className="w-16 h-16 text-green-700 mb-4" />} text="User Data Protection" />
           </div>
         </motion.div>
 
@@ -136,7 +136,7 @@ const PolicySection: React.FC<{ title: string; icon: React.ReactNode; content: s
           transition={{ duration: 0.3, delay: index * 0.1 }}
           className="flex items-start"
         >
-          <FaLeaf className="w-5 h-5 text-green-500 mr-3 mt-1 flex-shrink-0" />
+          <FaLeaf className="w-5 h-5 text-green-700 mr-3 mt-1 flex-shrink-0" />
           <span className="text-green-700">{item}</span>
         </motion.li>
       ))}

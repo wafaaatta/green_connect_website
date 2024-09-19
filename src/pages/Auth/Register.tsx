@@ -9,7 +9,7 @@ export default function Register() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   return (
-    <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-slate-400 flex items-center justify-center p-4">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -123,19 +123,19 @@ export default function Register() {
                   id="terms"
                   name="terms"
                   type="checkbox"
-                  className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                  className="h-4 w-4 text-green-700 focus:ring-green-500 border-gray-300 rounded"
                   required
                 />
                 <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">
                   I agree to the{" "}
-                  <a href="#" className="text-green-600 hover:text-green-500">
+                  <a href="#" className="text-green-700 hover:text-green-900">
                     Terms and Conditions
                   </a>
                 </label>
               </div>
               <button
                 type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-green-500"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-green-700 hover:bg-green-900 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-green-500"
               >
                 Create Account
               </button>
@@ -143,7 +143,7 @@ export default function Register() {
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
                 Already have an account?{" "}
-                <Link to="/login" className="font-medium text-green-600 hover:text-green-500">
+                <Link to="/login" className="font-medium text-green-700 hover:text-green-900">
                   Sign in
                 </Link>
               </p>

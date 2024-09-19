@@ -32,29 +32,29 @@ const EventDetailsPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="space-y-4">
               <div className="flex items-center text-gray-600">
-                <Calendar className="mr-2 h-5 w-5 text-green-600" />
+                <Calendar className="mr-2 h-5 w-5 text-green-700" />
                 <span>{event.date}</span>
               </div>
               <div className="flex items-center text-gray-600">
-                <Clock className="mr-2 h-5 w-5 text-green-600" />
+                <Clock className="mr-2 h-5 w-5 text-green-700" />
                 <span>{event.time}</span>
               </div>
               <div className="flex items-center text-gray-600">
-                <MapPin className="mr-2 h-5 w-5 text-green-600" />
+                <MapPin className="mr-2 h-5 w-5 text-green-700" />
                 <span>{event.location}</span>
               </div>
               <div className="flex items-center text-gray-600">
-                <Users className="mr-2 h-5 w-5 text-green-600" />
+                <Users className="mr-2 h-5 w-5 text-green-700" />
                 <span>{event.attendees} attendees</span>
               </div>
             </div>
             <div className="space-y-4">
               <div className="flex items-center text-gray-600">
-                <Leaf className="mr-2 h-5 w-5 text-green-600" />
+                <Leaf className="mr-2 h-5 w-5 text-green-700" />
                 <span>Organized by {event.organizer}</span>
               </div>
               <div className="flex items-center text-gray-600">
-                <DollarSign className="mr-2 h-5 w-5 text-green-600" />
+                <DollarSign className="mr-2 h-5 w-5 text-green-700" />
                 <span>${event.price} per person</span>
               </div>
             </div>
@@ -68,10 +68,10 @@ const EventDetailsPage = () => {
             ))}
           </div>
           <div className="flex justify-between items-center">
-            <button className="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition-colors">
+            <button className="bg-green-700 text-white px-6 py-2 rounded-md hover:bg-green-900 transition-colors">
               Register Now
             </button>
-            <button className="text-green-600 hover:text-green-800 flex items-center">
+            <button className="text-green-700 hover:text-green-800 flex items-center">
               <Share2 className="mr-2 h-5 w-5" />
               Share Event
             </button>

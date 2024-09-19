@@ -68,7 +68,7 @@ const PlantDetails = () => {
             <div>
               <h2 className="text-2xl font-semibold text-green-800 mb-2">Origin</h2>
               <p className="flex items-center text-gray-700">
-                <MapPin size={20} className="mr-2 text-green-600" />
+                <MapPin size={20} className="mr-2 text-green-700" />
                 {plant.origin}
               </p>
             </div>
@@ -88,7 +88,7 @@ const PlantDetails = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {plant.careInstructions.map((instruction, index) => (
               <div key={index} className="flex items-center bg-green-50 p-4 rounded-lg">
-                <instruction.icon size={24} className="mr-3 text-green-600" />
+                <instruction.icon size={24} className="mr-3 text-green-700" />
                 <span className="text-gray-700">{instruction.text}</span>
               </div>
             ))}
@@ -106,7 +106,7 @@ const PlantDetails = () => {
 
         <div className="mb-12">
           <h2 className="text-2xl font-semibold text-green-800 mb-4">Fun Facts</h2>
-          <div className="bg-green-50 p-6 rounded-lg">
+          <div className="bg-green-100 p-6 rounded-lg">
             <ul className="space-y-4">
               {plant.funFacts.map((fact, index) => (
                 <li key={index} className="flex items-start">

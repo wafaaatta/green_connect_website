@@ -144,7 +144,7 @@ export default function PostDetails() {
       <div className="flex items-center justify-end fixed bottom-0 left-0 right-0  p-4 shadow-md z-50">
         <button
           onClick={handleConnect}
-          className=" bg-green-500 text-white py-2 px-6 rounded hover:bg-green-600 transition duration-300"
+          className=" bg-green-700 text-white py-2 px-6 rounded hover:bg-green-900 transition duration-300"
         >
           Connect with {postDetails.user}
         </button>
@@ -162,7 +162,7 @@ export default function PostDetails() {
             <p className="mb-4">Please sign in to connect with other plant enthusiasts.</p>
             <button
               onClick={handleCloseDialog}
-              className="w-full bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-300 flex items-center justify-center"
+              className="w-full bg-green-700 text-white py-2 px-4 rounded hover:bg-green-900 transition duration-300 flex items-center justify-center"
             >
               Go to Sign In
               <User className="ml-2" />

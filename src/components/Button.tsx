@@ -37,14 +37,14 @@ const Button: React.FC<ButtonProps> = ({
     },
     blue: {
       bg: 'bg-blue-600 hover:bg-blue-700',
-      text: 'text-blue-600',
+      text: 'text-blue-900',
       border: 'border-blue-600',
       hover: 'hover:bg-blue-100',
       outline: 'bg-blue-50'
     },
     green: {
-      bg: 'bg-green-600 hover:bg-green-700',
-      text: 'text-green-600',
+      bg: 'bg-green-700 hover:bg-green-900',
+      text: 'text-green-700',
       border: 'border-green-600',
       hover: 'hover:bg-green-50',
       outline: 'bg-green-50'
@@ -78,7 +78,7 @@ const Button: React.FC<ButtonProps> = ({
       outline: 'bg-indigo-50'
     },
     gray: {
-      bg: 'bg-gray-600 hover:bg-gray-700',
+      bg: 'bg-gray-300 hover:bg-gray-700',
       text: 'text-gray-600',
       border: 'border-gray-600',
       hover: 'hover:bg-gray-50',

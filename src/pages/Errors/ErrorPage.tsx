@@ -19,7 +19,7 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ statusCode }) => {
     : AppImages.errors.serverError
 
   return (
-    <div className="min-h-screen bg-green-50 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-green-100 flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 text-center">
         <motion.div
           initial={{ opacity: 0, y: -50 }}
@@ -47,7 +47,7 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ statusCode }) => {
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-sm text-white bg-green-600 hover:bg-green-700"
+            className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-sm text-white bg-green-700 hover:bg-green-900"
           >
             <Home className="mr-2 h-5 w-5" />
             Return to Home
@@ -72,7 +72,7 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ statusCode }) => {
             {is404 ? (
               <>
                 If you believe this is an error, please{' '}
-                <a href="/contact" className="font-medium text-green-600 hover:text-green-500">
+                <a href="/contact" className="font-medium text-green-700 hover:text-green-900">
                   contact our support team
                 </a>
                 .

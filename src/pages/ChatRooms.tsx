@@ -68,7 +68,7 @@ const ChatRoomsPage = () => {
             placeholder="Type your message..."
             className="flex-grow px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
           />
-          <button className="bg-green-600 text-white px-4 py-2 rounded-r-md hover:bg-green-700 transition-colors">
+          <button className="bg-green-700 text-white px-4 py-2 rounded-r-md hover:bg-green-900 transition-colors">
             <Send className="w-5 h-5" />
           </button>
         </div>

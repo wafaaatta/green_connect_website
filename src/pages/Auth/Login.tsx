@@ -83,21 +83,21 @@ export default function Login() {
                     id="remember-me"
                     name="remember-me"
                     type="checkbox"
-                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                    className="h-4 w-4 text-green-700 focus:ring-green-500 border-gray-300 rounded"
                   />
                   <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
                     Remember me
                   </label>
                 </div>
                 <div className="text-sm">
-                  <a href="#" className="font-medium text-green-600 hover:text-green-500">
+                  <a href="#" className="font-medium text-green-700 hover:text-green-900">
                     Forgot your password?
                   </a>
                 </div>
               </div>
               <button
                 type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-green-800 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
               >
                 Sign in
               </button>
@@ -105,7 +105,7 @@ export default function Login() {
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
                 Don't have an account?{" "}
-                <Link to={Routes.AUTH.REGISTER} className="font-medium text-green-600 hover:text-green-500">
+                <Link to={Routes.AUTH.REGISTER} className="font-medium text-green-700 hover:text-green-900">
                   Join GreenConnect
                 </Link>
               </p>

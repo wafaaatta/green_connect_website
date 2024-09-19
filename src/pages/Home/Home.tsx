@@ -33,7 +33,7 @@ const LandingPage = () => {
             <div className="flex flex-col justify-center space-y-6">
               <div className="space-y-4">
                 <h1 className="text-4xl font-bold tracking-tighter text-primary-foreground sm:text-6xl md:text-7xl lg:text-7xl xl:text-7xl">
-                  <span className="block text-5xl lg:text-6xl text-green-600">Green Connect</span>
+                  <span className="block text-5xl lg:text-6xl text-green-700">Green Connect</span>
                 </h1>
                 <p className="max-w-[600px] text-primary-foreground md:text-2xl lg:text-xl xl:text-2xl">
                   A community-driven platform for plant enthusiasts
@@ -42,7 +42,7 @@ const LandingPage = () => {
               </div>
               <Link
                 to="/register"
-                className="font-medium hover:bg-green-700 bg-green-600 text-white inline-flex h-12 items-center justify-center rounded-md bg-secondary px-12 text-secondary-foreground shadow transition-colors hover:bg-secondary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                className="font-medium hover:bg-green-700 bg-green-800 text-white inline-flex h-12 items-center justify-center rounded-md bg-secondary px-12 text-secondary-foreground shadow transition-colors hover:bg-secondary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
               >
                 Join Our Community
               </Link>
@@ -80,7 +80,7 @@ const LandingPage = () => {
               </div>
               <Link
                 to="/plants"
-                className="inline-flex items-center justify-center rounded-md bg-green-600 px-6 py-3 text-white font-medium hover:bg-green-700 transition-colors"
+                className="inline-flex items-center justify-center rounded-md bg-green-800 px-6 py-3 text-white font-medium hover:bg-green-700 transition-colors"
               >
                 Explore Plants
               </Link>
@@ -104,7 +104,7 @@ const LandingPage = () => {
               </div>
               <Link
                 to="/events"
-                className="inline-flex items-center justify-center rounded-md bg-green-600 text-white hover:bg-green-700 px-6 py-3 font-medium transition-colors"
+                className="inline-flex items-center justify-center rounded-md bg-green-800 text-white hover:bg-green-700 px-6 py-3 font-medium transition-colors"
               >
                 View Upcoming Events
               </Link>
@@ -165,7 +165,7 @@ const LandingPage = () => {
           ))}
         </div>
         <div className="text-center mt-8">
-          <Link to="/articles" className="inline-flex items-center text-green-600 hover:text-green-700">
+          <Link to="/articles" className="inline-flex.items-center.text-green-800.hover:text-green-900">
             View More Articles
             <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
@@ -197,7 +197,7 @@ const LandingPage = () => {
           ))}
         </div>
         <div className="text-center mt-8">
-          <Link to="/events" className="inline-flex items-center text-green-600 hover:text-green-700">
+          <Link to="/events" className="inline-flex items-center text-green-700 hover:text-green-900">
             View More Events
             <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
@@ -226,7 +226,7 @@ const LandingPage = () => {
           ))}
         </div>
         <div className="text-center mt-8">
-          <Link to="/posts" className="inline-flex items-center text-green-600 hover:text-green-700">
+          <Link to="/posts" className="inline-flex items-center text-green-800 hover:text-green-900">
             View More Posts
             <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
@@ -234,14 +234,14 @@ const LandingPage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-green-600 py-20 text-white">
+      <section className="bg-green-700 py-20 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Start Your Green Journey?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">Join our thriving community of plant enthusiasts and unlock a world of botanical wonders!</p>
+          <p className="text-xl mb-8 max-w-2xl mx-auto.text-gray-800">Join our thriving community of plant enthusiasts and unlock a world of botanical wonders!</p>
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="bg-white text-green-600 px-8 py-3 rounded-full text-lg font-semibold hover:bg-green-50 transition-colors"
+            className="bg-white text-green-700 px-8 py-3 rounded-full text-lg font-semibold hover:bg-green-50 transition-colors"
           >
             Get Started Now
           </motion.button>
@@ -265,7 +265,7 @@ const LandingPage = () => {
               className="bg-white p-6 rounded-lg shadow-md"
             >
               <p className="text-gray-600 mb-4">"{testimonial.quote}"</p>
-              <p className="font-semibold text-green-600">{testimonial.name}</p>
+              <p className="font-semibold text-green-700">{testimonial.name}</p>
             </motion.div>
           ))}
         </div>

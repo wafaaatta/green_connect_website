@@ -39,7 +39,7 @@ const BlogsPage = () => {
               </div>
             </div>
             <div className="px-6 py-4 bg-gray-50">
-              <a href="#" className="text-green-600 hover:text-green-800 font-medium flex items-center">
+              <a href="#" className="text-green-700 hover:text-green-800 font-medium flex items-center">
                 Read More <ArrowRight size={16} className="ml-1" />
               </a>
             </div>
