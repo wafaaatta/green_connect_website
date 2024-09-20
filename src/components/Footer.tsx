@@ -14,10 +14,10 @@ const Footer = () => {
     <h2 className="text-xl font-semibold mb-4 text-green-800">Quick Links</h2>
     <ul className="space-y-2">
       <li><Link to="/" className="hover:text-green-900 transition-colors duration-300">Home</Link></li>
-      <li><Link to="/about" className="hover:text-green-900 transition-colors duration-300">About Us</Link></li>
-      <li><Link to="/plants" className="hover:text-green-900 transition-colors duration-300">Plants</Link></li>
-      <li><Link to="/events" className="hover:text-green-900 transition-colors duration-300">Events</Link></li>
+      <li><Link to="/announces" className="hover:text-green-900 transition-colors duration-300">Announces</Link></li>
       <li><Link to="/blog" className="hover:text-green-900 transition-colors duration-300">Blog</Link></li>
+      <li><Link to="/events" className="hover:text-green-900 transition-colors duration-300">Events</Link></li>
+      <li><Link to="/about" className="hover:text-green-900 transition-colors duration-300">About</Link></li>
     </ul>
   </div>
   <div>

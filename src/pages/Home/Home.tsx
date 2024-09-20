@@ -36,16 +36,16 @@ const LandingPage = () => {
                   <span className="block text-5xl lg:text-6xl text-green-700">Green Connect</span>
                 </h1>
                 <p className="max-w-[600px] text-primary-foreground md:text-2xl lg:text-xl xl:text-2xl">
-                  A community-driven platform for plant enthusiasts
-                  to share, trade, and grow together.
+                A platform dedicated to nature lovers: adopt or offer plants for free and help make the world bloom!
                 </p>
               </div>
               <Link
                 to="/register"
-                className="font-medium hover:bg-green-700 bg-green-800 text-white inline-flex h-12 items-center justify-center rounded-md bg-secondary px-12 text-secondary-foreground shadow transition-colors hover:bg-secondary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                className="font-medium hover:bg-green-700 bg-green-800 text-white inline-flex h-16 w-48 items-center justify-center rounded-md px-20 py-10 text-secondary-foreground shadow transition-colors hover:bg-secondary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
               >
                 Join Our Community
               </Link>
+
             </div>
             <img
               src={AppImages.workshops.group}
