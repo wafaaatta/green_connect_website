@@ -51,12 +51,38 @@ const LandingPage = () => {
               src={AppImages.workshops.group}
               width="650"
               height="400"
-              alt="AI-driven success"
+              alt="AI-workshop.group"
               className="mx-auto aspect-[13/8] overflow-hidden rounded-xl object-cover object-center sm:w-full"
             />
           </div>
         </div>
       </section>
+        {/* Features Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-3xl font-bold text-center mb-12">Discover the Green Connect Experience</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {[
+            { icon: Leaf, title: 'Adoption and Plant Offers', description: 'Trade plants and cuttings with enthusiasts worldwide' },
+            { icon: Users, title: 'Engaged Community', description: 'Connect, share, and learn from passionate plant lovers' },
+            { icon: Calendar, title: 'Exciting Events', description: 'Join workshops, seminars, and plant swap meets' },
+            { icon: BookOpen, title: 'Informative Blog', description: 'Access a wealth of plant care tips and gardening advice' },
+          ].map((feature, index) => (
+            <motion.div
+              key={feature.title}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="bg-white p-6 rounded-md hover:bg-green-50 transition-all duration-300 shadow-md text-center cursor-pointer select-none"
+            >
+              <feature.icon size={48} className="text-green-500 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+              <p className="text-gray-600">{feature.description}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      
 
       {/* Hero 2 */}
       <section className="w-full py-12 bg-green-50 text-slate-800">
@@ -88,66 +114,42 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
-
-      {/* Hero 3 */}
-      <section className="w-full py-12 text-slate-800 bg-green-50">
-        <div className="container px-4 md:px-6">
-          <div className="grid items-center gap-6 lg:grid-cols-[1fr_550px] lg:gap-12 xl:grid-cols-[1fr_650px]">
-            <div className="flex flex-col justify-center space-y-6">
-              <div className="space-y-4">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                  Learn from Experts
-                </h2>
-                <p className="max-w-[600px] md:text-xl">
-                  Attend workshops, webinars, and events hosted by plant care professionals and passionate hobbyists.
-                </p>
-              </div>
-              <Link
-                to="/events"
-                className="inline-flex items-center justify-center rounded-md bg-green-800 text-white hover:bg-green-700 px-6 py-3 font-medium transition-colors"
-              >
-                View Upcoming Events
-              </Link>
-            </div>
-            <img
-            //   src="/src/assets/workshop.jpg"
-              src={AppImages.workshops.house}
-              width="650"
-              height="400"
-              alt="Plant care workshop"
-              className="mx-auto aspect-[13/8] overflow-hidden rounded-xl object-cover object-center sm:w-full"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-center mb-12">Discover the Green Connect Experience</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {[
-            { icon: Leaf, title: 'Plant Exchange', description: 'Trade plants and cuttings with enthusiasts worldwide' },
-            { icon: Users, title: 'Vibrant Community', description: 'Connect, share, and learn from passionate plant lovers' },
-            { icon: Calendar, title: 'Exciting Events', description: 'Join workshops, seminars, and plant swap meets' },
-            { icon: BookOpen, title: 'Expert Blog', description: 'Access a wealth of plant care tips and gardening advice' },
-          ].map((feature, index) => (
+       {/* Posts Section */}
+       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-3xl font-bold text-center mb-12">Community Posts</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {posts.map((post, index) => (
             <motion.div
-              key={feature.title}
+              key={post.id}
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white p-6 rounded-md hover:bg-green-50 transition-all duration-300 shadow-md text-center cursor-pointer select-none"
+              className="bg-white p-6 rounded-lg shadow-md"
             >
-              <feature.icon size={48} className="text-green-500 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-              <p className="text-gray-600">{feature.description}</p>
+              <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
+              <p className="text-gray-600 mb-4">By {post.author}</p>
+              <div className="flex justify-between text-gray-500">
+                <span>{post.likes} likes</span>
+                <span>{post.comments} comments</span>
+              </div>
             </motion.div>
           ))}
         </div>
+        <div className="text-center mt-8">
+          <Link to="/posts" className="inline-flex items-center text-green-800 hover:text-green-900">
+            View More Posts
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Link>
+        </div>
       </section>
 
-      {/* Articles Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     
+
+      
+
+
+       {/* Articles Section */}
+       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-bold text-center mb-12">Latest Articles</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {articles.map((article, index) => (
@@ -171,6 +173,10 @@ const LandingPage = () => {
           </Link>
         </div>
       </section>
+
+     
+
+     
 
       {/* Events Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-green-50 py-16">
@@ -203,73 +209,39 @@ const LandingPage = () => {
           </Link>
         </div>
       </section>
-
-      {/* Posts Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-center mb-12">Community Posts</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {posts.map((post, index) => (
-            <motion.div
-              key={post.id}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white p-6 rounded-lg shadow-md"
-            >
-              <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
-              <p className="text-gray-600 mb-4">By {post.author}</p>
-              <div className="flex justify-between text-gray-500">
-                <span>{post.likes} likes</span>
-                <span>{post.comments} comments</span>
+ {/* Hero 3 */}
+ <section className="w-full py-12 text-slate-800 bg-green-50">
+        <div className="container px-4 md:px-6">
+          <div className="grid items-center gap-6 lg:grid-cols-[1fr_550px] lg:gap-12 xl:grid-cols-[1fr_650px]">
+            <div className="flex flex-col justify-center space-y-6">
+              <div className="space-y-4">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                Together, let's cultivate a green future!
+                </h2>
+                <p className="max-w-[600px] md:text-xl">
+                Discover our passionate commitment to a greener, more sustainable world, guided by our vision and mission.
+                </p>
               </div>
-            </motion.div>
-          ))}
-        </div>
-        <div className="text-center mt-8">
-          <Link to="/posts" className="inline-flex items-center text-green-800 hover:text-green-900">
-            View More Posts
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Link>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="bg-green-700 py-20 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Start Your Green Journey?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto.text-gray-800">Join our thriving community of plant enthusiasts and unlock a world of botanical wonders!</p>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-white text-green-700 px-8 py-3 rounded-full text-lg font-semibold hover:bg-green-50 transition-colors"
-          >
-            Get Started Now
-          </motion.button>
+              <Link
+                to="/events"
+                className="inline-flex items-center justify-center rounded-md bg-green-800 text-white hover:bg-green-700 px-6 py-3 font-medium transition-colors"
+              >
+                About us
+              </Link>
+            </div>
+            <img
+            //   src="/src/assets/workshop.jpg"
+              src={AppImages.workshops.house}
+              width="650"
+              height="400"
+              alt="Plant care workshop"
+              className="mx-auto aspect-[13/8] overflow-hidden rounded-xl object-cover object-center sm:w-full"
+            />
+          </div>
         </div>
       </section>
-
-      {/* Testimonials */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h2 className="text-3xl font-bold text-center mb-12">What Our Community Says</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            { name: 'Sarah L.', quote: 'Green Connect has transformed my plant hobby into a passion. The community is so supportive and knowledgeable!' },
-            { name: 'Mike T.', quote: 'I\'ve discovered so many rare plants through the exchange program. It\'s like a treasure hunt every day!' },
-            { name: 'Emma R.', quote: 'The events and workshops have helped me become a better plant parent. I\'m grateful for this amazing platform!' },
-          ].map((testimonial, index) => (
-            <motion.div
-              key={testimonial.name}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white p-6 rounded-lg shadow-md"
-            >
-              <p className="text-gray-600 mb-4">"{testimonial.quote}"</p>
-              <p className="font-semibold text-green-700">{testimonial.name}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+     
+      
 
       <ContactUs />
     </div>
