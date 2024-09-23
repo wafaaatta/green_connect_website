@@ -8,7 +8,7 @@ const MainLayout = () => {
       <Header />
       {/* Main content */}
       <main className="flex-grow">
-        <div className="max-w-8xl mx-auto py-6 sm:px-6 lg:px-8 ">
+        <div className=" ">
           <Outlet />
         </div>
       </main>
