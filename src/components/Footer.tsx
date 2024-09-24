@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="bg-[#E6DFC3aa] text-gray-700">
       <div className="max-w-8xl mx-auto p-4">
         <div className='flex items-center max-md:flex-col'>
-        <img src={AppImages.logo} className=' h-40 max-md:w-96 mr-44 ml-20' alt="GreenConnect Logo" />
+        <img src={AppImages.logo} className=' h-28 max-md:w-96 mr-44 ml-20' alt="GreenConnect Logo" />
 
 <div className="grid grid-cols-2 md:grid-cols-2 gap-4 max-md:gap-x-32 flex-grow">
 

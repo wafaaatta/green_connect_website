@@ -15,6 +15,9 @@ import PlantDetails from "./pages/Wiki/PlantDetails.tsx/PlantDetails";
 import PostDetails from "./pages/Posts/PostDetails";
 import PolicyPage from "./pages/Privacy/PrivacyPolicy";
 import About from "./pages/About/About.tsx";
+import ConversationsPage from "./pages/conversations/Conversations.tsx";
+import UserProfilePage from "./pages/User/UserProfile.tsx";
+import UserLayout from "./layouts/UserLayout.tsx";
 
 const router =  createBrowserRouter([
     {
@@ -24,6 +27,26 @@ const router =  createBrowserRouter([
     {
         path: Routes.AUTH.REGISTER,
         element: <Register />
+    },
+    {
+        path: '/conversations',  
+        element: <UserLayout /> ,
+        children: [
+            {
+                path: '/conversations',
+                element: <ConversationsPage />
+            }
+        ]
+    },
+    {
+        path: '/profile',  
+        element: <UserLayout />,
+        children: [
+            {
+                path: '/profile',
+                element: <UserProfilePage />
+            }
+        ]
     },
     {
         path: Routes.HOME,

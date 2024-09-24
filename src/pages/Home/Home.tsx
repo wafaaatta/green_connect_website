@@ -280,68 +280,61 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Contact Us Section */}
-      <section className="relative bg-gradient-to-r from-green-400 via-green-700 to-green-600 py-12 overflow-hidden">
-      <div className='inset-0 absolute w-full h-full bg-gray-900 opacity-50'></div>
-
-        <div className="container mx-auto px-4 relative">
-          <div className="max-w-2xl mx-auto bg-white rounded-lg shadow overflow-hidden">
+      <section className="w-full py-12 bg-gray-100">
+        <div className="container mx-auto grid items-center justify-center gap-8 px-4 md:px-6">
+          <div className="space-y-3 text-center">
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Get in touch</h2>
+            <p className="mx-auto max-w-[700px] text-gray-600 md:text-xl lg:text-base xl:text-xl">
+              Have a question or want to work together? Fill out the form below and we'll get back to you as soon as
+              possible.
+            </p>
+          </div>
+          <div className="w-full max-w-3xl mx-auto bg-white rounded-lg shadow-md">
             <div className="p-4">
-              <h2 className="text-3xl font-bold text-center mb-8">Get in Touch</h2>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+              <form className="grid gap-4">
+                <div className="grid gap-2">
+                  <label htmlFor="name" className="text-sm font-medium text-gray-700">
+                    Name
+                  </label>
                   <input
-                    type="text"
                     id="name"
-                    placeholder='Enter your name'
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-1.5 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                    required
+                    placeholder="Enter your name"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-200"
                   />
                 </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <div className="grid gap-2">
+                  <label htmlFor="email" className="text-sm font-medium text-gray-700">
+                    Email
+                  </label>
                   <input
-                    type="email"
                     id="email"
-                    placeholder='Enter your email'
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                    required
+                    type="email"
+                    placeholder="Enter your email"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-200"
                   />
                 </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                <div className="grid gap-2">
+                  <label htmlFor="message" className="text-sm font-medium text-gray-700">
+                    Message
+                  </label>
                   <textarea
                     id="message"
-                    name="message"
-                    placeholder='Enter your message'
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    rows={4}
-                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                    required
-                  ></textarea>
+                    placeholder="Tell us how we can help"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-200 min-h-[150px]"
+                  />
                 </div>
-                <div>
-                  <button
-                    type="submit"
-                    className="w-full bg-green-600 text-white font-semibold py-3 px-6 rounded hover:bg-green-700 transition duration-300 flex items-center justify-center"
-                  >
-                    Send Message
-                    <Send className="ml-2 h-5 w-5" />
-                  </button>
-                </div>
+                <button
+                  type="submit"
+                  className="w-full px-4 py-2 font-medium text-white bg-green-700 rounded-md hover:bg-green-900 focus:outline-none"
+                >
+                  Submit
+                </button>
               </form>
             </div>
           </div>
         </div>
       </section>
+
     </div>
   )
 }
