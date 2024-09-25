@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
+import Notification from '../components/Notification'
 
 const MainLayout = () => {
   return (
@@ -14,6 +15,7 @@ const MainLayout = () => {
       </main>
 
         <Footer />
+        <Notification />
     </div>
   )
 }

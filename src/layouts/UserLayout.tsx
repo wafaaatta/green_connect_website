@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import Header from '../components/Header'
+import Notification from '../components/Notification'
 
 const UserLayout = () => {
   return (
@@ -11,6 +12,8 @@ const UserLayout = () => {
           <Outlet />
         </div>
       </main>
+
+      <Notification />
     </div>
   )
 }

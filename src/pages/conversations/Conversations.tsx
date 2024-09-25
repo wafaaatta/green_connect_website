@@ -30,7 +30,7 @@ const conversations = [
   },
 ]
 
-const messages = [
+const initialMessages = [
   { id: 1, sender: 'You', content: 'Hi Alice, I\'m interested in your Monstera Deliciosa. Is it still available?', timestamp: '2023-06-20T14:30:00Z' },
   { id: 2, sender: 'Alice Green', content: 'Hello! Yes, it\'s still available. Would you like to come see it?', timestamp: '2023-06-20T14:35:00Z' },
   { id: 3, sender: 'You', content: 'That would be great! When would be a good time?', timestamp: '2023-06-20T14:40:00Z' },
@@ -42,11 +42,14 @@ const messages = [
 
 const ConversationsPage = () => {
   const [selectedConversation, setSelectedConversation] = useState(null)
+  const [messages, setMessages] = useState(initialMessages)
   const [message, setMessage] = useState('')
+  const [replyTo, setReplyTo] = useState(null)
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
   const [isConversationListOpen, setIsConversationListOpen] = useState(true)
   const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0, messageId: null })
   const chatContainerRef = useRef(null)
+  const inputRef = useRef(null)
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -56,8 +59,16 @@ const ConversationsPage = () => {
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault()
     if (message.trim()) {
-      console.log('Sending message:', message)
+      const newMessage = {
+        id: messages.length + 1,
+        sender: 'You',
+        content: message,
+        timestamp: new Date().toISOString(),
+        replyTo: replyTo,
+      }
+      setMessages([...messages, newMessage])
       setMessage('')
+      setReplyTo(null)
     }
   }
 
@@ -74,7 +85,21 @@ const ConversationsPage = () => {
   }
 
   const handleContextMenuAction = (action: string) => {
-    console.log(`Performing action: ${action} on message: ${contextMenu.messageId}`)
+    const targetMessage = messages.find(msg => msg.id === contextMenu.messageId)
+    if (!targetMessage) return
+
+    switch (action) {
+      case 'copy':
+        navigator.clipboard.writeText(targetMessage.content)
+        break
+      case 'reply':
+        setReplyTo(targetMessage)
+        inputRef.current?.focus()
+        break
+      case 'delete':
+        setMessages(messages.filter(msg => msg.id !== contextMenu.messageId))
+        break
+    }
     setContextMenu({ ...contextMenu, visible: false })
   }
 
@@ -184,6 +209,12 @@ const ConversationsPage = () => {
                   onContextMenu={(e) => handleContextMenu(e, msg.id)}
                 >
                   <div className={`max-w-[70%] p-3 rounded-lg ${msg.sender === 'You' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}`}>
+                    {msg.replyTo && (
+                      <div className="bg-gray-200 p-2 rounded mb-2 text-xs">
+                        <p className="font-semibold">{msg.replyTo.sender}</p>
+                        <p>{msg.replyTo.content}</p>
+                      </div>
+                    )}
                     <p className="font-semibold text-sm">{msg.sender}</p>
                     {msg.image ? (
                       <img src={msg.image} alt="Plant" className="w-full h-auto rounded-lg mt-2 mb-2" />
@@ -195,21 +226,35 @@ const ConversationsPage = () => {
                 </motion.div>
               ))}
             </div>
-            <form onSubmit={handleSendMessage} className="bg-white p-4 border-t border-gray-200 flex items-center space-x-2">
-              <input
-                type="text"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="Type your message..."
-                className="flex-grow p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              />
-              <label htmlFor="file-upload" className="cursor-pointer">
-                <Paperclip size={20} className="text-gray-500 hover:text-green-600" />
-                <input id="file-upload" type="file" className="hidden" onChange={handleFileUpload} />
-              </label>
-              <button type="submit" className="bg-green-600 text-white p-2 rounded-lg hover:bg-green-700 transition-colors duration-300">
-                <Send size={20} />
-              </button>
+            <form onSubmit={handleSendMessage} className="bg-white p-4 border-t border-gray-200 flex flex-col space-y-2">
+              {replyTo && (
+                <div className="flex items-center justify-between bg-gray-100 p-2 rounded">
+                  <div className="flex items-center">
+                    <Reply size={16} className="mr-2 text-gray-600" />
+                    <span className="text-sm text-gray-600">{replyTo.content}</span>
+                  </div>
+                  <button onClick={() => setReplyTo(null)} className="text-gray-600 hover:text-gray-800">
+                    <X size={16} />
+                  </button>
+                </div>
+              )}
+              <div className="flex items-center space-x-2">
+                <input
+                  type="text"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Type your message..."
+                  className="flex-grow p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                  ref={inputRef}
+                />
+                <label htmlFor="file-upload" className="cursor-pointer">
+                  <Paperclip size={20} className="text-gray-500 hover:text-green-600" />
+                  <input id="file-upload" type="file" className="hidden" onChange={handleFileUpload} />
+                </label>
+                <button type="submit" className="bg-green-600 text-white p-2 rounded-lg hover:bg-green-700 transition-colors duration-300">
+                  <Send size={20} />
+                </button>
+              </div>
             </form>
           </>
         ) : (
