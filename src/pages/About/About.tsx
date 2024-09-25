@@ -24,7 +24,7 @@ const About = () => {
             </p>
           </div>
           <div className="md:w-1/2 mt-8 md:mt-0">
-            <img src="/api/placeholder/400/320" alt="Decorative plant" className="w-full h-auto rounded-lg shadow-lg" />
+            <img src="/src/assets/apartment.jpg" alt="Decorative plant" className="w-full h-auto rounded-lg shadow-lg" />
           </div>
         </div>
 
@@ -51,7 +51,7 @@ const About = () => {
         </div>
 
         <div className="w-full">
-          <img src="/api/placeholder/400/320" alt="Hands planting" className="w-full h-64 object-cover rounded-lg shadow-lg" />
+          <img src="/src/assets/apartment.jpg"alt="Hands planting" className="w-full h-64 object-cover rounded-lg shadow-lg" />
         </div>
       </div>
     </section>

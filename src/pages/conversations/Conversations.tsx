@@ -2,33 +2,13 @@ import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, Send, Paperclip, MapPin, Calendar, Heart, Flag, X, Copy, Reply, Trash, Menu } from 'lucide-react'
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
+import { getAllConversations } from '../../redux/stores/conversation_store'
+import axiosHttp from '../../utils/axios_client'
+import ApiError from '../../interfaces/ApiError'
+import { AxiosError } from 'axios'
 
-const conversations = [
-  {
-    id: 1,
-    plantImage: '/src/assets/images/plants/monstera.png',
-    plantName: 'Monstera Deliciosa',
-    ownerName: 'Alice Green',
-    lastMessage: 'Is this plant still available?',
-    lastMessageDate: '2023-06-20T14:30:00Z',
-  },
-  {
-    id: 2,
-    plantImage: '/src/assets/images/plants/succulent.png',
-    plantName: 'Echeveria Elegans',
-    ownerName: 'Bob Plant',
-    lastMessage: 'Great! When can I pick it up?',
-    lastMessageDate: '2023-06-19T09:15:00Z',
-  },
-  {
-    id: 3,
-    plantImage: '/src/assets/images/plants/ficus.png',
-    plantName: 'Ficus Lyrata',
-    ownerName: 'Charlie Bloom',
-    lastMessage: 'Thanks for the care tips!',
-    lastMessageDate: '2023-06-18T18:45:00Z',
-  },
-]
+
 
 const initialMessages = [
   { id: 1, sender: 'You', content: 'Hi Alice, I\'m interested in your Monstera Deliciosa. Is it still available?', timestamp: '2023-06-20T14:30:00Z' },
@@ -42,7 +22,7 @@ const initialMessages = [
 
 const ConversationsPage = () => {
   const [selectedConversation, setSelectedConversation] = useState(null)
-  const [messages, setMessages] = useState(initialMessages)
+  const [messages, setMessages] = useState([])
   const [message, setMessage] = useState('')
   const [replyTo, setReplyTo] = useState(null)
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
@@ -50,6 +30,15 @@ const ConversationsPage = () => {
   const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0, messageId: null })
   const chatContainerRef = useRef(null)
   const inputRef = useRef(null)
+
+  const dispatch = useAppDispatch()
+  const { conversations } = useAppSelector(state => state.conversation_store)
+
+  useEffect(() => {
+    dispatch(
+        getAllConversations()
+    )
+  }, [dispatch])
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -129,6 +118,20 @@ const ConversationsPage = () => {
     return false
   }
 
+
+  const loadConversationMessages = async (conversation) => {
+    setSelectedConversation(conversation)
+    setMessages([])
+    try{
+        const response = await axiosHttp.get(`/conversations/${conversation.id}/messages`)
+        console.log(response.data);
+        setMessages(response.data)
+        
+    }catch(error){
+      throw ApiError.from(error as AxiosError)
+    }
+  }
+
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Conversation list */}
@@ -149,20 +152,17 @@ const ConversationsPage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
                 className={`p-3 border-b border-gray-200 cursor-pointer hover:bg-gray-50 ${selectedConversation?.id === conversation.id ? 'bg-green-50' : ''}`}
-                onClick={() => {
-                  setSelectedConversation(conversation)
-                  if (isMobile()) setIsConversationListOpen(false)
-                }}
+                onClick={() => loadConversationMessages(conversation)}
               >
                 <div className="flex items-center space-x-3">
-                  <img src={conversation.plantImage} alt={conversation.plantName} className="w-12 h-12 rounded-full object-cover" />
+                  <img src={'/src/assets/images/plants/aloe-vera.png'} alt={'plant'} className="w-12 h-12 rounded-full object-cover" />
                   <div className="flex-grow">
-                    <h2 className="text-sm font-semibold text-green-700">{conversation.plantName}</h2>
-                    <p className="text-xs text-gray-600">with {conversation.ownerName}</p>
-                    <p className="text-xs text-gray-800 mt-1 truncate">{conversation.lastMessage}</p>
+                    <h2 className="text-sm font-semibold text-green-700">{'conversation.plantName'}</h2>
+                    <p className="text-xs text-gray-600">with {'conversation.ownerName'}</p>
+                    <p className="text-xs text-gray-800 mt-1 truncate">{'conversation.lastMessage'}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-xs text-gray-500">{new Date(conversation.lastMessageDate).toLocaleString()}</p>
+                    <p className="text-xs text-gray-500">{new Date('conversation.lastMessageDate').toLocaleString()}</p>
                   </div>
                 </div>
               </motion.div>

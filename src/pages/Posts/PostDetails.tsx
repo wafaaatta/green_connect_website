@@ -105,7 +105,7 @@ export default function PostDetails() {
 
 
           <div>
-            <h3 className="text-xl font-semibold mb-4">More posts by {postDetails.user}</h3>
+            <h3 className="text-xl font-semibold mb-4">More posts by {currentAnnounce.user.name}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {otherPosts.map((post) => (
                 <motion.div
@@ -118,7 +118,6 @@ export default function PostDetails() {
                   <img src={post.image} alt={post.title} className="w-full h-40 object-cover" />
                   <div className="p-3">
                     <h4 className="text-lg font-semibold mb-1">{post.title}</h4>
-                    <span className="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full mb-1">{post.category}</span>
                     <p className="text-gray-600 text-sm">{`${post.city} . ${post.postalCode}`}</p>
                   </div>
                 </motion.div>
