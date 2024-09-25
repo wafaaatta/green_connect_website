@@ -6,7 +6,7 @@ interface Article {
     content: string
     image: string
     views: number
-    category: ArticleCategory
+    articleCategory: ArticleCategory
 }
 
 export default Article
