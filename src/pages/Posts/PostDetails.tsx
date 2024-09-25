@@ -4,6 +4,7 @@ import { Calendar, ChevronRight, MapPin, User, X } from 'lucide-react'
 import ContactMap from './ContactMap'
 import { useNavigate } from 'react-router-dom'
 import Routes from '../../constants/routes'
+import { useAppSelector } from '../../hooks/hooks'
 
 interface Post {
   id: number
@@ -53,6 +54,8 @@ export default function PostDetails() {
 
   }
 
+  const {currentAnnounce} = useAppSelector(state => state.announce_store)
+
   return (
     <div className="max-w-7xl mx-auto relative">
       <motion.div
@@ -61,12 +64,11 @@ export default function PostDetails() {
         transition={{ duration: 0.5 }}
         className="bg-white rounded border shadow overflow-hidden"
       >
-        <img src={postDetails.image} alt={postDetails.title} className="w-full h-96 object-cover" />
+        <img src={currentAnnounce?.image} alt={currentAnnounce?.title} className="w-full h-96 object-cover" />
         <div className="p-6">
           <div className="flex justify-between items-start mb-4">
             <div>
-              <h1 className="text-3xl font-bold text-green-800 mb-2">{postDetails.title}</h1>
-              <span className="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">{postDetails.category}</span>
+              <h1 className="text-3xl font-bold text-green-800 mb-2">{currentAnnounce?.title}</h1>
             </div>
             <div className="text-right">
               <p className="text-gray-600 flex items-center justify-end">
@@ -75,7 +77,7 @@ export default function PostDetails() {
               </p>
               <p className="text-gray-600 flex items-center justify-end mt-1">
                 <Calendar className="w-4 h-4 mr-1" />
-                {postDetails.creationDate}
+                {currentAnnounce.created_at}
               </p>
             </div>
           </div>
@@ -83,17 +85,17 @@ export default function PostDetails() {
           <div className="flex items-center mb-6">
             <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
             <div className="w-full h-full bg-green-500 flex items-center justify-center text-white text-xl font-bold">
-                  {postDetails.user[0] + postDetails.user[1]}
+                  {currentAnnounce.user.name[0] + currentAnnounce.user.name[1]}
                 </div>
             </div>
             <div>
-              <h2 className="text-xl font-semibold">{postDetails.user}</h2>
+              <h2 className="text-xl font-semibold">{currentAnnounce.user.name}</h2>
             </div>
           </div>
 
           <div className="mb-6">
             <h3 className="text-xl font-semibold mb-2">About this plant</h3>
-            <p className="text-gray-700">{postDetails.description}</p>
+            <p className="text-gray-700">{currentAnnounce.description}</p>
           </div>
 
           <div className="mb-6">
