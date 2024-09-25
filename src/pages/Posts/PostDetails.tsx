@@ -38,13 +38,6 @@ const otherPosts: Post[] = [
   { id: 3, user: 'Alice Green', title: 'Snake Plant', image: '/src/assets/images/plants/snake-plant.png', category: 'Indoor', city: 'New York', postalCode: '10021', creationDate: '2023-06-05', description: 'Snake Plant description...' },
 ]
 
-const sitePolicy = [
-  "Respect other users and their plants",
-  "No sharing of personal contact information",
-  "Plant trades and sales must comply with local laws",
-  "Report any suspicious activity",
-  "Be kind and supportive to fellow plant enthusiasts"
-]
 
 export default function PostDetails() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -108,14 +101,6 @@ export default function PostDetails() {
             <ContactMap />
           </div>
 
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-2">GreenConnect Policy</h3>
-            <ul className="list-disc pl-5">
-              {sitePolicy.map((policy, index) => (
-                <li key={index} className="text-gray-700 mb-1">{policy}</li>
-              ))}
-            </ul>
-          </div>
 
           <div>
             <h3 className="text-xl font-semibold mb-4">More posts by {postDetails.user}</h3>
