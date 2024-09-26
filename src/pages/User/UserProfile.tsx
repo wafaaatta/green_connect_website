@@ -1,37 +1,120 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Mail, Heart, Edit, Calendar, Podcast, X } from 'lucide-react'
-import { useAppSelector } from '../../hooks/hooks'
+import { Mail, Heart, Edit, Calendar, Podcast, X, Plus, Image, Trash2, User, Text, FolderTree } from 'lucide-react'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
+import { Card } from '../../components/Card'
+import { DangerModal } from '../../components/DangerModal'
+import FileUpload from '../../components/FileUpload'
+import Input from '../../components/Input'
+import Modal from '../../components/Modal'
+import TextArea from '../../components/Textarea'
+import Button from '../../components/Button'
+import Select from '../../components/Select'
+import { useDispatch } from 'react-redux'
+import { createAnnounce, getUserAnnounces } from '../../redux/stores/announce_store'
+import { showNotification } from '../../redux/stores/notification_store'
+import { getFileUrl } from '../../utils/laravel_storage'
 
 const UserProfilePage = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [isCreatePostModalOpen, setIsCreatePostModalOpen] = useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [postToDelete, setPostToDelete] = useState<number | null>(null)
+  const [newPost, setNewPost] = useState({ title: '', content: '', category: '', image: null as File | null })
+  const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
 
-  const userPosts = [
-    { id: 1, title: 'Monstera Deliciosa', image: '/src/assets/images/plants/monstera.png', likes: 24 },
-    { id: 2, title: 'Fiddle Leaf Fig', image: '/src/assets/images/plants/fiddle-leaf-fig.png', likes: 18 },
-    { id: 3, title: 'Snake Plant', image: '/src/assets/images/plants/snake-plant.png', likes: 32 },
-    { id: 4, title: 'Pothos', image: '/src/assets/images/plants/pothos.png', likes: 15 },
-  ]
+
 
   const toggleEditModal = () => setIsEditModalOpen(!isEditModalOpen)
+  const toggleCreatePostModal = () => setIsCreatePostModalOpen(!isCreatePostModalOpen)
 
-  const {user} = useAppSelector((state) => state.auth_store)
+  const { user } = useAppSelector((state) => state.auth_store)
+  const { announces } = useAppSelector((state) => state.announce_store)
+
+
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(getUserAnnounces())
+  }, [dispatch])
+
+  const handleCreatePost = async () => {
+    // Simulating post creation
+    const createdPost = { ...newPost, id: newPostId, likes: 0, image: newPost.image ? URL.createObjectURL(newPost.image) : '' }
+    setNewPost({ title: '', content: '', image: null, category: '' })
+    setIsCreatePostModalOpen(false)
+    setMessage({ type: 'success', text: 'Post created successfully!' })
+    setTimeout(() => setMessage(null), 3000)
+
+    const formData = new FormData()
+    formData.append('image', newPost.image as File)
+    formData.append('title', newPost.title)
+    formData.append('description', newPost.content)
+    formData.append('category', newPost.category)
+    formData.append('location', 'Paris, France')
+
+    await dispatch(
+      createAnnounce(formData)
+    ).unwrap()
+    .then(() => {
+      dispatch(
+        showNotification({
+          message: 'Announce created successfully!',
+          type: 'success',
+        })
+      )
+    }).catch((error) => {
+      console.log(error)
+
+      dispatch(
+        showNotification({
+          message: 'Announce creation failed!',
+          type: 'error',
+        })
+      )
+    })
+  }
+
+  const handleDeletePost = (postId: number) => {
+    setPostToDelete(postId)
+    setIsDeleteModalOpen(true)
+  }
+
+  const confirmDeletePost = () => {
+    if (postToDelete) {
+      setMessage({ type: 'success', text: 'Post deleted successfully!' })
+      setTimeout(() => setMessage(null), 3000)
+    }
+    setIsDeleteModalOpen(false)
+    setPostToDelete(null)
+  }
+
 
   return (
     <div className="p-4 max-w-7xl mx-auto">
-      <div className=" bg-white rounded shadow p-4 mb-4">
+      <Card className="mb-4">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
           <div>
             <h1 className="text-3xl font-bold text-green-800">{user?.name}</h1>
           </div>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="mt-4 md:mt-0 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors duration-300 flex items-center"
-            onClick={toggleEditModal}
-          >
-            <Edit size={20} className="mr-2" /> Edit Profile
-          </motion.button>
+          <div className="flex mt-4 md:mt-0 space-x-2">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors duration-300 flex items-center"
+              onClick={toggleEditModal}
+            >
+              <Edit size={20} className="mr-2" /> Edit Profile
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-300 flex items-center"
+              onClick={toggleCreatePostModal}
+            >
+              <Plus size={20} className="mr-2" /> Create Post
+            </motion.button>
+          </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div className="flex items-center text-gray-600">
@@ -43,85 +126,129 @@ const UserProfilePage = () => {
           </div>
         </div>
         <div className="flex items-center text-gray-600">
-          <Podcast size={20} className="mr-2" /> {15} posts
+          <Podcast size={20} className="mr-2" /> {announces.length} posts
         </div>
-      </div>
+      </Card>
+
+      {message && (
+        <div className={`mb-4 p-4 rounded ${message.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+          {message.text}
+        </div>
+      )}
 
       <div className="mt-8">
         <h2 className="text-2xl font-semibold mb-4">My Posts</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {userPosts.map((post) => (
-            <motion.div
-              key={post.id}
-              className="bg-white rounded border shadow overflow-hidden transition-shadow duration-300"
-            >
-              <img src={post.image} alt={post.title} className="w-full h-48 object-cover" />
+          {announces.map((post) => (
+            <Card key={post.id} className="overflow-hidden p-0">
+              <img src={getFileUrl(post.image)} alt={post.title} className="w-full h-48 object-cover" />
               <div className="p-4">
-                <h3 className="font-semibold text-lg mb-2">{post.title}</h3>
-                <div className="flex items-center text-sm text-gray-500">
-                  <Heart size={16} className="mr-1" />
-                  <span>{post.likes} likes</span>
+                <div className="flex items-center justify-between text-sm text-gray-500">
+                <h3 className="font-semibold text-lg">{post.title}</h3>
+
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => handleDeletePost(post.id)}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    <Trash2 size={16} />
+                  </motion.button>
                 </div>
               </div>
-            </motion.div>
+            </Card>
           ))}
         </div>
       </div>
 
-      <AnimatePresence>
-        {isEditModalOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
-          >
-            <motion.div
-              initial={{ scale: 0.9, y: 50 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 50 }}
-              className="bg-white rounded shadow-xl p-4 w-full max-w-md"
-            >
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-bold text-gray-800">Edit Profile</h2>
-                <button onClick={toggleEditModal} className="text-gray-500 hover:text-gray-700">
-                  <X size={24} />
-                </button>
-              </div>
-              <form className="space-y-4">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+      <Modal isOpen={isEditModalOpen} onClose={toggleEditModal} title="Edit Profile">
+        <form className="space-y-4">
+          <Input
+            icon={User}
+            label="Name"
+            id="name"
+            name="name"
+            defaultValue={user?.name}
+          />
+          <Input
+            icon={Mail}
+            label="Email"
+            id="email"
+            name="email"
+            type="email"
+            defaultValue={user?.email}
+          />
+          <div className="flex justify-end space-x-3">
+            <Button size="sm" color="gray" variant="outline" onClick={toggleEditModal}>
+              Cancel
+            </Button>
+            <Button size="sm" color="green" type="submit">
+              Save Changes
+            </Button>
+          </div>
+        </form>
+      </Modal>
 
-                  <input type="text" id="name" name="name" defaultValue={user?.name} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500" />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                  <input type="email" id="email" name="email" defaultValue={user?.email} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500" />
-                </div>
-                <div className="flex justify-end space-x-3">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    type="button"
-                    onClick={toggleEditModal}
-                    className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                  >
-                    Cancel
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    type="submit"
-                    className="px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                  >
-                    Save Changes
-                  </motion.button>
-                </div>
-              </form>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <Modal isOpen={isCreatePostModalOpen} onClose={toggleCreatePostModal} title="Create New Post">
+        <form onSubmit={(e) => { e.preventDefault(); handleCreatePost(); }} className="space-y-4">
+          <Input
+            icon={Text}
+            label="Title"
+            id="title"
+            name="title"
+            placeholder="Title"
+            value={newPost.title}
+            onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
+          />
+          <Select 
+            icon={FolderTree}
+            label="Category"
+            placeholder='fdafadfda'
+            options={[
+              { value: 'Indoor Plants', label: 'Indoor Plants' },
+              { value: 'Outdoor Plants', label: 'Outdoor Plants ' },
+              { value: 'Succulents & Cacti', label: 'Succulents & Cacti' },
+              { value: 'Herb Garden', label: 'Herb Garden' },
+              { value: 'Flowering Plants', label: 'Flowering Plants' },
+              { value: 'Rare & Exotic Species', label: 'Rare & Exotic Species' },
+            ]}
+            value={newPost.category as string}
+            onChange={(value) => setNewPost({ ...newPost, category: value as string })}
+          />
+          <TextArea
+            icon={Text}
+            label="Content"
+            placeholder='Write something...'
+            rows={5}
+            id="content"
+            name="content"
+            value={newPost.content}
+            onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
+          />
+          <FileUpload
+
+            onFileSelect={(files) => setNewPost({ ...newPost, image: files[0] })}
+            acceptedFileTypes="image/*"
+          />
+          <div className="flex justify-end space-x-3">
+            <Button size="sm" color="gray" variant="outline" onClick={toggleCreatePostModal}>
+              Cancel
+            </Button>
+            <Button size="sm" color="green" type="submit">
+              Create Post
+            </Button>
+          </div>
+        </form>
+      </Modal>
+
+      <DangerModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        title="Delete Post"
+        content="Are you sure you want to delete this post? This action cannot be undone."
+        onAccept={confirmDeletePost}
+        onCancel={() => setIsDeleteModalOpen(false)}
+      />
     </div>
   )
 }

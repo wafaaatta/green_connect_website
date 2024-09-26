@@ -17,6 +17,9 @@ export const Card: React.FC<CardProps> = ({
 }) => {
   // Check if bgColor is a hex value or a Tailwind class
   const isHexColor = bgColor.startsWith('#');
+
+  const baseChildrenClasses = 'p-4'; // Default Tailwind gray-700 class
+  const childrenClasses = className ? `${baseChildrenClasses} ${className}` : baseChildrenClasses;
   
   return (
     <div
@@ -29,7 +32,7 @@ export const Card: React.FC<CardProps> = ({
           {headerAction && <div>{headerAction}</div>}
         </div>
       )}
-      <div className="p-4">{children}</div>
+      <div className={childrenClasses}>{children}</div>
     </div>
   );
 };

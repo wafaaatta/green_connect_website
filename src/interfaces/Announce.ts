@@ -3,6 +3,7 @@ interface Announce {
     title: string
     description: string
     location: string
+    image: string
     status: 'pending' | 'accepted' | 'rejected'
 }
 
