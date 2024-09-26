@@ -1,12 +1,53 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { EyeIcon, EyeOffIcon, Leaf, Mail, Lock } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import AppImages from '../../constants/app_images'
 import Routes from '../../constants/routes'
+import Notification from '../../components/Notification'
+import { useAppDispatch } from '../../hooks/hooks'
+import { unwrapResult } from '@reduxjs/toolkit'
+import { loginUser } from '../../redux/stores/auth_store'
+import { showNotification } from '../../redux/stores/notification_store'
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false)
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    await dispatch(
+      loginUser({
+        email,
+        password,
+      })
+    ).then(unwrapResult)
+    .then(() => {
+      dispatch(
+        showNotification({
+          message: 'Login successful',
+          type: 'success',
+        })
+      )
+      setTimeout(() => {
+        navigate(Routes.HOME)
+      }, 2000)
+    }).catch((error) => {
+      dispatch(
+        showNotification({
+          message: 'Login failed',
+          description: error.message,
+          type: 'error',
+        })
+      )
+    })
+  }
 
   return (
     <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
@@ -35,7 +76,7 @@ export default function Login() {
               <img src={AppImages.logo} alt="GreenConnect Logo" className="w-60" />
             </div>
             <h2 className="text-3xl font-bold text-center text-green-800 mb-6">Login to GreenConnect</h2>
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                   Email
@@ -44,6 +85,8 @@ export default function Login() {
                   <input
                     id="email"
                     type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                     className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
                     placeholder="your@email.com"
@@ -58,6 +101,8 @@ export default function Login() {
                 <div className="relative">
                   <input
                     id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     type={showPassword ? "text" : "password"}
                     required
                     className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
@@ -113,6 +158,8 @@ export default function Login() {
           </div>
         </div>
       </motion.div>
+
+      <Notification />
     </div>
   )
 }

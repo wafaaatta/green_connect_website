@@ -1,12 +1,72 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { EyeIcon, EyeOffIcon, Leaf, Mail, Lock, User, Home } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import AppImages from '../../constants/app_images'
+import { useAppDispatch } from '../../hooks/hooks'
+import { showNotification } from '../../redux/stores/notification_store'
+import { registerUser } from '../../redux/stores/auth_store'
+import { unwrapResult } from '@reduxjs/toolkit'
+import Notification from '../../components/Notification'
+import Routes from '../../constants/routes'
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    if (password !== confirmPassword) {
+      dispatch(
+        showNotification({
+          message: 'Passwords do not match',
+          type: 'error',
+        })
+      )
+      return
+    }
+
+    await dispatch(
+      registerUser({
+        name,
+        email,
+        password,
+      })
+    ).then(unwrapResult)
+    .then(() => {
+      dispatch(
+        showNotification({
+          message: 'Registration successful',
+          type: 'success',
+        })
+      )
+
+      setTimeout(() => {
+        navigate(Routes.AUTH.LOGIN)
+      }, 1000)
+    }).catch((error) => {
+      dispatch(
+        showNotification({
+          message: error.message,
+          type: 'error',
+        })
+      )
+    })
+
+    setName('')
+    setEmail('')
+    setPassword('')
+    setConfirmPassword('')
+  }
 
   return (
     <div className="min-h-screen bg-slate-400 flex items-center justify-center p-4">
@@ -34,7 +94,7 @@ export default function Register() {
             <div className="flex justify-center">
               <img src={AppImages.logo} alt="GreenConnect Logo" className="w-52" />
             </div>
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
                   Username
@@ -42,6 +102,8 @@ export default function Register() {
                 <div className="relative">
                   <input
                     id="username"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     type="text"
                     required
                     className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
@@ -58,6 +120,8 @@ export default function Register() {
                   <input
                     id="email"
                     type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                     className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
                     placeholder="your@email.com"
@@ -73,6 +137,8 @@ export default function Register() {
                 <div className="relative">
                   <input
                     id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     type={showPassword ? "text" : "password"}
                     required
                     className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
@@ -99,6 +165,8 @@ export default function Register() {
                 <div className="relative">
                   <input
                     id="confirmPassword"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     type={showConfirmPassword ? "text" : "password"}
                     required
                     className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
@@ -151,6 +219,8 @@ export default function Register() {
           </div>
         </div>
       </motion.div>
+
+      <Notification />
     </div>
   )
 }

@@ -21,6 +21,8 @@ axiosHttp.interceptors.response.use((response) => {
     if(error.response?.status === 403) {
         location.href = `/login?redirected=true&redirected_from=${location.pathname}`
     }
+
+    return Promise.reject(error);
 })
 
 
