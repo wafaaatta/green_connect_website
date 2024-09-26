@@ -6,6 +6,7 @@ import Button from "./Button"
 import { IconType } from "react-icons"
 import { motion, AnimatePresence } from "framer-motion"
 import { useAppSelector } from "../hooks/hooks"
+import { useNavigate } from "react-router-dom"
 
 const Header = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
@@ -20,6 +21,8 @@ const Header = () => {
     { label: 'About', href: Routes.PAGES.ABOUT },
   ]
 
+  const navigate = useNavigate()
+
   const handleLogout = async () => {
     // Implement logout logic here
     console.log('Logout clicked')
@@ -27,8 +30,8 @@ const Header = () => {
 
 
   const userMenuItems = [
-    { label: 'Profile', icon: User, action: () => console.log('Profile clicked') },
-    { label: 'Logout', icon: LogOut, action: handleLogout },
+    { label: 'Profile', icon: User, action: () => navigate(Routes.PAGES.PROFILE) },
+    { label: 'Logout', icon: LogOut, action: handleLogout, color: 'text-red-700' },
   ]
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen)
@@ -107,18 +110,16 @@ const Header = () => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10"
+                      className="absolute right-0 mt-2 w-48 bg-white rounded shadow p-1 z-10"
                     >
                       {userMenuItems.map((item) => (
                         <motion.button
                           key={item.label}
                           onClick={item.action}
-                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-300"
-                          whileHover={{ backgroundColor: "#f3f4f6" }}
-                          whileTap={{ scale: 0.95 }}
+                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 transition-colors duration-300"
                         >
-                          <item.icon className="inline-block w-4 h-4 mr-2" />
-                          {item.label}
+                          <item.icon className={`inline-block w-4 h-4 mr-2 ${item.color}`} />
+                          <span className={`font-medium ${item.color}`}>{item.label}</span>
                         </motion.button>
                       ))}
                     </motion.div>

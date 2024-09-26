@@ -7,6 +7,8 @@ class Routes {
         public static EVENTS = '/events'
         public static EVENT_DETAILS = '/events/:id'
         public static BLOGS = '/blogs'
+        public static PROFILE = '/profile'
+        public static CONVERSATIONS = '/conversations'
         public static ABOUT = '/about'
 
         public static PLANTS_WIKI = '/plants-wiki'

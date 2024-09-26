@@ -29,21 +29,21 @@ const router =  createBrowserRouter([
         element: <Register />
     },
     {
-        path: '/conversations',  
+        path: Routes.PAGES.CONVERSATIONS,  
         element: <UserLayout /> ,
         children: [
             {
-                path: '/conversations',
+                path: Routes.PAGES.CONVERSATIONS,
                 element: <ConversationsPage />
             }
         ]
     },
     {
-        path: '/profile',  
+        path: Routes.PAGES.PROFILE,  
         element: <UserLayout />,
         children: [
             {
-                path: '/profile',
+                path: Routes.PAGES.PROFILE,
                 element: <UserProfilePage />
             }
         ]
