@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { Leaf, LogIn, Menu, User, Bell, Settings, LogOut } from "lucide-react"
 import Routes from "../constants/routes"
 import AppImages from "../constants/app_images"
 import Button from "./Button"
 import { IconType } from "react-icons"
 import { motion, AnimatePresence } from "framer-motion"
+import { useAppSelector } from "../hooks/hooks"
 
 const Header = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(true)
   const [showUserMenu, setShowUserMenu] = useState(false)
+  const userMenuRef = useRef<HTMLDivElement>(null)
 
   const sidebarItems = [
     { label: 'Home', href: Routes.HOME },
@@ -19,13 +20,21 @@ const Header = () => {
     { label: 'About', href: Routes.PAGES.ABOUT },
   ]
 
+  const handleLogout = async () => {
+    // Implement logout logic here
+    console.log('Logout clicked')
+  }
+
+
   const userMenuItems = [
     { label: 'Profile', icon: User, action: () => console.log('Profile clicked') },
-    { label: 'Logout', icon: LogOut, action: () => setIsLoggedIn(false) },
+    { label: 'Logout', icon: LogOut, action: handleLogout },
   ]
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen)
   const toggleUserMenu = () => setShowUserMenu(!showUserMenu)
+
+  const { isAuthenticated, user } = useAppSelector(state => state.auth_store)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,76 +48,83 @@ const Header = () => {
       }
     }
 
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setShowUserMenu(false)
+      }
+    }
+
     window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    document.addEventListener('mousedown', handleClickOutside)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
   }, [])
+
 
   return (
     <header id="main-header" className="bg-[#E6DFC3] sticky top-0 z-10 transition-shadow duration-300">
-      <div className="max-w-8xl mx-auto px-2 sm:px-4 lg:px-6 py-2">
-        <div className="flex justify-between items-center md:justify-start md:space-x-10">
-          <div className="flex justify-start lg:w-0 lg:flex-1">
-            <a href="/" className="flex items-center">
-              <img src={AppImages.logo} className="h-20 transition-transform duration-300 hover:scale-105" alt="logo Green Connect" />
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center">
+            <a href="/" className="flex-shrink-0">
+              <img src={AppImages.logo} className="h-20 w-auto transition-transform duration-300 hover:scale-105" alt="Green Connect logo" />
             </a>
+            <nav className="hidden md:ml-10 md:flex md:space-x-8">
+              {sidebarItems.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="text-lg font-medium text-green-800 hover:text-green-600 transition-colors duration-300"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
           </div>
-          <div className="-mr-2 -my-2 md:hidden">
-            <button
-              onClick={toggleSidebar}
-              className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-700 transition-colors duration-300"
-            >
-              <span className="sr-only">Open menu</span>
-              <Menu className="h-6 w-6" aria-hidden="true" />
-            </button>
-          </div>
-          <nav className="hidden md:flex space-x-10">
-            {sidebarItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="text-xl font-medium text-green-800 hover:text-green-1100 transition-colors duration-300"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-          <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0 space-x-2">
-            {isLoggedIn ? (
-              <>
-                <div className="relative">
-                  <Button
-                    leftIcon={User as IconType}
-                    variant="link"
-                    color="blue"
-                    size="md"
-                    onClick={toggleUserMenu}
-                  >
-                    John Doe
-                  </Button>
-                  <AnimatePresence>
-                    {showUserMenu && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute right-0 mt-2 w-48 bg-white rounded shadow py-1 z-10"
-                      >
-                        {userMenuItems.map((item, index) => (
-                          <button
-                            key={item.label}
-                            onClick={item.action}
-                            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-300"
-                          >
-                            <item.icon className="inline-block w-4 h-4 mr-2" />
-                            {item.label}
-                          </button>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              </>
+          <div className="flex items-center">
+            {isAuthenticated ? (
+              <div className="relative" ref={userMenuRef}>
+                <Button
+                  leftIcon={User as IconType}
+                  variant="link"
+                  color="blue"
+                  size="md"
+                  onClick={toggleUserMenu}
+                  className="flex items-center space-x-2"
+                >
+                  <div className="flex flex-col items-start">
+                    <span className="font-medium">{user?.name}</span>
+                    <span className="text-sm text-gray-600">{user?.email}</span>
+                  </div>
+                </Button>
+                <AnimatePresence>
+                  {showUserMenu && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10"
+                    >
+                      {userMenuItems.map((item) => (
+                        <motion.button
+                          key={item.label}
+                          onClick={item.action}
+                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-300"
+                          whileHover={{ backgroundColor: "#f3f4f6" }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <item.icon className="inline-block w-4 h-4 mr-2" />
+                          {item.label}
+                        </motion.button>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             ) : (
               <>
                 <Button
@@ -116,7 +132,7 @@ const Header = () => {
                   variant="link"
                   color="green"
                   size="md"
-                  onClick={() => setIsLoggedIn(true)}
+                  className="mr-4"
                 >
                   Sign in
                 </Button>
@@ -130,6 +146,15 @@ const Header = () => {
                 </Button>
               </>
             )}
+            <div className="md:hidden ml-4">
+              <button
+                onClick={toggleSidebar}
+                className="bg-[#E6DFC3] rounded-md p-2 inline-flex items-center justify-center text-green-800 hover:text-green-600 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500 transition-colors duration-300"
+              >
+                <span className="sr-only">Open menu</span>
+                <Menu className="h-6 w-6" aria-hidden="true" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -143,14 +168,14 @@ const Header = () => {
             className="fixed inset-0 z-50 md:hidden"
           >
             <div className="fixed inset-0 bg-black bg-opacity-25" onClick={toggleSidebar}></div>
-            <nav className="relative max-w-xs w-full bg-white shadow-xl py-6 px-6 space-y-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-              <div className="flex items-center justify-between">
+            <nav className="relative max-w-xs w-full bg-white shadow-xl h-full overflow-y-auto">
+              <div className="px-6 pt-6 pb-4 flex items-center justify-between">
                 <a href="/" className="-m-1.5 p-1.5">
-                  <img src={AppImages.logo} className="h-16" alt="logo Green Connect" />
+                  <img src={AppImages.logo} className="h-12 w-auto" alt="Green Connect logo" />
                 </a>
                 <button
                   onClick={toggleSidebar}
-                  className="rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-700"
+                  className="rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500"
                 >
                   <span className="sr-only">Close menu</span>
                   <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -158,67 +183,68 @@ const Header = () => {
                   </svg>
                 </button>
               </div>
-              <div className="flow-root">
-                <div className="divide-y divide-gray-500/10">
-                  <div className="space-y-2 py-6">
-                    {sidebarItems.map((item) => (
-                      <a
-                        key={item.label}
-                        href={item.href}
-                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                      >
-                        {item.label}
-                      </a>
-                    ))}
-                  </div>
-                  <div className="py-6">
-                    {isLoggedIn ? (
-                      <>
-                        <div className="flex items-center space-x-4 mb-4">
+              <div className="px-6 py-6">
+                <div className="space-y-1">
+                  {sidebarItems.map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      className="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-green-600 transition-colors duration-300"
+                    >
+                      {item.label}
+                    </a>
+                  ))}
+                </div>
+                <div className="mt-6 pt-6 border-t border-gray-200">
+                  {isAuthenticated ? (
+                    <>
+                      <div className="flex items-center mb-4">
+                        <div className="flex-shrink-0">
                           <img src="https://via.placeholder.com/40" alt="User Avatar" className="w-10 h-10 rounded-full" />
-                          <div>
-                            <p className="text-sm font-medium text-gray-900">John Doe</p>
-                            <p className="text-xs text-gray-500">john.doe@example.com</p>
-                          </div>
                         </div>
-                        {userMenuItems.map((item) => (
-                          <button
-                            key={item.label}
-                            onClick={item.action}
-                            className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                          >
-                            <item.icon className="inline-block w-5 h-5 mr-2" />
-                            {item.label}
-                          </button>
-                        ))}
-                      </>
-                    ) : (
-                      <>
-                        <Button
-                          leftIcon={LogIn as IconType}
-                          variant="link"
-                          color="green"
-                          size="md"
+                        <div className="ml-3">
+                          <p className="text-base font-medium text-gray-800">{user?.name}</p>
+                          <p className="text-sm text-gray-500">{user?.email}</p>
+                        </div>
+                      </div>
+                      {userMenuItems.map((item) => (
+                        <button
+                          key={item.label}
                           onClick={() => {
-                            setIsLoggedIn(true)
+                            item.action()
                             toggleSidebar()
                           }}
-                          className="w-full justify-start"
+                          className="block w-full text-left rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-green-600 transition-colors duration-300"
                         >
-                          Sign in
-                        </Button>
-                        <Button
-                          leftIcon={Leaf as IconType}
-                          variant="link"
-                          color="blue"
-                          size="md"
-                          className="w-full justify-start mt-2"
-                        >
-                          Join Us
-                        </Button>
-                      </>
-                    )}
-                  </div>
+                          <item.icon className="inline-block w-5 h-5 mr-2" />
+                          {item.label}
+                        </button>
+                      ))}
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        leftIcon={LogIn as IconType}
+                        variant="link"
+                        color="green"
+                        size="md"
+                        onClick={toggleSidebar}
+                        className="w-full justify-start mb-2"
+                      >
+                        Sign in
+                      </Button>
+                      <Button
+                        leftIcon={Leaf as IconType}
+                        variant="link"
+                        color="blue"
+                        size="md"
+                        onClick={toggleSidebar}
+                        className="w-full justify-start"
+                      >
+                        Join Us
+                      </Button>
+                    </>
+                  )}
                 </div>
               </div>
             </nav>
