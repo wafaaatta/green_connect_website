@@ -27,6 +27,21 @@ export const getAllConversations = createAsyncThunk(
     }
 )
 
+export const createConversation = createAsyncThunk(
+    'conversation/createConversation',
+    async (conversation: {
+        receiver_id: number,
+        announce_id: number
+    }) => {
+        try{
+            const response = await axiosHttp.post('/conversations', conversation)
+            return response.data
+        }catch(error){
+            throw ApiError.from(error as AxiosError)
+        }
+    }
+)
+
 const initialState: ConversationState = {
     conversations: [],
 };
@@ -43,6 +58,16 @@ const conversationSlice = createSlice({
             state.conversations = []
         })
         .addCase(getAllConversations.pending, (state) => {
+            state.conversations = []
+        })
+
+        .addCase(createConversation.fulfilled, (state, action) => {
+            state.conversations.push(action.payload)
+        })
+        .addCase(createConversation.rejected, (state, action) => {
+            state.conversations = []
+        })
+        .addCase(createConversation.pending, (state) => {
             state.conversations = []
         })
     }

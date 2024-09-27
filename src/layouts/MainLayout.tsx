@@ -6,12 +6,12 @@ import Pusher from 'pusher-js'
 import { useEffect } from 'react'
 
 const MainLayout = () => {
-  const pusher = new Pusher('c54be6c2bdbc371de2e5', {
-    cluster: 'mt1',
+  const pusher = new Pusher('5f950ee8879a3ee4e0ea', {
+    cluster: 'mt1'
   });
 
   useEffect(() => {
-    const channel = pusher.subscribe('my-channel');
+    const channel = pusher.subscribe('my-channel')
     channel.bind('my-event', function(data) {
       alert(JSON.stringify(data));
     });
@@ -19,7 +19,7 @@ const MainLayout = () => {
     return () => {
       pusher.unsubscribe('my-channel');
     }
-  }, [pusher])
+  }, [])
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-100 custom-scroll">

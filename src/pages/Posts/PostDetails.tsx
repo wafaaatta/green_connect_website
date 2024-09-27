@@ -4,7 +4,9 @@ import { Calendar, ChevronRight, MapPin, User, X } from 'lucide-react'
 import ContactMap from './ContactMap'
 import { useNavigate } from 'react-router-dom'
 import Routes from '../../constants/routes'
-import { useAppSelector } from '../../hooks/hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
+import { createConversation } from '../../redux/stores/conversation_store'
+import { unwrapResult } from '@reduxjs/toolkit'
 
 interface Post {
   id: number
@@ -19,19 +21,6 @@ interface Post {
   userImage?: string
 }
 
-const postDetails: Post = {
-  id: 1,
-  user: 'Alice Green',
-  title: 'Monstera Deliciosa',
-  image: '/src/assets/images/plants/monstera.png',
-  category: 'Indoor',
-  city: 'New York',
-  postalCode: '10021',
-  creationDate: '2023-06-15',
-  description: 'The Monstera Deliciosa, also known as the Swiss Cheese Plant, is a stunning tropical plant known for its large, glossy, heart-shaped leaves with distinctive holes or cuts. It\'s an excellent choice for adding a touch of the tropics to your home or office. This plant is relatively easy to care for and can thrive in various indoor conditions.',
-  userImage: '/src/assets/images/users/alice-green.jpg'
-}
-
 const otherPosts: Post[] = [
   { id: 2, user: 'Alice Green', title: 'Fiddle Leaf Fig', image: '/src/assets/images/plants/fiddle-leaf-fig.png', category: 'Indoor', city: 'New York', postalCode: '10021', creationDate: '2023-06-10', description: 'Fiddle Leaf Fig description...' },
   { id: 3, user: 'Alice Green', title: 'Snake Plant', image: '/src/assets/images/plants/snake-plant.png', category: 'Indoor', city: 'New York', postalCode: '10021', creationDate: '2023-06-05', description: 'Snake Plant description...' },
@@ -43,9 +32,26 @@ const otherPosts: Post[] = [
 export default function PostDetails() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const navigate = useNavigate()
+  const {isAuthenticated} = useAppSelector(state => state.auth_store)
+  const dispatch = useAppDispatch()
+  const {currentAnnounce} = useAppSelector(state => state.announce_store)
 
-  const handleConnect = () => {
-    setIsDialogOpen(true)
+  const handleConnect = async () => {
+    if(!isAuthenticated) {
+      return setIsDialogOpen(true)
+    }
+    
+    await dispatch(
+      createConversation({
+        receiver_id: currentAnnounce?.user.id as number, 
+        announce_id: currentAnnounce?.id as number
+    })
+    ).then(unwrapResult)
+    .then(() => {
+      navigate(Routes.PAGES.CONVERSATIONS)
+    }).catch((error) => {
+      console.log(error)
+    })
   }
 
   const handleCloseDialog = () => {
@@ -54,7 +60,6 @@ export default function PostDetails() {
 
   }
 
-  const {currentAnnounce} = useAppSelector(state => state.announce_store)
 
   return (
     <div className="max-w-7xl mx-auto relative">
@@ -73,7 +78,7 @@ export default function PostDetails() {
             <div className="text-right">
               <p className="text-gray-600 flex items-center justify-end">
                 <MapPin className="w-4 h-4 mr-1" />
-                {postDetails.city}, {postDetails.postalCode}
+                {'currentAnnounce?.city'}, {'currentAnnounce?.postalCode'}
               </p>
               <p className="text-gray-600 flex items-center justify-end mt-1">
                 <Calendar className="w-4 h-4 mr-1" />
@@ -132,7 +137,7 @@ export default function PostDetails() {
           onClick={handleConnect}
           className=" bg-green-700 text-white py-2 px-6 rounded hover:bg-green-900 transition duration-300"
         >
-          Connect with {postDetails.user}
+          Connect with {currentAnnounce.user.name}
         </button>
       </div>
 
