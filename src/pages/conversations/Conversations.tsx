@@ -7,6 +7,8 @@ import { getAllConversations } from '../../redux/stores/conversation_store'
 import axiosHttp from '../../utils/axios_client'
 import ApiError from '../../interfaces/ApiError'
 import { AxiosError } from 'axios'
+import { subscribeToChannel, unsubscribeFromChannel } from '../../services/pusher'
+import PusherBroadcasts from '../../constants/pusher_broadcasts'
 
 
 
@@ -33,6 +35,7 @@ const ConversationsPage = () => {
 
   const dispatch = useAppDispatch()
   const { conversations } = useAppSelector(state => state.conversation_store)
+  
 
   useEffect(() => {
     dispatch(
@@ -117,6 +120,18 @@ const ConversationsPage = () => {
     }
     return false
   }
+
+  useEffect(() => {
+    subscribeToChannel(
+      PusherBroadcasts.channels.conversations, 
+      PusherBroadcasts.events.conversations.created, 
+      (data: unknown) => {
+        dispatch(getAllConversations())
+        
+      })
+
+    return () => unsubscribeFromChannel(PusherBroadcasts.channels.conversations)
+  }, [])
 
 
   const loadConversationMessages = async (conversation) => {

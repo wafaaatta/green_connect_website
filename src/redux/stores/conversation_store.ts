@@ -19,7 +19,7 @@ export const getAllConversations = createAsyncThunk(
     'conversation/getAllConversations',
     async () => {
         try{
-            const response = await axiosHttp.get('/conversations')
+            const response = await axiosHttp.get('/user/conversations')
             return response.data
         }catch(error){
             throw ApiError.from(error as AxiosError)
