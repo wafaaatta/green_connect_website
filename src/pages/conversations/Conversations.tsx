@@ -316,15 +316,7 @@ const ConversationsPage = () => {
                   <span className="text-sm">Posted on June 15, 2023</span>
                 </div>
               </div>
-              <h3 className="text-lg font-semibold mb-2">Actions</h3>
-              <div className="space-y-2">
-                <button className="w-full bg-white text-green-600 border border-green-600 px-4 py-2 rounded-lg hover:bg-green-50 transition-colors duration-300 flex items-center justify-center">
-                  <Heart size={16} className="mr-2" /> Add to Favorites
-                </button>
-                <button className="w-full bg-white text-red-600 border border-red-600 px-4 py-2 rounded-lg hover:bg-red-50 transition-colors duration-300 flex items-center justify-center">
-                  <Flag size={16} className="mr-2" /> Report Listing
-                </button>
-              </div>
+             
             </div>
           </motion.div>
         )}
