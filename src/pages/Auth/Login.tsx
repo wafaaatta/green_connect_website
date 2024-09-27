@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { EyeIcon, EyeOffIcon, Leaf, Mail, Lock } from 'lucide-react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import AppImages from '../../constants/app_images'
 import Routes from '../../constants/routes'
 import Notification from '../../components/Notification'
@@ -19,6 +19,21 @@ export default function Login() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    const redirected = searchParams.get("redirected") === 'true';
+    if (redirected) {
+      dispatch(
+        showNotification({
+          type: 'info',
+          message: 'Login Again',
+          description: 'You have been logged out. Please login again.',
+        })
+      )
+    }
+  }, [dispatch, searchParams]); // Include
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -35,7 +50,14 @@ export default function Login() {
           type: 'success',
         })
       )
+
       setTimeout(() => {
+        const redirected = searchParams.get("redirected") === 'true';
+        const redirectTo = searchParams.get("redirected_from") || '/';
+        if (redirected) {
+          return navigate(redirectTo);
+        }
+
         navigate(Routes.HOME)
       }, 2000)
     }).catch((error) => {

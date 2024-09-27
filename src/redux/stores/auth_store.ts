@@ -38,6 +38,18 @@ export const registerUser = createAsyncThunk(
     }
 )
 
+export const validateToken = createAsyncThunk(
+    'auth/validateToken',
+    async () => {
+        try{
+            const response = await axiosHttp.get('/validate-token')
+            return response.data
+        }catch(error){
+            throw ApiError.from(error as AxiosError)
+        }
+    }
+)
+
 const authSlice = createSlice({
     name: 'auth',
     initialState,

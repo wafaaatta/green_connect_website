@@ -19,6 +19,7 @@ import ConversationsPage from "./pages/conversations/Conversations.tsx";
 import UserProfilePage from "./pages/User/UserProfile.tsx";
 import UserLayout from "./layouts/UserLayout.tsx";
 import Workspace from "./workspace.tsx";
+import RequireAuth from "./components/RequireAuth.tsx";
 
 const router =  createBrowserRouter([
     {
@@ -49,7 +50,9 @@ const router =  createBrowserRouter([
         children: [
             {
                 path: Routes.PAGES.PROFILE,
-                element: <UserProfilePage />
+                element: <RequireAuth>
+                    <UserProfilePage />
+                </RequireAuth>
             }
         ]
     },
