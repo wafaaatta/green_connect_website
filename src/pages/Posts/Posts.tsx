@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { useEffect } from 'react'
 import { getAllAnnounces, setCurrentAnnounce } from '../../redux/stores/announce_store'
 import Announce from '../../interfaces/Announce'
+import { getFileUrl } from '../../utils/laravel_storage'
 
 const PostsPage = () => {
   const dispatch = useAppDispatch()
@@ -38,7 +39,7 @@ const PostsPage = () => {
             transition={{ duration: 0.5, delay: index * 0.1 }}
             className="bg-white rounded shadow overflow-hidden border"
           >
-            <img src={announce.image} alt={announce.title} className="w-full h-48 object-cover" />
+            <img src={getFileUrl(announce.image)} alt={announce.title} className="w-full h-48 object-cover" />
             <div className="p-3">
               <h2 className="text-xl font-semibold mb-1">{announce.title}</h2>
               <Badge className='mb-1'>{announce.category}</Badge>

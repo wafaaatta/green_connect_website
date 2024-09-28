@@ -7,6 +7,8 @@ import Routes from '../../constants/routes'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { createConversation } from '../../redux/stores/conversation_store'
 import { unwrapResult } from '@reduxjs/toolkit'
+import { getFileUrl } from '../../utils/laravel_storage'
+import moment from 'moment'
 
 interface Post {
   id: number
@@ -62,14 +64,25 @@ export default function PostDetails() {
 
 
   return (
-    <div className="max-w-7xl mx-auto relative">
+    <div className="max-w-7xl mx-auto relative p-4">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="bg-white rounded border shadow overflow-hidden"
       >
-        <img src={currentAnnounce?.image} alt={currentAnnounce?.title} className="w-full h-96 object-cover" />
+        <img 
+          src={getFileUrl(currentAnnounce?.image as string)} 
+          alt={currentAnnounce?.title} 
+          className="w-full h-96 object-cover"
+          style={{
+            objectFit: 'cover',
+            objectPosition: 'center',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+          }} 
+        />
         <div className="p-6">
           <div className="flex justify-between items-start mb-4">
             <div>
@@ -78,11 +91,11 @@ export default function PostDetails() {
             <div className="text-right">
               <p className="text-gray-600 flex items-center justify-end">
                 <MapPin className="w-4 h-4 mr-1" />
-                {'currentAnnounce?.city'}, {'currentAnnounce?.postalCode'}
+                {currentAnnounce?.city}, {currentAnnounce?.postal_code}
               </p>
               <p className="text-gray-600 flex items-center justify-end mt-1">
                 <Calendar className="w-4 h-4 mr-1" />
-                {currentAnnounce.created_at}
+                {moment(currentAnnounce?.created_at).format('MMMM Do YYYY')}
               </p>
             </div>
           </div>
@@ -90,17 +103,17 @@ export default function PostDetails() {
           <div className="flex items-center mb-6">
             <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
             <div className="w-full h-full bg-green-500 flex items-center justify-center text-white text-xl font-bold">
-                  {currentAnnounce.user.name[0] + currentAnnounce.user.name[1]}
+                  {currentAnnounce?.user?.name[0] + currentAnnounce?.user?.name[1]}
                 </div>
             </div>
             <div>
-              <h2 className="text-xl font-semibold">{currentAnnounce.user.name}</h2>
+              <h2 className="text-xl font-semibold">{currentAnnounce?.user.name}</h2>
             </div>
           </div>
 
           <div className="mb-6">
             <h3 className="text-xl font-semibold mb-2">About this plant</h3>
-            <p className="text-gray-700">{currentAnnounce.description}</p>
+            <p className="text-gray-700">{currentAnnounce?.description}</p>
           </div>
 
           <div className="mb-6">

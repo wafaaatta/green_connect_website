@@ -23,6 +23,7 @@ const Header = () => {
 
   const navigate = useNavigate()
 
+
   const handleLogout = async () => {
     // Implement logout logic here
     console.log('Logout clicked')
@@ -133,7 +134,8 @@ const Header = () => {
                   variant="link"
                   color="green"
                   size="md"
-                  className="mr-4"
+                  onClick={toggleSidebar}
+                  className="w-full justify-start mb-2"
                 >
                   Sign in
                 </Button>
@@ -142,6 +144,8 @@ const Header = () => {
                   variant="link"
                   color="blue"
                   size="md"
+                  onClick={toggleSidebar}
+                  className="w-full justify-start"
                 >
                   Join Us
                 </Button>

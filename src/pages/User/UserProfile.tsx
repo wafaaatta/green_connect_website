@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Mail, Heart, Edit, Calendar, Podcast, X, Plus, Image, Trash2, User, Text, FolderTree } from 'lucide-react'
+import { Mail, Heart, Edit, Calendar, Podcast, X, Plus, Image, Trash2, User, Text, FolderTree, Check, Clock } from 'lucide-react'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { Card } from '../../components/Card'
 import { DangerModal } from '../../components/DangerModal'
@@ -10,7 +10,6 @@ import Modal from '../../components/Modal'
 import TextArea from '../../components/Textarea'
 import Button from '../../components/Button'
 import Select from '../../components/Select'
-import { useDispatch } from 'react-redux'
 import { createAnnounce, getUserAnnounces } from '../../redux/stores/announce_store'
 import { showNotification } from '../../redux/stores/notification_store'
 import { getFileUrl } from '../../utils/laravel_storage'
@@ -20,7 +19,15 @@ const UserProfilePage = () => {
   const [isCreatePostModalOpen, setIsCreatePostModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [postToDelete, setPostToDelete] = useState<number | null>(null)
-  const [newPost, setNewPost] = useState({ title: '', content: '', category: '', image: null as File | null })
+  const [newPost, setNewPost] = useState({ 
+    title: '', 
+    content: '', 
+    category: '', 
+    image: null as File | null,
+    city: '',
+    country: '',
+    postalCode: ''
+ })
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
 
 
@@ -39,19 +46,14 @@ const UserProfilePage = () => {
   }, [dispatch])
 
   const handleCreatePost = async () => {
-    // Simulating post creation
-    const createdPost = { ...newPost, id: newPostId, likes: 0, image: newPost.image ? URL.createObjectURL(newPost.image) : '' }
-    setNewPost({ title: '', content: '', image: null, category: '' })
-    setIsCreatePostModalOpen(false)
-    setMessage({ type: 'success', text: 'Post created successfully!' })
-    setTimeout(() => setMessage(null), 3000)
-
     const formData = new FormData()
     formData.append('image', newPost.image as File)
     formData.append('title', newPost.title)
     formData.append('description', newPost.content)
     formData.append('category', newPost.category)
-    formData.append('location', 'Paris, France')
+    formData.append('city', newPost.city)
+    formData.append('country', newPost.country)
+    formData.append('postal_code', newPost.postalCode)
 
     await dispatch(
       createAnnounce(formData)
@@ -63,6 +65,9 @@ const UserProfilePage = () => {
           type: 'success',
         })
       )
+
+      setNewPost({ title: '', content: '', image: null, category: '', location: '', postalCode: '' })
+
     }).catch((error) => {
       console.log(error)
 
@@ -72,6 +77,9 @@ const UserProfilePage = () => {
           type: 'error',
         })
       )
+
+      setNewPost({ title: '', content: '', image: null, category: '', location: '', postalCode: '' })
+
     })
   }
 
@@ -144,23 +152,27 @@ const UserProfilePage = () => {
               <img src={getFileUrl(post.image)} alt={post.title} className="w-full h-48 object-cover" />
               <div className="p-4">
                 <div className="flex items-center justify-between text-sm text-gray-500">
-                <h3 className="font-semibold text-lg">{post.title}</h3>
-
-                  <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => handleDeletePost(post.id)}
-                    className="text-red-500 hover:text-red-700"
-                  >
-                    <Trash2 size={16} />
-                  </motion.button>
+                  <h3 className="font-semibold text-lg">{post.title}</h3>
+                  <div className="flex items-center">
+                    {post.status === 'pending' && <Clock size={16} className="mr-1" />}
+                    {post.status === 'accepted' && <Check size={16} className="text-green-500 mr-1" />}
+                    {post.status === 'rejected' && <X size={16} className="text-red-500 mr-1" />}
+                    <span className="text-xs">{post.status}</span>
+                    <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={() => handleDeletePost(post.id)}
+                      className="text-red-500 hover:text-red-700 ml-2"
+                    >
+                      <Trash2 size={16} />
+                    </motion.button>
+                  </div>
                 </div>
               </div>
             </Card>
           ))}
         </div>
       </div>
-
       <Modal isOpen={isEditModalOpen} onClose={toggleEditModal} title="Edit Profile">
         <form className="space-y-4">
           <Input
@@ -189,57 +201,104 @@ const UserProfilePage = () => {
         </form>
       </Modal>
 
-      <Modal isOpen={isCreatePostModalOpen} onClose={toggleCreatePostModal} title="Create New Post">
-        <form onSubmit={(e) => { e.preventDefault(); handleCreatePost(); }} className="space-y-4">
+      <Modal size="xl" isOpen={isCreatePostModalOpen} onClose={toggleCreatePostModal} title="Create New Post">
+      <motion.form
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        onSubmit={(e) => { e.preventDefault(); handleCreatePost(); }}
+        className="grid grid-cols-1 md:grid-cols-2 gap-4"
+      >
+        <div>
           <Input
             icon={Text}
             label="Title"
             id="title"
             name="title"
-            placeholder="Title"
+            placeholder="Enter post title"
             value={newPost.title}
             onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
           />
+        </div>
+        <div>
+          <Input
+            icon={Text}
+            label="Country"
+            id="country"
+            name="country"
+            placeholder="Enter country"
+            value={newPost.country}
+            onChange={(e) => setNewPost({ ...newPost, country: e.target.value })}
+          />
+        </div>
+        <div>
+          <Input
+            icon={Text}
+            label="City"
+            id="city"
+            name="city"
+            placeholder="Enter city"
+            value={newPost.city}
+            onChange={(e) => setNewPost({ ...newPost, city: e.target.value })}
+          />
+        </div>
+        <div>
+          <Input
+            icon={Text}
+            label="Postal Code"
+            id="postalCode"
+            name="postalCode"
+            placeholder="Enter postal code"
+            value={newPost.postalCode}
+            onChange={(e) => setNewPost({ ...newPost, postalCode: e.target.value })}
+          />
+        </div>
+        <div className="md:col-span-2">
           <Select 
             icon={FolderTree}
             label="Category"
-            placeholder='fdafadfda'
+            placeholder="Select a category"
             options={[
               { value: 'Indoor Plants', label: 'Indoor Plants' },
-              { value: 'Outdoor Plants', label: 'Outdoor Plants ' },
+              { value: 'Outdoor Plants', label: 'Outdoor Plants' },
               { value: 'Succulents & Cacti', label: 'Succulents & Cacti' },
               { value: 'Herb Garden', label: 'Herb Garden' },
               { value: 'Flowering Plants', label: 'Flowering Plants' },
               { value: 'Rare & Exotic Species', label: 'Rare & Exotic Species' },
             ]}
-            value={newPost.category as string}
+            value={newPost.category}
             onChange={(value) => setNewPost({ ...newPost, category: value as string })}
           />
+        </div>
+        <div className="md:col-span-2">
           <TextArea
             icon={Text}
             label="Content"
-            placeholder='Write something...'
+            placeholder="Write something..."
             rows={5}
             id="content"
             name="content"
             value={newPost.content}
             onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
           />
+        </div>
+        <div className="md:col-span-2">
           <FileUpload
-
+            label="Upload Image"
             onFileSelect={(files) => setNewPost({ ...newPost, image: files[0] })}
             acceptedFileTypes="image/*"
           />
-          <div className="flex justify-end space-x-3">
-            <Button size="sm" color="gray" variant="outline" onClick={toggleCreatePostModal}>
-              Cancel
-            </Button>
-            <Button size="sm" color="green" type="submit">
-              Create Post
-            </Button>
-          </div>
-        </form>
-      </Modal>
+        </div>
+        <div className="md:col-span-2 flex justify-end space-x-3">
+          <Button size="sm" color="gray" variant="outline" onClick={toggleCreatePostModal}>
+            Cancel
+          </Button>
+          <Button size="sm" color="green" type="submit">
+            Create Post
+          </Button>
+        </div>
+      </motion.form>
+    </Modal>
 
       <DangerModal
         isOpen={isDeleteModalOpen}
