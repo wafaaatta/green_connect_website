@@ -8,44 +8,22 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { getAllAnnounces } from '../../redux/stores/announce_store'
 import { getFileUrl } from '../../utils/laravel_storage'
 import { getAllArticles } from '../../redux/stores/article_store'
+import { getAllEvents } from '../../redux/stores/event_store'
+import moment from 'moment'
 
 const HomePage = () => {
-
-  const events = [
-    { id: 1, title: "Annual Plant Swap Meet", date: "2023-06-15", location: "Central Park, New York", image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" },
-    { id: 2, title: "Succulent Care Workshop", date: "2023-06-20", location: "Green Thumb Nursery, LA", image: "https://images.unsplash.com/photo-1459156212016-c812468e2115?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" },
-    { id: 3, title: "Bonsai Masterclass", date: "2023-06-25", location: "Japanese Garden, San Francisco", image: "https://images.unsplash.com/photo-1512428813834-c702c7702b78?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" },
-    { 
-      id: 4, 
-      title: "Indoor Jungle Design Workshop", 
-      date: "2023-07-01", 
-      location: "Botanical Gardens, Chicago", 
-      image: "https://images.unsplash.com/photo-1545241047-6083a3684587?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80"
-    }
-  ]
-
-  const posts = [
-    { id: 1, title: "My Monstera Deliciosa Journey", author: "Alice Green", likes: 120, comments: 45, image: "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" },
-    { id: 2, title: "Succulent Propagation Tips", author: "Bob Plant", likes: 89, comments: 32, image: "https://images.unsplash.com/photo-1446071103084-c257b5f70672?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" },
-    { id: 3, title: "Creating a Tropical Indoor Jungle", author: "Charlie Bloom", likes: 156, comments: 67, image: "https://images.unsplash.com/photo-1545241047-6083a3684587?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" },
-    {
-      id: 4, 
-      title: "The Benefits of Vertical Gardening", 
-      author: "David Miller", 
-      likes: 98, 
-      comments: 21,
-    }
-  ]
 
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(getAllAnnounces())
     dispatch(getAllArticles())
+    dispatch(getAllEvents())
   }, [dispatch])
 
   const {announces} = useAppSelector((state) => state.announce_store)
   const {articles} = useAppSelector((state) => state.article_store)
+  const {events} = useAppSelector((state) => state.event_store)
 
   return (
     <div className="bg-green-50 text-gray-800">
@@ -203,12 +181,12 @@ const HomePage = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="bg-white rounded overflow-hidden shadow border transition-shadow duration-300"
               >
-                <img src={event.image} alt={event.title} className="w-full h-48 object-cover" />
+                <img src={getFileUrl(event.image)} alt={event.title} className="w-full h-48 object-cover" />
                 <div className="p-4">
                   <h3 className="text-xl font-semibold mb-4">{event.title}</h3>
                   <p className="text-gray-600 mb-2 flex items-center">
                     <Calendar className="mr-2 h-5 w-5 text-green-600" />
-                    {event.date}
+                    {moment(event.event_date).format('MMMM DD, YYYY')}
                   </p>
                   <p className="text-gray-600 flex items-center">
                     <MapPin className="mr-2 h-5 w-5 text-green-600" />
