@@ -49,6 +49,18 @@ export const getUserAnnounces = createAsyncThunk(
     }
 )
 
+export const deleteAnnounce = createAsyncThunk(
+    'announce/deleteAnnounce',
+    async (id: number) => {
+        try{
+            await axiosHttp.delete(`announces/${id}`)
+            return {id}
+        }catch(error){
+            throw ApiError.from(error as AxiosError)
+        }
+    }
+)
+
 const announceSlice = createSlice({
     name: 'announce',
     initialState,
@@ -93,6 +105,19 @@ const announceSlice = createSlice({
                 state.announces = action.payload
             })
             .addCase(getUserAnnounces.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.error.message || 'Something went wrong'
+            })
+
+
+            .addCase(deleteAnnounce.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(deleteAnnounce.fulfilled, (state, action) => {
+                state.loading = false
+                state.announces = state.announces.filter((announce) => announce.id !== action.payload.id)
+            })
+            .addCase(deleteAnnounce.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.error.message || 'Something went wrong'
             })

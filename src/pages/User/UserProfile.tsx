@@ -10,7 +10,7 @@ import Modal from '../../components/Modal'
 import TextArea from '../../components/Textarea'
 import Button from '../../components/Button'
 import Select from '../../components/Select'
-import { createAnnounce, getUserAnnounces } from '../../redux/stores/announce_store'
+import { createAnnounce, deleteAnnounce, getUserAnnounces } from '../../redux/stores/announce_store'
 import { showNotification } from '../../redux/stores/notification_store'
 import { getFileUrl } from '../../utils/laravel_storage'
 
@@ -90,11 +90,30 @@ const UserProfilePage = () => {
 
   const confirmDeletePost = () => {
     if (postToDelete) {
-      setMessage({ type: 'success', text: 'Post deleted successfully!' })
-      setTimeout(() => setMessage(null), 3000)
+      dispatch(
+        deleteAnnounce(postToDelete)
+      ).unwrap()
+      .then(() => {
+        dispatch(
+          showNotification({
+            message: 'Announce deleted successfully!',
+            type: 'success',
+          })
+        )
+      }).catch((error) => {
+        console.log(error)
+
+        dispatch(
+          showNotification({
+            message: 'Announce deletion failed!',
+            type: 'error',
+          })
+        )
+      }).finally(() => {
+        setIsDeleteModalOpen(false)
+        setPostToDelete(null)
+      })
     }
-    setIsDeleteModalOpen(false)
-    setPostToDelete(null)
   }
 
 

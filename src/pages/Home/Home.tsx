@@ -82,7 +82,7 @@ const HomePage = () => {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Discover the Green Connect Experience</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { icon: Leaf, title: 'Plant Adoption', description: 'Give plants a new home or find your perfect green companion' },
               { icon: Users, title: 'Community', description: 'Connect with plant enthusiasts and share your green journey' },
@@ -160,7 +160,7 @@ const HomePage = () => {
             ))}
           </div>
           <div className="text-center mt-10">
-            <Link to="/articles" className="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
+            <Link to="/blogs" className="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
               Read More Articles
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
