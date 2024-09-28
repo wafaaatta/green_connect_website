@@ -130,7 +130,7 @@ const UserProfilePage = () => {
             {user?.email}
           </div>
           <div className="flex items-center text-gray-600">
-            <Calendar size={20} className="mr-2" /> Joined {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(user?.created_at as string))}
+            <Calendar size={20} className="mr-2" /> Joined {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(user?.created_at ?? ''))}
           </div>
         </div>
         <div className="flex items-center text-gray-600">

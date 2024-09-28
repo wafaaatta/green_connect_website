@@ -1,17 +1,18 @@
-import React, { useState, useEffect, useRef } from "react"
-import { Leaf, LogIn, Menu, User, Bell, Settings, LogOut } from "lucide-react"
+import React, { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Leaf, LogIn, Menu, User, Bell, Settings, LogOut, MessageCircle } from "lucide-react"
+import { useNavigate } from "react-router-dom"
+import { useAppDispatch, useAppSelector } from "../hooks/hooks"
 import Routes from "../constants/routes"
 import AppImages from "../constants/app_images"
 import Button from "./Button"
 import { IconType } from "react-icons"
-import { motion, AnimatePresence } from "framer-motion"
-import { useAppSelector } from "../hooks/hooks"
-import { useNavigate } from "react-router-dom"
+import { logoutUser } from "../redux/stores/auth_store"
 
-const Header = () => {
+const Header: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-  const [showUserMenu, setShowUserMenu] = useState(false)
-  const userMenuRef = useRef<HTMLDivElement>(null)
+  const navigate = useNavigate()
+  const { isAuthenticated, user } = useAppSelector(state => state.auth_store)
 
   const sidebarItems = [
     { label: 'Home', href: Routes.HOME },
@@ -21,24 +22,13 @@ const Header = () => {
     { label: 'About', href: Routes.PAGES.ABOUT },
   ]
 
-  const navigate = useNavigate()
-
-
+  const dispatch = useAppDispatch()
   const handleLogout = async () => {
-    // Implement logout logic here
-    console.log('Logout clicked')
+    dispatch(logoutUser())
+    navigate(Routes.AUTH.LOGIN)
   }
 
-
-  const userMenuItems = [
-    { label: 'Profile', icon: User, action: () => navigate(Routes.PAGES.PROFILE) },
-    { label: 'Logout', icon: LogOut, action: handleLogout, color: 'text-red-700' },
-  ]
-
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen)
-  const toggleUserMenu = () => setShowUserMenu(!showUserMenu)
-
-  const { isAuthenticated, user } = useAppSelector(state => state.auth_store)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,18 +42,10 @@ const Header = () => {
       }
     }
 
-    const handleClickOutside = (event: MouseEvent) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
-        setShowUserMenu(false)
-      }
-    }
-
     window.addEventListener('scroll', handleScroll)
-    document.addEventListener('mousedown', handleClickOutside)
 
     return () => {
       window.removeEventListener('scroll', handleScroll)
-      document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [])
 
@@ -88,78 +70,72 @@ const Header = () => {
               ))}
             </nav>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center space-x-2">
+            <Button
+              leftIcon={MessageCircle as IconType}
+              variant="outline"
+              color="green"
+              size="sm"
+              onClick={() => navigate(Routes.PAGES.CONVERSATIONS)}
+              className="hidden md:flex"
+            >
+              Chat
+            </Button>
             {isAuthenticated ? (
-              <div className="relative" ref={userMenuRef}>
+              <>
                 <Button
                   leftIcon={User as IconType}
-                  variant="link"
-                  color="blue"
-                  size="md"
-                  onClick={toggleUserMenu}
-                  className="flex items-center space-x-2"
+                  variant="outline"
+                  color="green"
+                  size="sm"
+                  onClick={() => navigate(Routes.PAGES.PROFILE)}
+                  className="hidden md:flex"
                 >
-                  <div className="flex flex-col items-start">
-                    <span className="font-medium">{user?.name}</span>
-                    <span className="text-sm text-gray-600">{user?.email}</span>
-                  </div>
+                  Profile
                 </Button>
-                <AnimatePresence>
-                  {showUserMenu && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute right-0 mt-2 w-48 bg-white rounded shadow p-1 z-10"
-                    >
-                      {userMenuItems.map((item) => (
-                        <motion.button
-                          key={item.label}
-                          onClick={item.action}
-                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 transition-colors duration-300"
-                        >
-                          <item.icon className={`inline-block w-4 h-4 mr-2 ${item.color}`} />
-                          <span className={`font-medium ${item.color}`}>{item.label}</span>
-                        </motion.button>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+
+                <Button
+                  leftIcon={LogOut as IconType}
+                  variant="outline"
+                  color="red"
+                  size="sm"
+                  onClick={handleLogout}
+                  className="hidden md:flex"
+                >
+                  Logout
+                </Button>
+              </>
             ) : (
               <>
                 <Button
                   leftIcon={LogIn as IconType}
-                  variant="link"
+                  variant="outline"
                   color="green"
-                  size="md"
-                  onClick={toggleSidebar}
-                  className="w-full justify-start mb-2"
+                  size="sm"
+                  onClick={() => navigate(Routes.AUTH.LOGIN)}
+                  className="hidden md:flex"
                 >
                   Sign in
                 </Button>
                 <Button
                   leftIcon={Leaf as IconType}
-                  variant="link"
+                  variant="outline"
                   color="blue"
-                  size="md"
-                  onClick={toggleSidebar}
-                  className="w-full justify-start"
+                  size="sm"
+                  onClick={() => navigate(Routes.AUTH.REGISTER)}
+                  className="hidden md:flex"
                 >
                   Join Us
                 </Button>
               </>
             )}
-            <div className="md:hidden ml-4">
-              <button
-                onClick={toggleSidebar}
-                className="bg-[#E6DFC3] rounded-md p-2 inline-flex items-center justify-center text-green-800 hover:text-green-600 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500 transition-colors duration-300"
-              >
-                <span className="sr-only">Open menu</span>
-                <Menu className="h-6 w-6" aria-hidden="true" />
-              </button>
-            </div>
+            <button
+              onClick={toggleSidebar}
+              className="md:hidden bg-[#E6DFC3] rounded-md p-2 inline-flex items-center justify-center text-green-800 hover:text-green-600 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500 transition-colors duration-300"
+            >
+              <span className="sr-only">Open menu</span>
+              <Menu className="h-6 w-6" aria-hidden="true" />
+            </button>
           </div>
         </div>
       </div>
@@ -201,6 +177,19 @@ const Header = () => {
                   ))}
                 </div>
                 <div className="mt-6 pt-6 border-t border-gray-200">
+                  <Button
+                    leftIcon={MessageCircle as IconType}
+                    variant="link"
+                    color="green"
+                    size="md"
+                    onClick={() => {
+                      navigate(Routes.PAGES.CHAT)
+                      toggleSidebar()
+                    }}
+                    className="w-full justify-start mb-2"
+                  >
+                    Chat
+                  </Button>
                   {isAuthenticated ? (
                     <>
                       <div className="flex items-center mb-4">
@@ -212,19 +201,33 @@ const Header = () => {
                           <p className="text-sm text-gray-500">{user?.email}</p>
                         </div>
                       </div>
-                      {userMenuItems.map((item) => (
-                        <button
-                          key={item.label}
-                          onClick={() => {
-                            item.action()
-                            toggleSidebar()
-                          }}
-                          className="block w-full text-left rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-green-600 transition-colors duration-300"
-                        >
-                          <item.icon className="inline-block w-5 h-5 mr-2" />
-                          {item.label}
-                        </button>
-                      ))}
+  
+                      <Button
+                        leftIcon={User as IconType}
+                        variant="link"
+                        color="blue"
+                        size="md"
+                        onClick={() => {
+                          navigate(Routes.PAGES.PROFILE)
+                          toggleSidebar()
+                        }}
+                        className="w-full justify-start mb-2"
+                      >
+                        Profile
+                      </Button>
+                      <Button
+                        leftIcon={LogOut as IconType}
+                        variant="link"
+                        color="red"
+                        size="md"
+                        onClick={() => {
+                          handleLogout()
+                          toggleSidebar()
+                        }}
+                        className="w-full justify-start"
+                      >
+                        Logout
+                      </Button>
                     </>
                   ) : (
                     <>
@@ -233,7 +236,10 @@ const Header = () => {
                         variant="link"
                         color="green"
                         size="md"
-                        onClick={toggleSidebar}
+                        onClick={() => {
+                          navigate(Routes.AUTH.LOGIN)
+                          toggleSidebar()
+                        }}
                         className="w-full justify-start mb-2"
                       >
                         Sign in
@@ -243,7 +249,10 @@ const Header = () => {
                         variant="link"
                         color="blue"
                         size="md"
-                        onClick={toggleSidebar}
+                        onClick={() => {
+                          navigate(Routes.AUTH.REGISTER)
+                          toggleSidebar()
+                        }}
                         className="w-full justify-start"
                       >
                         Join Us

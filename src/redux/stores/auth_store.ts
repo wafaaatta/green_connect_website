@@ -3,7 +3,7 @@ import AuthState from "../../interfaces/states/AuthState";
 import { AxiosError } from "axios";
 import ApiError from "../../interfaces/ApiError";
 import axiosHttp from "../../utils/axios_client";
-import { saveAuthenticationToken } from "../../utils/authentication";
+import { removeAuthenticationToken, saveAuthenticationToken } from "../../utils/authentication";
 
 const initialState: AuthState = {
     isAuthenticated: false,
@@ -58,6 +58,8 @@ const authSlice = createSlice({
             state.isAuthenticated = false
             state.user = null
             state.token = null
+
+            removeAuthenticationToken()
         }
     },
     extraReducers: (builder) => {
