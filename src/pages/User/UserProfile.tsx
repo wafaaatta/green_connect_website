@@ -1,6 +1,6 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { Mail, Heart, Edit, Calendar, Podcast, X, Plus, Image, Trash2, User, Text, FolderTree, Check, Clock, MapPin } from 'lucide-react'
+import { Mail, Heart, Edit, Calendar, Podcast, X, Plus, Image, Trash2, User, Text, FolderTree, Check, Clock, MapPin, Phone, LocateFixedIcon } from 'lucide-react'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { Card } from '../../components/Card'
 import { DangerModal } from '../../components/DangerModal'
@@ -14,6 +14,7 @@ import { createAnnounce, deleteAnnounce, getUserAnnounces, updateAnnounce } from
 import { showNotification } from '../../redux/stores/notification_store'
 import { getFileUrl } from '../../utils/laravel_storage'
 import { useState, useEffect } from 'react'
+import { updateUser } from '../../redux/stores/auth_store'
 
 interface Announce {
   id: number
@@ -58,6 +59,26 @@ const UserProfilePage = () => {
   useEffect(() => {
     dispatch(getUserAnnounces())
   }, [dispatch])
+
+  const [name, setName] = useState(user?.name)
+  const [email, setEmail] = useState(user?.email)
+
+  const handleUpdateUser = async (e) => {
+    e.preventDefault()
+    try {
+      await dispatch(updateUser({ id: user!.id, data: { name, email } })).unwrap()
+      dispatch(showNotification({
+        message: 'User updated successfully!',
+        type: 'success',
+      }))
+    } catch (error) {
+      console.error(error)
+      dispatch(showNotification({
+        message: 'User update failed!',
+        type: 'error',
+      }))
+    }
+  }
   
 
   const handleCreatePost = async () => {
@@ -219,6 +240,10 @@ const UserProfilePage = () => {
                     {post.city}, {post.country}
                   </div>
                   <div className="flex items-center text-sm text-gray-500 mb-2">
+                    <LocateFixedIcon size={16} className="mr-1" />
+                    {post.postal_code}
+                  </div>
+                  <div className="flex items-center text-sm text-gray-500 mb-2">
                     <FolderTree size={16} className="mr-1" />
                     {post.category}
                   </div>
@@ -256,13 +281,15 @@ const UserProfilePage = () => {
       </div>
 
       <Modal isOpen={isEditModalOpen} onClose={toggleEditModal} title="Edit Profile">
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleUpdateUser}>
           <Input
             icon={User}
             label="Name"
             id="name"
             name="name"
-            defaultValue={user?.name}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder='Enter your name'
           />
           <Input
             icon={Mail}
@@ -270,7 +297,9 @@ const UserProfilePage = () => {
             id="email"
             name="email"
             type="email"
-            defaultValue={user?.email}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder='Enter your email'
           />
           <div className="flex justify-end space-x-3">
             <Button size="sm" color="gray" variant="outline" onClick={toggleEditModal}>

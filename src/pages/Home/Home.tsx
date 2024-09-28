@@ -10,20 +10,43 @@ import { getFileUrl } from '../../utils/laravel_storage'
 import { getAllArticles } from '../../redux/stores/article_store'
 import { getAllEvents } from '../../redux/stores/event_store'
 import moment from 'moment'
+import axiosHttp from '../../utils/axios_client'
+import { showNotification } from '../../redux/stores/notification_store'
 
 const HomePage = () => {
 
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(getAllAnnounces())
-    dispatch(getAllArticles())
-    dispatch(getAllEvents())
+    dispatch(getAllAnnounces(3))
+    dispatch(getAllArticles(3))
+    dispatch(getAllEvents(4))
   }, [dispatch])
 
   const {announces} = useAppSelector((state) => state.announce_store)
   const {articles} = useAppSelector((state) => state.article_store)
   const {events} = useAppSelector((state) => state.event_store)
+
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const data = {
+      name,
+      email,
+      message
+    }
+    
+    try{
+      await axiosHttp.post('/contact-submissions', data)
+      dispatch(showNotification({ message: 'Message sent successfully!', type: 'success' }))
+    }catch(error){
+      console.error(error)
+      dispatch(showNotification({ message: 'Message sending failed!', type: 'error' }))
+    }
+  }
 
   return (
     <div className="bg-green-50 text-gray-800">
@@ -55,7 +78,7 @@ const HomePage = () => {
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
                 <Link
-                  to="/register"
+                  to={'/auth/register'}
                   className="bg-white text-green-600 font-semibold py-3 px-8 rounded-full text-lg hover:bg-green-100 transition duration-300 inline-block"
                 >
                   Join Our Community
@@ -153,7 +176,7 @@ const HomePage = () => {
                   <h3 className="text-xl font-semibold mb-2">{article.title}</h3>
                   <p className="text-gray-500">{article.content.substring(0, 100)}</p>
                   <p className="text-gray-600 font-semibold">
-                    Category: {article.articleCategory?.name}
+                    Category: {article.article_category?.name}
                   </p>
                 </div>
               </motion.div>
@@ -247,7 +270,7 @@ const HomePage = () => {
           </div>
           <div className="w-full max-w-3xl mx-auto bg-white rounded-lg shadow-md">
             <div className="p-4">
-              <form className="grid gap-4">
+              <form className="grid gap-4" onSubmit={handleSubmit}>
                 <div className="grid gap-2">
                   <label htmlFor="name" className="text-sm font-medium text-gray-700">
                     Name
@@ -255,6 +278,8 @@ const HomePage = () => {
                   <input
                     id="name"
                     placeholder="Enter your name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-200"
                   />
                 </div>
@@ -266,6 +291,8 @@ const HomePage = () => {
                     id="email"
                     type="email"
                     placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-200"
                   />
                 </div>
@@ -275,6 +302,8 @@ const HomePage = () => {
                   </label>
                   <textarea
                     id="message"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
                     placeholder="Tell us how we can help"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-200 min-h-[150px]"
                   />

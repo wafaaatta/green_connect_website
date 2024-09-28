@@ -13,9 +13,13 @@ const initialState: Eventstate = {
 
 export const getAllEvents = createAsyncThunk(
     'event/getAllEvents',
-    async () => {
+    async (size?: number ) => {
         try{
-            const response = await axiosHttp.get('/events')
+            const response = await axiosHttp.get('/events', {
+                params: {
+                    size
+                }
+            })
             return response.data
         }catch(error){
             throw ApiError.from(error as AxiosError)

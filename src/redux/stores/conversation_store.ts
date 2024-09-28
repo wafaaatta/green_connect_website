@@ -2,14 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import ApiError from "../../interfaces/ApiError";
 import axiosHttp from "../../utils/axios_client";
+import Conversation from "../../interfaces/Conversation";
 
-interface Conversation {
-    id: number;
-    sender: string;
-    receiver: string;
-    message: string;
-    created_at: string;
-}
 
 interface ConversationState {
     conversations: Conversation[];

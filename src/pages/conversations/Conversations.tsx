@@ -9,6 +9,8 @@ import ApiError from '../../interfaces/ApiError'
 import { AxiosError } from 'axios'
 import { subscribeToChannel, unsubscribeFromChannel } from '../../services/pusher'
 import PusherBroadcasts from '../../constants/pusher_broadcasts'
+import { getFileUrl } from '../../utils/laravel_storage'
+import Conversation from '../../interfaces/Conversation'
 
 
 
@@ -23,7 +25,7 @@ const initialMessages = [
 ]
 
 const ConversationsPage = () => {
-  const [selectedConversation, setSelectedConversation] = useState(null)
+  const [selectedConversation, setSelectedConversation] = useState<Conversation>(null)
   const [messages, setMessages] = useState([])
   const [message, setMessage] = useState('')
   const [replyTo, setReplyTo] = useState(null)
@@ -35,6 +37,7 @@ const ConversationsPage = () => {
 
   const dispatch = useAppDispatch()
   const { conversations } = useAppSelector(state => state.conversation_store)
+  const { user } = useAppSelector(state => state.auth_store)
   
 
   useEffect(() => {
@@ -159,25 +162,30 @@ const ConversationsPage = () => {
             transition={{ duration: 0.3 }}
             className="w-full md:w-80 lg:w-96 bg-white border-r border-gray-200 overflow-y-auto flex-shrink-0"
           >
-            <h1 className="text-xl font-bold text-green-800 p-4 border-b border-gray-200">Your Conversations</h1>
+            <h1 className="text-xl font-bold text-green-800 p-4 border border-gray-200">Your Conversations</h1>
             {conversations.map((conversation) => (
               <motion.div
                 key={conversation.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
-                className={`p-3 border-b border-gray-200 cursor-pointer hover:bg-gray-50 ${selectedConversation?.id === conversation.id ? 'bg-green-50' : ''}`}
+                className={`p-2 border border-gray-400 cursor-pointer hover:bg-gray-50 ${selectedConversation?.id === conversation.id ? 'bg-green-50' : ''}`}
                 onClick={() => loadConversationMessages(conversation)}
               >
                 <div className="flex items-center space-x-3">
-                  <img src={'/src/assets/images/plants/aloe-vera.png'} alt={'plant'} className="w-12 h-12 rounded-full object-cover" />
+                  <img src={getFileUrl(conversation.announce?.image)} alt={'plant'} className="w-24 h-24 rounded object-cover" />
                   <div className="flex-grow">
-                    <h2 className="text-sm font-semibold text-green-700">{'conversation.plantName'}</h2>
-                    <p className="text-xs text-gray-600">with {'conversation.ownerName'}</p>
-                    <p className="text-xs text-gray-800 mt-1 truncate">{'conversation.lastMessage'}</p>
+                    <h2 className="text-sm font-semibold text-green-700">{conversation.announce?.title}</h2>
+                    <p className="text-xs text-gray-600">with {
+                        user?.id === conversation.receiver.id ? conversation.creator.name : conversation.receiver.name
+                      }</p>
+                    <div className="flex items-center space-x-1 justify-between">
+                      <p className="text-sm text-gray-800 mt-1 truncate">{conversation.last_message}</p>
+                      <p className="text-sm text-gray-500">{conversation.last_sender_id === user?.id ? 'you' : user.id === conversation.receiver.id ? conversation.creator.name : 'you'}</p>
+                    </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-xs text-gray-500">{new Date('conversation.lastMessageDate').toLocaleString()}</p>
+                    <p className="text-xs text-gray-500">{conversation.last_sent_at}</p>
                   </div>
                 </div>
               </motion.div>
@@ -200,10 +208,10 @@ const ConversationsPage = () => {
                 </button>
               )}
               <div className="flex items-center space-x-3">
-                <img src={selectedConversation.plantImage} alt={selectedConversation.plantName} className="w-10 h-10 rounded-full object-cover" />
+                <img src={getFileUrl(selectedConversation.announce.image)} alt={selectedConversation.announce.title} className="w-10 h-10 rounded object-cover" />
                 <div>
-                  <h2 className="text-lg font-semibold text-green-800">{selectedConversation.plantName}</h2>
-                  <p className="text-sm text-gray-600">with {selectedConversation.ownerName}</p>
+                  <h2 className="text-lg font-semibold text-green-800">{selectedConversation.announce.title}</h2>
+                  <p className="text-sm text-gray-600">with {selectedConversation.announce.user.name}</p>
                 </div>
               </div>
               <button

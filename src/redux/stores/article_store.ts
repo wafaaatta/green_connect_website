@@ -13,9 +13,13 @@ const initialState: ArticleState = {
 
 export const getAllArticles = createAsyncThunk(
     'article/getAllArticles',
-    async () => {
+    async (size?: number ) => {
         try{
-            const response = await axiosHttp.get('/articles')
+            const response = await axiosHttp.get('/articles', {
+                params: {
+                    size
+                }
+            })
             return response.data
         }catch(error){
             throw ApiError.from(error as AxiosError)

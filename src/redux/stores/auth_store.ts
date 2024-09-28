@@ -50,6 +50,26 @@ export const validateToken = createAsyncThunk(
     }
 )
 
+interface UpdateUserPayload {
+    id: number
+    data: {
+        name: string
+        email: string
+    }
+}
+
+export const updateUser = createAsyncThunk(
+    'auth/updateUser',
+    async (payload: UpdateUserPayload) => {
+        try{
+            const response = await axiosHttp.post(`/users/${payload.id}?_method=PUT`, payload.data)
+            return response.data
+        }catch(error){
+            throw ApiError.from(error as AxiosError)
+        }
+    }
+)
+
 const authSlice = createSlice({
     name: 'auth',
     initialState,
@@ -89,6 +109,21 @@ const authSlice = createSlice({
                 state.token = action.payload.token
             })
             .addCase(registerUser.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.error.message || 'Something went wrong'
+            })
+
+        builder
+            .addCase(validateToken.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(validateToken.fulfilled, (state, action) => {
+                state.loading = false
+                state.isAuthenticated = true
+                state.user = action.payload
+                
+            })
+            .addCase(validateToken.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.error.message || 'Something went wrong'
             })

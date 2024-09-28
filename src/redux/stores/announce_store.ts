@@ -14,9 +14,13 @@ const initialState: AnnounceState = {
 
 export const getAllAnnounces = createAsyncThunk(
     'announce/getAllAnnounces',
-    async () => {
+    async (size?: number) => {
         try{
-            const response = await axiosHttp.get('/announces/accepted')
+            const response = await axiosHttp.get('/announces/accepted', {
+                params: {
+                    size
+                }
+            })
             return response.data
         }catch(error){
             throw ApiError.from(error as AxiosError)

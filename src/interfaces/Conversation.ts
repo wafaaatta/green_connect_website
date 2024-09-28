@@ -3,7 +3,7 @@ import User from "./User"
 
 interface Conversation {
     id: number
-    sender: User
+    creator: User
     receiver: User
     last_message: string
     last_sent_at: string
