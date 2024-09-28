@@ -1,23 +1,15 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Leaf, Users, Calendar, BookOpen, ArrowRight, MapPin, Sprout, Recycle, Sun, Mail, Phone, Send } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
+import { getAllAnnounces } from '../../redux/stores/announce_store'
+import { getFileUrl } from '../../utils/laravel_storage'
+import { getAllArticles } from '../../redux/stores/article_store'
 
 const HomePage = () => {
-  const articles = [
-    { id: 1, title: "Top 10 Low-Maintenance Houseplants", author: "Emma Green", date: "2023-05-15", image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" },
-    { id: 2, title: "The Art of Bonsai: A Beginner's Guide", author: "Alex Bonsai", date: "2023-05-10", image: "https://images.unsplash.com/photo-1512428813834-c702c7702b78?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" },
-    { id: 3, title: "Vertical Gardening: Maximizing Space", author: "Sophia Urban", date: "2023-05-05", image: "https://images.unsplash.com/photo-1522758971460-1d21eed7dc1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" },
-    {
-      id: 4, 
-      title: "The Benefits of Plants in the Workplace", 
-      author: "Mark Office", 
-      date: "2023-04-30", 
-      image: "https://images.unsplash.com/photo-1522758971460-1d21eed7dc1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80"
-    }
-  ]
 
   const events = [
     { id: 1, title: "Annual Plant Swap Meet", date: "2023-06-15", location: "Central Park, New York", image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" },
@@ -45,27 +37,15 @@ const HomePage = () => {
     }
   ]
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  })
+  const dispatch = useAppDispatch()
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }))
-  }
+  useEffect(() => {
+    dispatch(getAllAnnounces())
+    dispatch(getAllArticles())
+  }, [dispatch])
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission logic here
-    console.log('Form submitted:', formData)
-    // Reset form after submission
-    setFormData({ name: '', email: '', message: '' })
-  }
+  const {announces} = useAppSelector((state) => state.announce_store)
+  const {articles} = useAppSelector((state) => state.article_store)
 
   return (
     <div className="bg-green-50 text-gray-800">
@@ -136,7 +116,7 @@ const HomePage = () => {
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
+                className="bg-white p-4 border rounded shadow transition-shadow duration-300"
               >
                 <feature.icon size={48} className="text-green-600 mb-4" />
                 <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
@@ -152,22 +132,18 @@ const HomePage = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Community Highlights</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {posts.map((post, index) => (
+            {announces.slice(0, 4).map((post, index) => (
               <motion.div
                 key={post.id}
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-green-50 rounded-lg overflow-hidden shadow border-shadow duration-300"
+                className="bg-green-50 rounded overflow-hidden shadow border-shadow duration-300"
               >
-                <img src={post.image} alt={post.title} className="w-full h-48 object-cover" />
-                <div className="p-6">
+                <img src={getFileUrl(post.image)} alt={post.title} className="w-full h-48 object-cover" />
+                <div className="p-4">
                   <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
-                  <p className="text-gray-600 mb-4">By {post.author}</p>
-                  <div className="flex justify-between text-gray-500">
-                    <span>{post.likes} likes</span>
-                    <span>{post.comments} comments</span>
-                  </div>
+                  <p className="text-gray-600">By {post?.user?.name}</p>
                 </div>
               </motion.div>
             ))}
@@ -194,11 +170,13 @@ const HomePage = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="bg-white rounded overflow-hidden shadow border  transition-shadow duration-300"
               >
-                <img src={article.image} alt={article.title} className="w-full h-48 object-cover" />
-                <div className="p-6">
+                <img src={getFileUrl(article.image)} alt={article.title} className="w-full h-48 object-cover" />
+                <div className="p-4">
                   <h3 className="text-xl font-semibold mb-2">{article.title}</h3>
-                  <p className="text-gray-600 mb-2">By {article.author}</p>
-                  <p className="text-gray-500">{article.date}</p>
+                  <p className="text-gray-500">{article.content.substring(0, 100)}</p>
+                  <p className="text-gray-600 font-semibold">
+                    Category: {article.articleCategory?.name}
+                  </p>
                 </div>
               </motion.div>
             ))}
