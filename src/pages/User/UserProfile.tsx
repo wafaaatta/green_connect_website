@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+
 import { motion, AnimatePresence } from 'framer-motion'
-import { Mail, Heart, Edit, Calendar, Podcast, X, Plus, Image, Trash2, User, Text, FolderTree, Check, Clock } from 'lucide-react'
+import { Mail, Heart, Edit, Calendar, Podcast, X, Plus, Image, Trash2, User, Text, FolderTree, Check, Clock, MapPin } from 'lucide-react'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { Card } from '../../components/Card'
 import { DangerModal } from '../../components/DangerModal'
@@ -10,15 +10,31 @@ import Modal from '../../components/Modal'
 import TextArea from '../../components/Textarea'
 import Button from '../../components/Button'
 import Select from '../../components/Select'
-import { createAnnounce, deleteAnnounce, getUserAnnounces } from '../../redux/stores/announce_store'
+import { createAnnounce, deleteAnnounce, getUserAnnounces, updateAnnounce } from '../../redux/stores/announce_store'
 import { showNotification } from '../../redux/stores/notification_store'
 import { getFileUrl } from '../../utils/laravel_storage'
+import { useState, useEffect } from 'react'
+
+interface Announce {
+  id: number
+  title: string
+  description: string
+  category: string
+  image: string
+  city: string
+  country: string
+  postal_code: string
+  status: 'pending' | 'accepted' | 'rejected'
+  created_at: string
+}
 
 const UserProfilePage = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [isCreatePostModalOpen, setIsCreatePostModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isEditPostModalOpen, setIsEditPostModalOpen] = useState(false)
   const [postToDelete, setPostToDelete] = useState<number | null>(null)
+  const [postToEdit, setPostToEdit] = useState<Announce | null>(null)
   const [newPost, setNewPost] = useState({ 
     title: '', 
     content: '', 
@@ -27,23 +43,22 @@ const UserProfilePage = () => {
     city: '',
     country: '',
     postalCode: ''
- })
+  })
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
-
-
 
   const toggleEditModal = () => setIsEditModalOpen(!isEditModalOpen)
   const toggleCreatePostModal = () => setIsCreatePostModalOpen(!isCreatePostModalOpen)
+  const toggleEditPostModal = () => setIsEditPostModalOpen(!isEditPostModalOpen)
 
   const { user } = useAppSelector((state) => state.auth_store)
   const { announces } = useAppSelector((state) => state.announce_store)
-
 
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(getUserAnnounces())
   }, [dispatch])
+  
 
   const handleCreatePost = async () => {
     const formData = new FormData()
@@ -55,32 +70,21 @@ const UserProfilePage = () => {
     formData.append('country', newPost.country)
     formData.append('postal_code', newPost.postalCode)
 
-    await dispatch(
-      createAnnounce(formData)
-    ).unwrap()
-    .then(() => {
-      dispatch(
-        showNotification({
-          message: 'Announce created successfully!',
-          type: 'success',
-        })
-      )
-
-      setNewPost({ title: '', content: '', image: null, category: '', location: '', postalCode: '' })
-
-    }).catch((error) => {
-      console.log(error)
-
-      dispatch(
-        showNotification({
-          message: 'Announce creation failed!',
-          type: 'error',
-        })
-      )
-
-      setNewPost({ title: '', content: '', image: null, category: '', location: '', postalCode: '' })
-
-    })
+    try {
+      await dispatch(createAnnounce(formData)).unwrap()
+      dispatch(showNotification({
+        message: 'Announce created successfully!',
+        type: 'success',
+      }))
+      setNewPost({ title: '', content: '', image: null, category: '', city: '', country: '', postalCode: '' })
+      toggleCreatePostModal()
+    } catch (error) {
+      console.error(error)
+      dispatch(showNotification({
+        message: 'Announce creation failed!',
+        type: 'error',
+      }))
+    }
   }
 
   const handleDeletePost = (postId: number) => {
@@ -88,34 +92,66 @@ const UserProfilePage = () => {
     setIsDeleteModalOpen(true)
   }
 
-  const confirmDeletePost = () => {
+  const confirmDeletePost = async () => {
     if (postToDelete) {
-      dispatch(
-        deleteAnnounce(postToDelete)
-      ).unwrap()
-      .then(() => {
-        dispatch(
-          showNotification({
-            message: 'Announce deleted successfully!',
-            type: 'success',
-          })
-        )
-      }).catch((error) => {
-        console.log(error)
-
-        dispatch(
-          showNotification({
-            message: 'Announce deletion failed!',
-            type: 'error',
-          })
-        )
-      }).finally(() => {
+      try {
+        await dispatch(deleteAnnounce(postToDelete)).unwrap()
+        dispatch(showNotification({
+          message: 'Announce deleted successfully!',
+          type: 'success',
+        }))
+      } catch (error) {
+        console.error(error)
+        dispatch(showNotification({
+          message: 'Announce deletion failed!',
+          type: 'error',
+        }))
+      } finally {
         setIsDeleteModalOpen(false)
         setPostToDelete(null)
-      })
+      }
     }
   }
 
+  const handleEditPost = (post: Announce) => {
+    setPostToEdit(post)
+    setIsEditPostModalOpen(true)
+  }
+
+  const confirmEditPost = async () => {
+    if (postToEdit) {
+      try {
+        const formData = new FormData()
+        //formData.append('image', postToEdit.image as File)
+        formData.append('title', postToEdit.title)
+        formData.append('description', postToEdit.description)
+        formData.append('category', postToEdit.category)
+        formData.append('city', postToEdit.city)
+        formData.append('country', postToEdit.country)
+        formData.append('postal_code', postToEdit.postal_code)
+
+        formData.append('image', postToEdit.image as File)
+        
+      
+        await dispatch(updateAnnounce({
+          id: postToEdit.id,
+          data: formData
+        })).unwrap()
+        dispatch(showNotification({
+          message: 'Announce updated successfully!',
+          type: 'success',
+        }))
+        setIsEditPostModalOpen(false)
+        setPostToEdit(null)
+      } catch (error) {
+        console.error(error)
+        dispatch(showNotification({
+          message: 'Announce update failed!',
+          type: 'error',
+        }))
+      }
+    }
+  }
 
   return (
     <div className="p-4 max-w-7xl mx-auto">
@@ -167,31 +203,58 @@ const UserProfilePage = () => {
         <h2 className="text-2xl font-semibold mb-4">My Posts</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {announces.map((post) => (
-            <Card key={post.id} className="overflow-hidden p-0">
-              <img src={getFileUrl(post.image)} alt={post.title} className="w-full h-48 object-cover" />
-              <div className="p-4">
-                <div className="flex items-center justify-between text-sm text-gray-500">
-                  <h3 className="font-semibold text-lg">{post.title}</h3>
-                  <div className="flex items-center">
-                    {post.status === 'pending' && <Clock size={16} className="mr-1" />}
-                    {post.status === 'accepted' && <Check size={16} className="text-green-500 mr-1" />}
-                    {post.status === 'rejected' && <X size={16} className="text-red-500 mr-1" />}
-                    <span className="text-xs">{post.status}</span>
-                    <motion.button
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      onClick={() => handleDeletePost(post.id)}
-                      className="text-red-500 hover:text-red-700 ml-2"
-                    >
-                      <Trash2 size={16} />
-                    </motion.button>
+            <motion.div
+              key={post.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Card className="overflow-hidden p-0 h-full flex flex-col">
+                <img src={getFileUrl(post.image)} alt={post.title} className="w-full h-48 object-cover" />
+                <div className="p-2 flex-grow">
+                  <h3 className="font-semibold text-lg mb-2">{post.title}</h3>
+                  <p className="text-sm text-gray-600 mb-2">{post.description.substring(0, 100)}...</p>
+                  <div className="flex items-center text-sm text-gray-500 mb-2">
+                    <MapPin size={16} className="mr-1" />
+                    {post.city}, {post.country}
+                  </div>
+                  <div className="flex items-center text-sm text-gray-500 mb-2">
+                    <FolderTree size={16} className="mr-1" />
+                    {post.category}
+                  </div>
+                  <div className="flex items-center justify-between text-sm text-gray-500 mt-2">
+                    <div className="flex items-center">
+                      {post.status === 'pending' && <Clock size={16} className="mr-1" />}
+                      {post.status === 'accepted' && <Check size={16} className="text-green-500 mr-1" />}
+                      {post.status === 'rejected' && <X size={16} className="text-red-500 mr-1" />}
+                      <span className="capitalize">{post.status}</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => handleEditPost(post)}
+                        className="text-blue-500 hover:text-blue-700"
+                      >
+                        <Edit size={16} />
+                      </motion.button>
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => handleDeletePost(post.id)}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        <Trash2 size={16} />
+                      </motion.button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Card>
+              </Card>
+            </motion.div>
           ))}
         </div>
       </div>
+
       <Modal isOpen={isEditModalOpen} onClose={toggleEditModal} title="Edit Profile">
         <form className="space-y-4">
           <Input
@@ -221,103 +284,204 @@ const UserProfilePage = () => {
       </Modal>
 
       <Modal size="xl" isOpen={isCreatePostModalOpen} onClose={toggleCreatePostModal} title="Create New Post">
-      <motion.form
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        onSubmit={(e) => { e.preventDefault(); handleCreatePost(); }}
-        className="grid grid-cols-1 md:grid-cols-2 gap-4"
-      >
-        <div>
-          <Input
-            icon={Text}
-            label="Title"
-            id="title"
-            name="title"
-            placeholder="Enter post title"
-            value={newPost.title}
-            onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
-          />
-        </div>
-        <div>
-          <Input
-            icon={Text}
-            label="Country"
-            id="country"
-            name="country"
-            placeholder="Enter country"
-            value={newPost.country}
-            onChange={(e) => setNewPost({ ...newPost, country: e.target.value })}
-          />
-        </div>
-        <div>
-          <Input
-            icon={Text}
-            label="City"
-            id="city"
-            name="city"
-            placeholder="Enter city"
-            value={newPost.city}
-            onChange={(e) => setNewPost({ ...newPost, city: e.target.value })}
-          />
-        </div>
-        <div>
-          <Input
-            icon={Text}
-            label="Postal Code"
-            id="postalCode"
-            name="postalCode"
-            placeholder="Enter postal code"
-            value={newPost.postalCode}
-            onChange={(e) => setNewPost({ ...newPost, postalCode: e.target.value })}
-          />
-        </div>
-        <div className="md:col-span-2">
-          <Select 
-            icon={FolderTree}
-            label="Category"
-            placeholder="Select a category"
-            options={[
-              { value: 'Indoor Plants', label: 'Indoor Plants' },
-              { value: 'Outdoor Plants', label: 'Outdoor Plants' },
-              { value: 'Succulents & Cacti', label: 'Succulents & Cacti' },
-              { value: 'Herb Garden', label: 'Herb Garden' },
-              { value: 'Flowering Plants', label: 'Flowering Plants' },
-              { value: 'Rare & Exotic Species', label: 'Rare & Exotic Species' },
-            ]}
-            value={newPost.category}
-            onChange={(value) => setNewPost({ ...newPost, category: value as string })}
-          />
-        </div>
-        <div className="md:col-span-2">
-          <TextArea
-            icon={Text}
-            label="Content"
-            placeholder="Write something..."
-            rows={5}
-            id="content"
-            name="content"
-            value={newPost.content}
-            onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
-          />
-        </div>
-        <div className="md:col-span-2">
-          <FileUpload
-            label="Upload Image"
-            onFileSelect={(files) => setNewPost({ ...newPost, image: files[0] })}
-            acceptedFileTypes="image/*"
-          />
-        </div>
-        <div className="md:col-span-2 flex justify-end space-x-3">
-          <Button size="sm" color="gray" variant="outline" onClick={toggleCreatePostModal}>
-            Cancel
-          </Button>
-          <Button size="sm" color="green" type="submit">
-            Create Post
-          </Button>
-        </div>
-      </motion.form>
-    </Modal>
+        <motion.form
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          onSubmit={(e) => { e.preventDefault(); handleCreatePost(); }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+        >
+          <div className="md:col-span-2">
+            <Input
+              icon={Text}
+              label="Title"
+              id="title"
+              name="title"
+              placeholder="Enter post title"
+              value={newPost.title}
+              onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
+            />
+          </div>
+          <div>
+            <Input
+              icon={Text}
+              label="Country"
+              id="country"
+              name="country"
+              placeholder="Enter country"
+              value={newPost.country}
+              onChange={(e) => setNewPost({ ...newPost, country: e.target.value })}
+            />
+          </div>
+          <div>
+            <Input
+              icon={Text}
+              label="City"
+              id="city"
+              name="city"
+              placeholder="Enter city"
+              value={newPost.city}
+              onChange={(e) => setNewPost({ ...newPost, city: e.target.value })}
+            />
+          </div>
+          <div className="md:col-span-2">
+            <Input
+              icon={Text}
+              label="Postal Code"
+              id="postalCode"
+              name="postalCode"
+              placeholder="Enter postal code"
+              value={newPost.postalCode}
+              onChange={(e) => setNewPost({ ...newPost, postalCode: e.target.value })}
+            />
+          </div>
+          <div className="md:col-span-2">
+            <Select 
+              icon={FolderTree}
+              label="Category"
+              placeholder="Select a category"
+              options={[
+                { value: 'Indoor Plants', label: 'Indoor Plants' },
+                { value: 'Outdoor Plants', label: 'Outdoor Plants' },
+                { value: 'Succulents & Cacti', label: 'Succulents & Cacti' },
+                { value: 'Herb Garden', label: 'Herb Garden' },
+                { value: 'Flowering Plants', label: 'Flowering Plants' },
+                { value: 'Rare & Exotic Species', label: 'Rare & Exotic Species' },
+              ]}
+              value={newPost.category}
+              onChange={(value) => setNewPost({ ...newPost, category: value as string })}
+            />
+          </div>
+          <div className="md:col-span-2">
+            <TextArea
+              icon={Text}
+              label="Content"
+              placeholder="Write something..."
+              rows={5}
+              id="content"
+              name="content"
+              value={newPost.content}
+              onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
+            />
+          </div>
+          <div className="md:col-span-2">
+            <FileUpload
+              label="Upload Image"
+              onFileSelect={(files) => setNewPost({ ...newPost, image: files[0] })}
+              acceptedFileTypes="image/*"
+            />
+          </div>
+          <div className="md:col-span-2 flex justify-end space-x-3">
+            <Button size="sm" color="gray" variant="outline" onClick={toggleCreatePostModal}>
+              Cancel
+            </Button>
+            <Button size="sm" color="green" type="submit">
+              Create Post
+            </Button>
+          </div>
+        </motion.form>
+      </Modal>
+
+      <Modal size="xl" isOpen={isEditPostModalOpen} onClose={toggleEditPostModal} title="Edit Post">
+        {postToEdit && (
+          <motion.form
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            onSubmit={(e) => { e.preventDefault(); confirmEditPost(); }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-4"
+          >
+            <div className="md:col-span-2">
+              <Input
+                icon={Text}
+                label="Title"
+                id="editTitle"
+                name="editTitle"
+                placeholder="Enter post title"
+                value={postToEdit.title}
+                onChange={(e) => setPostToEdit({ ...postToEdit, title: e.target.value })}
+              />
+            </div>
+            <div>
+              <Input
+                icon={Text}
+                label="Country"
+                id="editCountry"
+                name="editCountry"
+                placeholder="Enter country"
+                value={postToEdit.country}
+                onChange={(e) => setPostToEdit({ ...postToEdit, country: e.target.value })}
+              />
+            </div>
+            <div>
+              <Input
+                icon={Text}
+                label="City"
+                id="editCity"
+                name="editCity"
+                placeholder="Enter city"
+                value={postToEdit.city}
+                onChange={(e) => setPostToEdit({ ...postToEdit, city: e.target.value })}
+              />
+            </div>
+            <div className="md:col-span-2">
+              <Input
+                icon={Text}
+                label="Postal Code"
+                id="editPostalCode"
+                name="editPostalCode"
+                placeholder="Enter postal code"
+                value={postToEdit.postal_code}
+                onChange={(e) => setPostToEdit({ ...postToEdit, postal_code: e.target.value })}
+              />
+            </div>
+            <div className="md:col-span-2">
+              <Select 
+                icon={FolderTree}
+                label="Category"
+                placeholder="Select a category"
+                options={[
+                  { value: 'Indoor Plants', label: 'Indoor Plants' },
+                  { value: 'Outdoor Plants', label: 'Outdoor Plants' },
+                  { value: 'Succulents & Cacti', label: 'Succulents & Cacti' },
+                  { value: 'Herb Garden', label: 'Herb Garden' },
+                  { value: 'Flowering Plants', label: 'Flowering Plants' },
+                  { value: 'Rare & Exotic Species', label: 'Rare & Exotic Species' },
+                ]}
+                value={postToEdit.category}
+                onChange={(value) => setPostToEdit({ ...postToEdit, category: value as string })}
+              />
+            </div>
+            <div className="md:col-span-2">
+              <TextArea
+                icon={Text}
+                label="Content"
+                placeholder="Write something..."
+                rows={5}
+                id="editContent"
+                name="editContent"
+                value={postToEdit.description}
+                onChange={(e) => setPostToEdit({ ...postToEdit, description: e.target.value })}
+              />
+            </div>
+            <div className="md:col-span-2">
+              <FileUpload
+                label="Upload New Image"
+                onFileSelect={(files) => setPostToEdit({ ...postToEdit, image: files[0] })}
+                acceptedFileTypes="image/*"
+              />
+            </div>
+            <div className="md:col-span-2 flex justify-end space-x-3">
+              <Button size="sm" color="gray" variant="outline" onClick={toggleEditPostModal}>
+                Cancel
+              </Button>
+              <Button size="sm" color="green" type="submit">
+                Update Post
+              </Button>
+            </div>
+          </motion.form>
+        )}
+      </Modal>
 
       <DangerModal
         isOpen={isDeleteModalOpen}

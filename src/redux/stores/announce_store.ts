@@ -61,6 +61,23 @@ export const deleteAnnounce = createAsyncThunk(
     }
 )
 
+interface UpdateAnnouncePayload {
+    id: number
+    data: FormData
+}
+
+export const updateAnnounce = createAsyncThunk(
+    'announce/updateAnnounce',
+    async (payload: UpdateAnnouncePayload) => {
+        try{
+            const response = await axiosHttp.post(`announces/${payload.id}?_method=PUT`, payload.data)
+            return response.data
+        }catch(error){
+            throw ApiError.from(error as AxiosError)
+        }
+    }
+)
+
 const announceSlice = createSlice({
     name: 'announce',
     initialState,
@@ -118,6 +135,24 @@ const announceSlice = createSlice({
                 state.announces = state.announces.filter((announce) => announce.id !== action.payload.id)
             })
             .addCase(deleteAnnounce.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.error.message || 'Something went wrong'
+            })
+
+
+            .addCase(updateAnnounce.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(updateAnnounce.fulfilled, (state, action) => {
+                state.loading = false
+                state.announces = state.announces.map((announce) => {
+                    if (announce.id === action.payload.id) {
+                        return action.payload
+                    }
+                    return announce
+                })
+            })
+            .addCase(updateAnnounce.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.error.message || 'Something went wrong'
             })
