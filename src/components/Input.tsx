@@ -10,7 +10,7 @@ const Input: React.FC<CustomInputProps> = ({ icon: Icon, label, ...props }) => {
     const ref = React.useRef<HTMLInputElement>(null);
 
   return (
-    <div className="mb-4">
+    <div>
       <label htmlFor={props.id || props.name} className="block text-sm font-medium text-gray-700 mb-1">
         {label}
       </label>
