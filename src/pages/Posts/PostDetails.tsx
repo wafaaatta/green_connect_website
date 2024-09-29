@@ -72,16 +72,15 @@ export default function PostDetails() {
         className="bg-white rounded border shadow overflow-hidden"
       >
         <img 
-          src={getFileUrl(currentAnnounce?.image as string)} 
+          src={'/src/assets/images/plants/bonsai.png'} 
           alt={currentAnnounce?.title} 
-          className="w-full h-96 object-cover"
+          className="w-full h-96 "
           style={{
+            aspectRatio: '16/9',
             objectFit: 'cover',
             objectPosition: 'center',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
-          }} 
+            width: '100%',
+          }}
         />
         <div className="p-6">
           <div className="flex justify-between items-start mb-4">

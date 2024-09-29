@@ -18,8 +18,8 @@ const HomePage = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(getAllAnnounces(3))
-    dispatch(getAllArticles(3))
+    dispatch(getAllAnnounces(4))
+    dispatch(getAllArticles(4))
     dispatch(getAllEvents(4))
   }, [dispatch])
 
