@@ -16,6 +16,7 @@
     "axios": "^1.7.7",
     "framer-motion": "^11.3.29",
     "leaflet": "^1.9.4",
+    "lodash": "^4.17.21",
     "lucide-react": "^0.429.0",
     "moment": "^2.30.1",
     "pusher-js": "^8.4.0-rc2",
@@ -29,6 +30,7 @@
     "redux-persist": "^6.0.0"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.9",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.15.0",

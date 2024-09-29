@@ -9,6 +9,8 @@ import { createConversation } from '../../redux/stores/conversation_store'
 import { unwrapResult } from '@reduxjs/toolkit'
 import { getFileUrl } from '../../utils/laravel_storage'
 import moment from 'moment'
+import { AutocompleteInput } from '../../components/AutoComplete'
+import cities from '../../constants/mapped_france_cities'
 
 interface Post {
   id: number
@@ -117,7 +119,7 @@ export default function PostDetails() {
 
           <div className="mb-6">
             <h3 className="text-xl font-semibold mb-2">Location</h3>
-            <ContactMap />
+            <ContactMap city='lyon' country='france'  />
           </div>
 
 

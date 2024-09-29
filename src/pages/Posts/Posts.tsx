@@ -87,7 +87,12 @@ const PostsPage: React.FC = () => {
                 onChange={(value) => setCategoryFilter(value as string)}
                 options={[
                   { value: 'all', label: 'All Categories' },
-                  ...categories.map(cat => ({ value: cat, label: cat }))
+                  { value: 'Indoor Plants', label: 'Indoor Plants' },
+                  { value: 'Outdoor Plants', label: 'Outdoor Plants' },
+                  { value: 'Succulents & Cacti', label: 'Succulents & Cacti' },
+                  { value: 'Herb Garden', label: 'Herb Garden' },
+                  { value: 'Flowering Plants', label: 'Flowering Plants' },
+                  { value: 'Rare & Exotic Species', label: 'Rare & Exotic Species' },
                 ]}
                 className="bg-white border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
               />

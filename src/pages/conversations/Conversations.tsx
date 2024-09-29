@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, Send, Paperclip, MapPin, Calendar, Heart, Flag, X, Copy, Reply, Trash, Menu } from 'lucide-react'
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api'
+import { ChevronLeft, Send, Paperclip, MapPin, Calendar, X, Copy, Reply, Trash, Menu, SignpostIcon, Image as ImageIcon, Text } from 'lucide-react'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { getAllConversations } from '../../redux/stores/conversation_store'
 import axiosHttp from '../../utils/axios_client'
@@ -11,66 +10,90 @@ import { subscribeToChannel, unsubscribeFromChannel } from '../../services/pushe
 import PusherBroadcasts from '../../constants/pusher_broadcasts'
 import { getFileUrl } from '../../utils/laravel_storage'
 import Conversation from '../../interfaces/Conversation'
+import moment from 'moment'
+import Message from '../../interfaces/Message'
+import ContactMap from '../Posts/ContactMap'
+import { Tooltip } from 'react-leaflet'
+import Button from '../../components/Button'
+import Input from '../../components/Input'
 
-
-
-const initialMessages = [
-  { id: 1, sender: 'You', content: 'Hi Alice, I\'m interested in your Monstera Deliciosa. Is it still available?', timestamp: '2023-06-20T14:30:00Z' },
-  { id: 2, sender: 'Alice Green', content: 'Hello! Yes, it\'s still available. Would you like to come see it?', timestamp: '2023-06-20T14:35:00Z' },
-  { id: 3, sender: 'You', content: 'That would be great! When would be a good time?', timestamp: '2023-06-20T14:40:00Z' },
-  { id: 4, sender: 'Alice Green', content: 'How about tomorrow afternoon around 3 PM?', timestamp: '2023-06-20T14:45:00Z' },
-  { id: 5, sender: 'You', content: 'Perfect! I\'ll be there. Can you send me a picture of the plant\'s current condition?', timestamp: '2023-06-20T14:50:00Z' },
-  { id: 6, sender: 'Alice Green', content: 'Of course! Here\'s a recent photo:', timestamp: '2023-06-20T14:55:00Z', image: '/src/assets/images/plants/string-of-pearls.png' },
-  { id: 7, sender: 'You', content: 'Wow, it looks beautiful! I\'m excited to see it in person.', timestamp: '2023-06-20T15:00:00Z' },
-]
-
-const ConversationsPage = () => {
-  const [selectedConversation, setSelectedConversation] = useState<Conversation>(null)
-  const [messages, setMessages] = useState([])
+const ConversationsPage: React.FC = () => {
+  const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null)
+  const [messages, setMessages] = useState<Message[]>([])
   const [message, setMessage] = useState('')
-  const [replyTo, setReplyTo] = useState(null)
+  const [replyTo, setReplyTo] = useState<Message | null>(null)
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
   const [isConversationListOpen, setIsConversationListOpen] = useState(true)
   const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0, messageId: null })
-  const chatContainerRef = useRef(null)
-  const inputRef = useRef(null)
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const chatContainerRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const dispatch = useAppDispatch()
   const { conversations } = useAppSelector(state => state.conversation_store)
   const { user } = useAppSelector(state => state.auth_store)
-  
 
   useEffect(() => {
-    dispatch(
-        getAllConversations()
-    )
+    dispatch(getAllConversations())
   }, [dispatch])
 
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: "YOUR_GOOGLE_MAPS_API_KEY"
-  })
+  const [uploadedImage, setUploadedImage] = useState<File | null>(null)
 
-  const handleSendMessage = (e: React.FormEvent) => {
+
+  const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (message.trim()) {
-      const newMessage = {
-        id: messages.length + 1,
-        sender: 'You',
-        content: message,
-        timestamp: new Date().toISOString(),
-        replyTo: replyTo,
+    if (!selectedConversation) return
+
+    try {
+      const formData = new FormData()
+      formData.append('conversation_id', selectedConversation.id.toString())
+      formData.append('content', message)
+      formData.append('type', uploadedImage ? 'image' : 'text')
+
+      if (uploadedImage) {
+        formData.append('image', uploadedImage as File)
       }
-      setMessages([...messages, newMessage])
+
+      await axiosHttp.post(`messages`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      })
+
       setMessage('')
-      setReplyTo(null)
+      setImagePreview(null)
+      inputRef.current?.focus()
+    } catch (error) {
+      console.error(ApiError.from(error as AxiosError))
     }
   }
 
+  useEffect(() => {
+    const channel = PusherBroadcasts.channels.message_creation
+    const event = PusherBroadcasts.events.messages.created
+
+    subscribeToChannel(channel, event, (data: { message: Message }) => {
+      console.log(data);
+      
+      if (data.message.conversation_id == selectedConversation?.id) {
+        setMessages(prevMessages => [...prevMessages, data.message])
+      }
+    })
+
+    return () => {
+      unsubscribeFromChannel(channel)
+    }
+  }, [selectedConversation])
+
+
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files[0]
+    const file = e.target.files?.[0]
     if (file) {
-      console.log('Uploading file:', file.name)
+      setUploadedImage(file)
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string)
+      }
+      reader.readAsDataURL(file)
     }
   }
 
@@ -100,7 +123,7 @@ const ConversationsPage = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (contextMenu.visible && !event.target.closest('.context-menu')) {
+      if (contextMenu.visible && !(event.target as Element).closest('.context-menu')) {
         setContextMenu({ ...contextMenu, visible: false })
       }
     }
@@ -118,40 +141,33 @@ const ConversationsPage = () => {
   }, [messages])
 
   const isMobile = () => {
-    if (typeof window !== 'undefined') {
-      return window.innerWidth < 768
-    }
-    return false
+    return window.innerWidth < 768
   }
 
   useEffect(() => {
-    subscribeToChannel(
-      PusherBroadcasts.channels.conversations, 
-      PusherBroadcasts.events.conversations.created, 
-      (data: unknown) => {
-        dispatch(getAllConversations())
-        
-      })
+    const channel = PusherBroadcasts.channels.conversations
+    const event = PusherBroadcasts.events.conversations.created
 
-    return () => unsubscribeFromChannel(PusherBroadcasts.channels.conversations)
-  }, [])
+    subscribeToChannel(channel, event, () => {
+      dispatch(getAllConversations())
+    })
 
+    return () => unsubscribeFromChannel(channel)
+  }, [dispatch])
 
-  const loadConversationMessages = async (conversation) => {
+  const loadConversationMessages = async (conversation: Conversation) => {
     setSelectedConversation(conversation)
     setMessages([])
-    try{
-        const response = await axiosHttp.get(`/conversations/${conversation.id}/messages`)
-        console.log(response.data);
-        setMessages(response.data)
-        
-    }catch(error){
-      throw ApiError.from(error as AxiosError)
+    try {
+      const response = await axiosHttp.get(`/conversations/${conversation.id}/messages`)
+      setMessages(response.data)
+    } catch (error) {
+      console.error(ApiError.from(error as AxiosError))
     }
   }
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex flex-col md:flex-row h-[calc(100vh-112px)] bg-gray-100">
       {/* Conversation list */}
       <AnimatePresence>
         {(isConversationListOpen || !isMobile()) && (
@@ -162,30 +178,25 @@ const ConversationsPage = () => {
             transition={{ duration: 0.3 }}
             className="w-full md:w-80 lg:w-96 bg-white border-r border-gray-200 overflow-y-auto flex-shrink-0"
           >
-            <h1 className="text-xl font-bold text-green-800 p-4 border border-gray-200">Your Conversations</h1>
+            <h1 className="text-xl font-bold text-green-800 p-4 border-b border-gray-200">Your Conversations</h1>
             {conversations.map((conversation) => (
               <motion.div
                 key={conversation.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
-                className={`p-2 border border-gray-400 cursor-pointer hover:bg-gray-50 ${selectedConversation?.id === conversation.id ? 'bg-green-50' : ''}`}
+                className={`p-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 ${selectedConversation?.id === conversation.id ? 'bg-green-50' : ''}`}
                 onClick={() => loadConversationMessages(conversation)}
               >
                 <div className="flex items-center space-x-3">
-                  <img src={getFileUrl(conversation.announce?.image)} alt={'plant'} className="w-24 h-24 rounded object-cover" />
+                  <img src={getFileUrl(conversation.announce?.image)} alt={conversation.announce?.title} className="w-16 h-16 rounded-full object-cover" />
                   <div className="flex-grow">
                     <h2 className="text-sm font-semibold text-green-700">{conversation.announce?.title}</h2>
-                    <p className="text-xs text-gray-600">with {
-                        user?.id === conversation.receiver.id ? conversation.creator.name : conversation.receiver.name
-                      }</p>
-                    <div className="flex items-center space-x-1 justify-between">
-                      <p className="text-sm text-gray-800 mt-1 truncate">{conversation.last_message}</p>
-                      <p className="text-sm text-gray-500">{conversation.last_sender_id === user?.id ? 'you' : user.id === conversation.receiver.id ? conversation.creator.name : 'you'}</p>
-                    </div>
+                    <p className="text-xs text-gray-600">with {user?.id === conversation.receiver?.id ? conversation.creator?.name : conversation.receiver?.name}</p>
+                    <p className="text-sm text-gray-800 mt-1 truncate">{conversation.last_message}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-xs text-gray-500">{conversation.last_sent_at}</p>
+                    <p className="text-xs text-gray-500">{conversation.last_sent_at && moment(conversation.last_sent_at).fromNow()}</p>
                   </div>
                 </div>
               </motion.div>
@@ -200,90 +211,114 @@ const ConversationsPage = () => {
           <>
             <div className="bg-white p-3 border-b border-gray-200 flex items-center justify-between">
               {isMobile() && (
-                <button
+                <Button
+                  variant="ghost"
                   onClick={() => setIsConversationListOpen(true)}
-                  className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
                 >
-                  <ChevronLeft className="h-6 w-6 text-gray-600" />
-                </button>
+                  <ChevronLeft className="h-6 w-6" />
+                </Button>
               )}
               <div className="flex items-center space-x-3">
-                <img src={getFileUrl(selectedConversation.announce.image)} alt={selectedConversation.announce.title} className="w-10 h-10 rounded object-cover" />
+                <img src={getFileUrl(selectedConversation.announce.image)} alt={selectedConversation.announce.title} className="w-10 h-10 rounded-full object-cover" />
                 <div>
                   <h2 className="text-lg font-semibold text-green-800">{selectedConversation.announce.title}</h2>
-                  <p className="text-sm text-gray-600">with {selectedConversation.announce.user.name}</p>
+                  <p className="text-sm text-gray-600">with {user?.id == selectedConversation.creator.id ? selectedConversation.receiver.name : selectedConversation.creator.name}</p>
                 </div>
               </div>
-              <button
+              <Button
+                variant="ghost"
                 onClick={() => setIsSideMenuOpen(!isSideMenuOpen)}
-                className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
               >
-                {isSideMenuOpen ? <X className="h-6 w-6 text-gray-600" /> : <Menu className="h-6 w-6 text-gray-600" />}
-              </button>
+                {isSideMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </Button>
             </div>
-            <div ref={chatContainerRef} className="flex-grow overflow-y-auto custom-scroll p-4 space-y-4">
-              {messages.map((msg) => (
+            <div ref={chatContainerRef} className="flex-grow overflow-y-auto p-4 space-y-4">
+              {messages.map((msg: Message) => (
                 <motion.div
                   key={msg.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
-                  className={`flex ${msg.sender === 'You' ? 'justify-end' : 'justify-start'}`}
+                  className={`flex ${msg.sender_id != user?.id ? 'justify-end' : 'justify-start'}`}
                   onContextMenu={(e) => handleContextMenu(e, msg.id)}
                 >
-                  <div className={`max-w-[70%] p-3 rounded-lg ${msg.sender === 'You' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}`}>
-                    {msg.replyTo && (
+                  <div className={`max-w-[70%] p-3 rounded-lg ${msg.sender_id == user?.id ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}`}>
+                    {msg.reply_message && (
                       <div className="bg-gray-200 p-2 rounded mb-2 text-xs">
-                        <p className="font-semibold">{msg.replyTo.sender}</p>
-                        <p>{msg.replyTo.content}</p>
+                        <p className="font-semibold">{msg.reply_message.sender == selectedConversation.creator.id ? selectedConversation.creator.name : selectedConversation.receiver.name}</p>
+                        <p>{msg.reply_message.content}</p>
                       </div>
                     )}
-                    <p className="font-semibold text-sm">{msg.sender}</p>
-                    {msg.image ? (
-                      <img src={msg.image} alt="Plant" className="w-full h-auto rounded-lg mt-2 mb-2" />
+                    <p className="font-semibold text-sm">{msg.sender_id == user?.id ? 'You' : msg.sender_id == selectedConversation.creator.id ? selectedConversation.creator.name : selectedConversation.receiver.name}</p>
+                    {msg.message_type == 'image' ? (
+                      <img src={getFileUrl(msg.image_url)} alt="Uploaded" className="w-full h-auto rounded-lg mt-2 mb-2" />
                     ) : (
                       <p className="text-sm">{msg.content}</p>
                     )}
-                    <p className="text-xs text-gray-500 mt-1">{new Date(msg.timestamp).toLocaleString()}</p>
+                    <p className="text-xs text-gray-500 mt-1">{moment(msg.created_at).format('hh:mm A')}</p>
                   </div>
                 </motion.div>
               ))}
             </div>
-            <form onSubmit={handleSendMessage} className="bg-white p-4 border-t border-gray-200 flex flex-col space-y-2">
+            <form onSubmit={handleSendMessage} className="bg-white p-3 border-t border-gray-200">
               {replyTo && (
-                <div className="flex items-center justify-between bg-gray-100 p-2 rounded">
+                <div className="flex items-center justify-between bg-gray-100 p-2 rounded mb-2">
                   <div className="flex items-center">
                     <Reply size={16} className="mr-2 text-gray-600" />
                     <span className="text-sm text-gray-600">{replyTo.content}</span>
                   </div>
-                  <button onClick={() => setReplyTo(null)} className="text-gray-600 hover:text-gray-800">
+                  <Button variant="ghost" onClick={() => setReplyTo(null)}>
                     <X size={16} />
-                  </button>
+                  </Button>
                 </div>
               )}
-              <div className="flex items-center space-x-2">
-                <input
+              {imagePreview && (
+                <div className="relative mb-2">
+                  <img src={imagePreview} alt="Preview" className="w-20 h-20 object-cover rounded" />
+                  <Button
+                    variant="outline"
+                    className="absolute top-0 right-0"
+                    onClick={() => setImagePreview(null)}
+                  >
+                    <X size={16} />
+                  </Button>
+                </div>
+              )}
+              <div className="flex items-center space-x-2 w-full">
+                <div className="w-full">
+                <Input
+                icon={Text}
                   type="text"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Type your message..."
-                  className="flex-grow p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                   ref={inputRef}
                 />
-                <label htmlFor="file-upload" className="cursor-pointer">
-                  <Paperclip size={20} className="text-gray-500 hover:text-green-600" />
-                  <input id="file-upload" type="file" className="hidden" onChange={handleFileUpload} />
-                </label>
-                <button type="submit" className="bg-green-600 text-white p-2 rounded-lg hover:bg-green-700 transition-colors duration-300">
+                </div>
+                  <Button
+                    variant="outline"
+                    size='md'
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <ImageIcon size={20} />
+                  </Button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleFileUpload}
+                />
+                <Button type="submit" size='md'>
                   <Send size={20} />
-                </button>
+                </Button>
               </div>
             </form>
           </>
         ) : (
           <div className="flex-grow flex items-center justify-center bg-gray-50">
             <div className="text-center">
-              <img src="/src/assets/images/plants/default-plant.png" alt="Default Plant" className="w-32 h-32 mx-auto mb-4" />
+              <img src="/src/assets/green_connect.png" alt="Default Plant" className=" h-32 mx-auto mb-4" />
               <h2 className="text-2xl font-semibold text-gray-700 mb-2">No conversation selected</h2>
               <p className="text-gray-500">Choose a conversation from the list to start chatting</p>
             </div>
@@ -303,43 +338,38 @@ const ConversationsPage = () => {
           >
             <div className="p-4 overflow-y-auto h-full">
               {isMobile() && (
-                <button
+                <Button
+                  variant="ghost"
+                  className="absolute top-4 left-4"
                   onClick={() => setIsSideMenuOpen(false)}
-                  className="absolute top-4 left-4 p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
                 >
-                  <ChevronLeft className="h-6 w-6 text-gray-600" />
-                </button>
+                  <ChevronLeft className="h-6 w-6" />
+                </Button>
               )}
               <h3 className="text-lg font-semibold mb-4 text-center">Plant Details</h3>
-              <img src={selectedConversation.plantImage} alt={selectedConversation.plantName} className="w-full h-48 object-cover rounded-lg mb-4" />
-              <h4 className="font-semibold text-center">{selectedConversation.plantName}</h4>
-              <p className="text-sm text-gray-600 mb-4 text-center">Owner: {selectedConversation.ownerName}</p>
+              <img src={getFileUrl(selectedConversation.announce.image)} alt={selectedConversation.announce.title} className="w-full h-48 object-cover rounded-lg mb-4" />
+              <h4 className="font-semibold text-center">{selectedConversation.announce.title}</h4>
+              <p className="text-sm text-gray-600 mb-4 text-center">Owner: {selectedConversation.receiver.name}</p>
               <div className="mb-4 h-48 rounded-lg overflow-hidden">
-                {isLoaded ? (
-                  <GoogleMap
-                    mapContainerStyle={{ width: '100%', height: '100%' }}
-                    center={{ lat: 40.7128, lng: -74.0060 }}
-                    zoom={10}
-                  >
-                    <Marker position={{ lat: 40.7128, lng: -74.0060 }} />
-                  </GoogleMap>
-                ) : (
-                  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                    <p>Loading map...</p>
-                  </div>
-                )}
+                <ContactMap 
+                  city={'paris'}
+                  country={'france'}
+                />
               </div>
               <div className="space-y-2 mb-4">
                 <div className="flex items-center">
                   <MapPin size={16} className="mr-2 text-green-600" />
-                  <span className="text-sm">New York, NY</span>
+                  <span className="text-sm">{selectedConversation.announce.city}, {selectedConversation.announce.country}</span>
+                </div>
+                <div className="flex items-center">
+                  <SignpostIcon size={16} className="mr-2 text-green-600" />
+                  <span className="text-sm">{selectedConversation.announce.postal_code}</span>
                 </div>
                 <div className="flex items-center">
                   <Calendar size={16} className="mr-2 text-green-600" />
-                  <span className="text-sm">Posted on June 15, 2023</span>
+                  <span className="text-sm">{moment(selectedConversation.announce.created_at).format('DD MMM YYYY')}</span>
                 </div>
               </div>
-             
             </div>
           </motion.div>
         )}
