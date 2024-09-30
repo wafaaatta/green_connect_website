@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { FaLeaf, FaHandshake, FaUserShield, FaBalanceScale, FaSeedling, FaRecycle, FaGlobeAmericas, FaTree, FaShieldAlt, FaUserFriends, FaLock, FaExclamationTriangle } from 'react-icons/fa'
+import { FaLeaf, FaHandshake, FaUserShield, FaBalanceScale, FaSeedling, FaRecycle, FaGlobeAmericas, FaTree, FaShieldAlt } from 'react-icons/fa'
 
 const PolicyPage: React.FC = () => {
   return (

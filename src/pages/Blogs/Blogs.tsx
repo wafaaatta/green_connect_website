@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Calendar, ArrowRight, User, Eye } from 'lucide-react'
+import { Search, Calendar } from 'lucide-react'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { getAllArticles } from '../../redux/stores/article_store'
 import { Card } from '../../components/Card'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
-import Badge from '../../components/Badge'
+import { IconType } from 'react-icons'
 
 const ITEMS_PER_PAGE = 12
 
@@ -50,7 +50,7 @@ const ArticlesPage: React.FC = () => {
           <h1 className="text-3xl font-bold text-green-800">Green Connect Articles</h1>
           <div className="w-full md:w-64">
             <Input
-              icon={Search}
+              icon={Search as IconType}
               placeholder="Search articles..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -89,8 +89,8 @@ const ArticlesPage: React.FC = () => {
                       <span>{new Date(article.created_at).toLocaleDateString()}</span>
                     </div>
                     <div className="flex items-center mb-2 text-green-600">
-                      
-                      <span>{article.article_category.name}</span>
+
+                      <span>{article.articleCategory.name}</span>
                     </div>
                     <div className="flex items-center justify-between mt-2">
                       

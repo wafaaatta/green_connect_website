@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { EyeIcon, EyeOffIcon, Leaf, Mail, Lock, User, Home } from 'lucide-react'
+import { EyeIcon, EyeOffIcon, Mail, Lock, User } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import AppImages from '../../constants/app_images'
 import { useAppDispatch } from '../../hooks/hooks'

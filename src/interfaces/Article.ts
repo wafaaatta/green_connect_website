@@ -7,6 +7,7 @@ interface Article {
     image: string
     views: number
     articleCategory: ArticleCategory
+    created_at: string
 }
 
 export default Article

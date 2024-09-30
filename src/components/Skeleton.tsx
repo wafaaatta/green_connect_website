@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Utility function to create a skeleton element
-export const SkeletonElement = ({ className }) => (
+export const SkeletonElement = ({ className }: { className: string }) => (
   <div className={`animate-pulse bg-gray-200 rounded ${className}`} />
 );
 

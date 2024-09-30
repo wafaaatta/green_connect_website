@@ -48,7 +48,7 @@ const conversationSlice = createSlice({
         builder.addCase(getAllConversations.fulfilled, (state, action) => {
             state.conversations = action.payload
         })
-        .addCase(getAllConversations.rejected, (state, action) => {
+        .addCase(getAllConversations.rejected, (state) => {
             state.conversations = []
         })
         .addCase(getAllConversations.pending, (state) => {
@@ -58,7 +58,7 @@ const conversationSlice = createSlice({
         .addCase(createConversation.fulfilled, (state, action) => {
             state.conversations.push(action.payload)
         })
-        .addCase(createConversation.rejected, (state, action) => {
+        .addCase(createConversation.rejected, (state) => {
             state.conversations = []
         })
         .addCase(createConversation.pending, (state) => {

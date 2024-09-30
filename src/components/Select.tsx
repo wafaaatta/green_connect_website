@@ -4,7 +4,7 @@ import { FiChevronDown, FiChevronUp } from 'react-icons/fi'
 
 interface CustomSelectProps {
   icon: IconType
-  label: string
+  label?: string
   options: { value: string; label: string }[]
   value: string | string[]
   onChange: (value: string | string[]) => void

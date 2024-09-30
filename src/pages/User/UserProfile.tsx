@@ -1,6 +1,6 @@
 
-import { motion, AnimatePresence } from 'framer-motion'
-import { Mail, Heart, Edit, Calendar, Podcast, X, Plus, Image, Trash2, User, Text, FolderTree, Check, Clock, MapPin, Phone, LocateFixedIcon } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { Mail, Edit, Calendar, Podcast, X, Plus, Trash2, User, Text, FolderTree, Check, Clock, MapPin, LocateFixedIcon } from 'lucide-react'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { Card } from '../../components/Card'
 import { DangerModal } from '../../components/DangerModal'
@@ -15,19 +15,8 @@ import { showNotification } from '../../redux/stores/notification_store'
 import { getFileUrl } from '../../utils/laravel_storage'
 import { useState, useEffect } from 'react'
 import { updateUser } from '../../redux/stores/auth_store'
-
-interface Announce {
-  id: number
-  title: string
-  description: string
-  category: string
-  image: string
-  city: string
-  country: string
-  postal_code: string
-  status: 'pending' | 'accepted' | 'rejected'
-  created_at: string
-}
+import Announce from '../../interfaces/Announce'
+import { IconType } from 'react-icons'
 
 const UserProfilePage = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
@@ -45,7 +34,6 @@ const UserProfilePage = () => {
     country: '',
     postalCode: ''
   })
-  const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
 
   const toggleEditModal = () => setIsEditModalOpen(!isEditModalOpen)
   const toggleCreatePostModal = () => setIsCreatePostModalOpen(!isCreatePostModalOpen)
@@ -63,10 +51,10 @@ const UserProfilePage = () => {
   const [name, setName] = useState(user?.name)
   const [email, setEmail] = useState(user?.email)
 
-  const handleUpdateUser = async (e) => {
+  const handleUpdateUser = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      await dispatch(updateUser({ id: user!.id, data: { name, email } })).unwrap()
+      await dispatch(updateUser({ id: user!.id, data: { name: name as string, email: email as string } })).unwrap()
       dispatch(showNotification({
         message: 'User updated successfully!',
         type: 'success',
@@ -146,12 +134,12 @@ const UserProfilePage = () => {
         //formData.append('image', postToEdit.image as File)
         formData.append('title', postToEdit.title)
         formData.append('description', postToEdit.description)
-        formData.append('category', postToEdit.category)
+        formData.append('category', postToEdit.article_category)
         formData.append('city', postToEdit.city)
         formData.append('country', postToEdit.country)
         formData.append('postal_code', postToEdit.postal_code)
 
-        formData.append('image', postToEdit.image as File)
+        formData.append('image', postToEdit.image as unknown as File)
         
       
         await dispatch(updateAnnounce({
@@ -200,7 +188,7 @@ const UserProfilePage = () => {
             </motion.button>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div className="flex flex-col space-y-4 mb-4">
           <div className="flex items-center text-gray-600">
             <Mail size={20} className="mr-2" />
             {user?.email}
@@ -213,12 +201,6 @@ const UserProfilePage = () => {
           <Podcast size={20} className="mr-2" /> {announces.length} posts
         </div>
       </Card>
-
-      {message && (
-        <div className={`mb-4 p-4 rounded ${message.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-          {message.text}
-        </div>
-      )}
 
       <div className="mt-8">
         <h2 className="text-2xl font-semibold mb-4">My Posts</h2>
@@ -245,7 +227,7 @@ const UserProfilePage = () => {
                   </div>
                   <div className="flex items-center text-sm text-gray-500 mb-2">
                     <FolderTree size={16} className="mr-1" />
-                    {post.category}
+                    {post.article_category}
                   </div>
                   <div className="flex items-center justify-between text-sm text-gray-500 mt-2">
                     <div className="flex items-center">
@@ -283,7 +265,7 @@ const UserProfilePage = () => {
       <Modal isOpen={isEditModalOpen} onClose={toggleEditModal} title="Edit Profile">
         <form className="space-y-4" onSubmit={handleUpdateUser}>
           <Input
-            icon={User}
+            icon={User as IconType}
             label="Name"
             id="name"
             name="name"
@@ -292,7 +274,7 @@ const UserProfilePage = () => {
             placeholder='Enter your name'
           />
           <Input
-            icon={Mail}
+            icon={Mail as IconType}
             label="Email"
             id="email"
             name="email"
@@ -322,7 +304,7 @@ const UserProfilePage = () => {
         >
           <div className="md:col-span-2">
             <Input
-              icon={Text}
+              icon={Text as IconType}
               label="Title"
               id="title"
               name="title"
@@ -333,7 +315,7 @@ const UserProfilePage = () => {
           </div>
           <div>
             <Input
-              icon={Text}
+              icon={Text as IconType}
               label="Country"
               id="country"
               name="country"
@@ -344,7 +326,7 @@ const UserProfilePage = () => {
           </div>
           <div>
             <Input
-              icon={Text}
+              icon={Text as IconType}
               label="City"
               id="city"
               name="city"
@@ -355,7 +337,7 @@ const UserProfilePage = () => {
           </div>
           <div className="md:col-span-2">
             <Input
-              icon={Text}
+              icon={Text as IconType}
               label="Postal Code"
               id="postalCode"
               name="postalCode"
@@ -366,7 +348,7 @@ const UserProfilePage = () => {
           </div>
           <div className="md:col-span-2">
             <Select 
-              icon={FolderTree}
+              icon={FolderTree as IconType}
               label="Category"
               placeholder="Select a category"
               options={[
@@ -383,7 +365,7 @@ const UserProfilePage = () => {
           </div>
           <div className="md:col-span-2">
             <TextArea
-              icon={Text}
+              icon={Text as IconType}
               label="Content"
               placeholder="Write something..."
               rows={5}
@@ -395,9 +377,10 @@ const UserProfilePage = () => {
           </div>
           <div className="md:col-span-2">
             <FileUpload
-              label="Upload Image"
+            
               onFileSelect={(files) => setNewPost({ ...newPost, image: files[0] })}
-              acceptedFileTypes="image/*"
+              acceptedFileTypes="image/*" 
+              mode={'single'}            
             />
           </div>
           <div className="md:col-span-2 flex justify-end space-x-3">
@@ -422,7 +405,7 @@ const UserProfilePage = () => {
           >
             <div className="md:col-span-2">
               <Input
-                icon={Text}
+                icon={Text as IconType}
                 label="Title"
                 id="editTitle"
                 name="editTitle"
@@ -433,7 +416,7 @@ const UserProfilePage = () => {
             </div>
             <div>
               <Input
-                icon={Text}
+                icon={Text as IconType}
                 label="Country"
                 id="editCountry"
                 name="editCountry"
@@ -444,7 +427,7 @@ const UserProfilePage = () => {
             </div>
             <div>
               <Input
-                icon={Text}
+                icon={Text as IconType}
                 label="City"
                 id="editCity"
                 name="editCity"
@@ -455,7 +438,7 @@ const UserProfilePage = () => {
             </div>
             <div className="md:col-span-2">
               <Input
-                icon={Text}
+                icon={Text as IconType}
                 label="Postal Code"
                 id="editPostalCode"
                 name="editPostalCode"
@@ -466,7 +449,7 @@ const UserProfilePage = () => {
             </div>
             <div className="md:col-span-2">
               <Select 
-                icon={FolderTree}
+                icon={FolderTree as IconType}
                 label="Category"
                 placeholder="Select a category"
                 options={[
@@ -477,13 +460,13 @@ const UserProfilePage = () => {
                   { value: 'Flowering Plants', label: 'Flowering Plants' },
                   { value: 'Rare & Exotic Species', label: 'Rare & Exotic Species' },
                 ]}
-                value={postToEdit.category}
-                onChange={(value) => setPostToEdit({ ...postToEdit, category: value as string })}
+                value={postToEdit.article_category}
+                onChange={(value) => console.log(value)}
               />
             </div>
             <div className="md:col-span-2">
               <TextArea
-                icon={Text}
+                icon={Text as IconType}
                 label="Content"
                 placeholder="Write something..."
                 rows={5}
@@ -495,8 +478,8 @@ const UserProfilePage = () => {
             </div>
             <div className="md:col-span-2">
               <FileUpload
-                label="Upload New Image"
-                onFileSelect={(files) => setPostToEdit({ ...postToEdit, image: files[0] })}
+                mode='single'
+                onFileSelect={(files) => console.log(files)}
                 acceptedFileTypes="image/*"
               />
             </div>

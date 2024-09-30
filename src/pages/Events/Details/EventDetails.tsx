@@ -1,6 +1,5 @@
-import React from 'react'
 import { motion } from 'framer-motion'
-import { Calendar, Clock, MapPin, Users, Leaf, DollarSign, Share2 } from 'lucide-react'
+import { Calendar, Clock, MapPin, Leaf, DollarSign, Share2 } from 'lucide-react'
 import AppImages from '../../../constants/app_images'
 
 const EventDetailsPage = () => {

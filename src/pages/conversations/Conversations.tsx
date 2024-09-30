@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, Send, Paperclip, MapPin, Calendar, X, Copy, Reply, Trash, Menu, SignpostIcon, Image as ImageIcon, Text } from 'lucide-react'
+import { ChevronLeft, Send, MapPin, Calendar, X, Copy, Reply, Trash, Menu, SignpostIcon, Image as ImageIcon, Text } from 'lucide-react'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { getAllConversations } from '../../redux/stores/conversation_store'
 import axiosHttp from '../../utils/axios_client'
@@ -13,9 +13,9 @@ import Conversation from '../../interfaces/Conversation'
 import moment from 'moment'
 import Message from '../../interfaces/Message'
 import ContactMap from '../Posts/ContactMap'
-import { Tooltip } from 'react-leaflet'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
+import { IconType } from 'react-icons'
 
 const ConversationsPage: React.FC = () => {
   const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null)
@@ -24,7 +24,12 @@ const ConversationsPage: React.FC = () => {
   const [replyTo, setReplyTo] = useState<Message | null>(null)
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
   const [isConversationListOpen, setIsConversationListOpen] = useState(true)
-  const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0, messageId: null })
+  const [contextMenu, setContextMenu] = useState<{
+    visible: boolean
+    x: number
+    y: number
+    messageId: number | null
+  }>({ visible: false, x: 0, y: 0, messageId: 0 })
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const chatContainerRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -71,11 +76,11 @@ const ConversationsPage: React.FC = () => {
     const channel = PusherBroadcasts.channels.message_creation
     const event = PusherBroadcasts.events.messages.created
 
-    subscribeToChannel(channel, event, (data: { message: Message }) => {
+    subscribeToChannel(channel, event, (data) => {
       console.log(data);
       
-      if (data.message.conversation_id == selectedConversation?.id) {
-        setMessages(prevMessages => [...prevMessages, data.message])
+      if ((data as { message: Message }).message.conversation_id == selectedConversation?.id) {
+        setMessages(prevMessages => [...prevMessages, (data as { message: Message }).message])
       }
     })
 
@@ -245,13 +250,13 @@ const ConversationsPage: React.FC = () => {
                   <div className={`max-w-[70%] p-3 rounded-lg ${msg.sender_id == user?.id ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}`}>
                     {msg.reply_message && (
                       <div className="bg-gray-200 p-2 rounded mb-2 text-xs">
-                        <p className="font-semibold">{msg.reply_message.sender == selectedConversation.creator.id ? selectedConversation.creator.name : selectedConversation.receiver.name}</p>
+                        <p className="font-semibold">{msg.reply_message.sender_id == selectedConversation.creator.id ? selectedConversation.creator.name : selectedConversation.receiver.name}</p>
                         <p>{msg.reply_message.content}</p>
                       </div>
                     )}
                     <p className="font-semibold text-sm">{msg.sender_id == user?.id ? 'You' : msg.sender_id == selectedConversation.creator.id ? selectedConversation.creator.name : selectedConversation.receiver.name}</p>
                     {msg.message_type == 'image' ? (
-                      <img src={getFileUrl(msg.image_url)} alt="Uploaded" className="w-full h-auto rounded-lg mt-2 mb-2" />
+                      <img src={getFileUrl(msg.image_url ?? '')} alt="Uploaded" className="w-full h-auto rounded-lg mt-2 mb-2" />
                     ) : (
                       <p className="text-sm">{msg.content}</p>
                     )}
@@ -287,12 +292,11 @@ const ConversationsPage: React.FC = () => {
               <div className="flex items-center space-x-2 w-full">
                 <div className="w-full">
                 <Input
-                icon={Text}
+                icon={Text as IconType}
                   type="text"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Type your message..."
-                  ref={inputRef}
                 />
                 </div>
                   <Button

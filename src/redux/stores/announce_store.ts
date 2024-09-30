@@ -97,7 +97,7 @@ const announceSlice = createSlice({
             })
             .addCase(getAllAnnounces.fulfilled, (state, action) => {
                 state.loading = false
-                state.announces = action.payload
+                state.announces = action.payload 
             })
             .addCase(getAllAnnounces.rejected, (state, action) => {
                 state.loading = false

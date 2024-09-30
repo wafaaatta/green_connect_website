@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { EyeIcon, EyeOffIcon, Leaf, Mail, Lock } from 'lucide-react'
+import { EyeIcon, EyeOffIcon, Mail, Lock } from 'lucide-react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import AppImages from '../../constants/app_images'
 import Routes from '../../constants/routes'
 import Notification from '../../components/Notification'
-import { useAppDispatch } from '../../hooks/hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { unwrapResult } from '@reduxjs/toolkit'
 import { loginUser } from '../../redux/stores/auth_store'
 import { showNotification } from '../../redux/stores/notification_store'
@@ -34,6 +34,8 @@ export default function Login() {
     }
   }, [dispatch, searchParams]); // Include
 
+  const {loading} = useAppSelector((state) => state.auth_store)
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -52,13 +54,10 @@ export default function Login() {
       )
 
       setTimeout(() => {
-        const redirected = searchParams.get("redirected") === 'true';
         const redirectTo = searchParams.get("redirected_from") || '/';
-        if (redirected) {
-          return navigate(redirectTo);
-        }
+        navigate(redirectTo)
 
-        navigate(Routes.HOME)
+        
       }, 2000)
     }).catch((error) => {
       dispatch(
@@ -166,7 +165,7 @@ export default function Login() {
                 type="submit"
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-green-800 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
               >
-                Sign in
+                {loading ? "Loading..." : "Login"}
               </button>
             </form>
             <div className="mt-6 text-center">

@@ -1,7 +1,13 @@
 import React from 'react';
 import { Eye, RefreshCw } from 'lucide-react';
 
-const InfoCard = ({ title, description, icon }) => (
+interface InfoCardProps {
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+}
+
+const InfoCard: React.FC<InfoCardProps> = ({ title, description, icon }) => (
   <div className="bg-white p-6 rounded-lg shadow-md">
     {icon}
     <h3 className="text-xl font-semibold mt-4 mb-2">{title}</h3>

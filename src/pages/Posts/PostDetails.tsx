@@ -1,16 +1,13 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Calendar, ChevronRight, MapPin, User, X } from 'lucide-react'
+import { Calendar, MapPin, User, X } from 'lucide-react'
 import ContactMap from './ContactMap'
 import { useNavigate } from 'react-router-dom'
 import Routes from '../../constants/routes'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { createConversation } from '../../redux/stores/conversation_store'
 import { unwrapResult } from '@reduxjs/toolkit'
-import { getFileUrl } from '../../utils/laravel_storage'
 import moment from 'moment'
-import { AutocompleteInput } from '../../components/AutoComplete'
-import cities from '../../constants/mapped_france_cities'
 
 interface Post {
   id: number
@@ -104,7 +101,7 @@ export default function PostDetails() {
           <div className="flex items-center mb-6">
             <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
             <div className="w-full h-full bg-green-500 flex items-center justify-center text-white text-xl font-bold">
-                  {currentAnnounce?.user?.name[0] + currentAnnounce?.user?.name[1]}
+                  {(currentAnnounce?.user?.name ? currentAnnounce?.user?.name[0] + currentAnnounce?.user?.name[1] : '')}
                 </div>
             </div>
             <div>
@@ -124,7 +121,7 @@ export default function PostDetails() {
 
 
           <div>
-            <h3 className="text-xl font-semibold mb-4">More posts by {currentAnnounce.user.name}</h3>
+            <h3 className="text-xl font-semibold mb-4">More posts by {currentAnnounce?.user.name}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {otherPosts.map((post) => (
                 <motion.div
@@ -151,7 +148,7 @@ export default function PostDetails() {
           onClick={handleConnect}
           className=" bg-green-700 text-white py-2 px-6 rounded hover:bg-green-900 transition duration-300"
         >
-          Connect with {currentAnnounce.user.name}
+          Connect with {currentAnnounce?.user.name}
         </button>
       </div>
 

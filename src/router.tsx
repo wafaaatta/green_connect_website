@@ -6,26 +6,18 @@ import BlogsPage from "./pages/Blogs/Blogs";
 import EventsPage from "./pages/Events/Events";
 import PostsPage from "./pages/Posts/Posts";
 import EventDetailsPage from "./pages/Events/Details/EventDetails";
-import ChatRoomsPage from "./pages/ChatRooms";
 import Custom404 from "./pages/Errors/404";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
-import PlantsWiki from "./pages/Wiki/PlantsWiki";
-import PlantDetails from "./pages/Wiki/PlantDetails.tsx/PlantDetails";
 import PostDetails from "./pages/Posts/PostDetails";
 import PolicyPage from "./pages/Privacy/PrivacyPolicy";
 import About from "./pages/About/About.tsx";
 import ConversationsPage from "./pages/conversations/Conversations.tsx";
 import UserProfilePage from "./pages/User/UserProfile.tsx";
 import UserLayout from "./layouts/UserLayout.tsx";
-import Workspace from "./workspace.tsx";
 import RequireAuth from "./components/RequireAuth.tsx";
 
 const router =  createBrowserRouter([
-    {
-        path: '/workspace',
-        element: <Workspace />
-    },
     {
         path: Routes.AUTH.LOGIN,
         element: <Login />
@@ -40,7 +32,9 @@ const router =  createBrowserRouter([
         children: [
             {
                 path: Routes.PAGES.CONVERSATIONS,
-                element: <ConversationsPage />
+                element: <RequireAuth>
+                    <ConversationsPage />
+                </RequireAuth>
             }
         ]
     },
@@ -83,18 +77,6 @@ const router =  createBrowserRouter([
             {
                 path: Routes.PAGES.EVENT_DETAILS,
                 element: <EventDetailsPage />
-            },
-            {
-                path: Routes.PAGES.CHAT_ROOMS,
-                element: <ChatRoomsPage />
-            },
-            {
-                path: Routes.PAGES.PLANTS_WIKI,
-                element: <PlantsWiki />
-            },
-            {
-                path: Routes.PAGES.PLANT_DETAILS,
-                element: <PlantDetails />
             },
             {
                 path: Routes.PAGES.PRIVACY_POLICY,

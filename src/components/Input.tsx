@@ -3,7 +3,7 @@ import { IconType } from 'react-icons';
 
 interface CustomInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon: IconType;
-  label: string;
+  label?: string;
 }
 
 const Input: React.FC<CustomInputProps> = ({ icon: Icon, label, ...props }) => {

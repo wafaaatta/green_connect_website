@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Filter, MapPin, Calendar, Clock, X, User, Mail } from 'lucide-react'
+import { Search, Filter, MapPin, Calendar, X, User, Mail } from 'lucide-react'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { getAllEvents } from '../../redux/stores/event_store'
 import Event from '../../interfaces/Event'
@@ -8,7 +8,7 @@ import { Card } from '../../components/Card'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
 import Select from '../../components/Select'
-import Badge from '../../components/Badge'
+import { IconType } from 'react-icons'
 
 const ITEMS_PER_PAGE = 10
 
@@ -64,7 +64,7 @@ const EventsPage: React.FC = () => {
             <div className="flex flex-wrap items-center gap-4">
               <div className="w-full md:w-64">
                 <Input
-                  icon={Search}
+                  icon={Search as IconType}
                   placeholder="Search events..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -72,14 +72,13 @@ const EventsPage: React.FC = () => {
               </div>
               <div className="w-full md:w-48">
                 <Select
-                  icon={Filter}
+                  icon={Filter as IconType}
                   value={sortBy}
                   onChange={(value) => setSortBy(value as string)}
                   options={[
                     { value: 'upcoming', label: 'Upcoming' },
                     { value: 'latest', label: 'Latest' },
                   ]}
-                  className="bg-white border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
                 />
               </div>
             </div>

@@ -1,8 +1,7 @@
-"use client"
 
 import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Leaf, Users, Calendar, BookOpen, ArrowRight, MapPin, Sprout, Recycle, Sun, Mail, Phone, Send } from 'lucide-react'
+import { Leaf, Users, Calendar, BookOpen, ArrowRight, MapPin, Sprout, Recycle, Sun } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { getAllAnnounces } from '../../redux/stores/announce_store'
@@ -176,7 +175,7 @@ const HomePage = () => {
                   <h3 className="text-xl font-semibold mb-2">{article.title}</h3>
                   <p className="text-gray-500">{article.content.substring(0, 100)}</p>
                   <p className="text-gray-600 font-semibold">
-                    Category: {article.article_category?.name}
+                    Category: {article.articleCategory?.name}
                   </p>
                 </div>
               </motion.div>

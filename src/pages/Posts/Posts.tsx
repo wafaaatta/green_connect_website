@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { Search, Filter, MapPin, Calendar, Tag } from 'lucide-react'
+import { Search, Filter, MapPin, Calendar } from 'lucide-react'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { getAllAnnounces, setCurrentAnnounce } from '../../redux/stores/announce_store'
 import Routes from '../../constants/routes'
 import Announce from '../../interfaces/Announce'
-import { getFileUrl } from '../../utils/laravel_storage'
 import { Card } from '../../components/Card'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
 import Select from '../../components/Select'
 import Badge from '../../components/Badge'
+import { IconType } from 'react-icons'
 
 const ITEMS_PER_PAGE = 15
 
@@ -29,8 +29,10 @@ const PostsPage: React.FC = () => {
     dispatch(getAllAnnounces())
   }, [dispatch])
 
+
+
   const filteredAnnounces = announces.filter(announce =>
-    (categoryFilter === 'all' || announce.category === categoryFilter) &&
+    (categoryFilter === 'all' || announce.article_category === categoryFilter) &&
     (announce.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
      announce.description.toLowerCase().includes(searchTerm.toLowerCase()))
   )
@@ -64,7 +66,6 @@ const PostsPage: React.FC = () => {
     setPage(prevPage => prevPage + 1)
   }
 
-  const categories = ['Indoor Plants', 'Outdoor Plants', 'Succulents', 'Herbs', 'Flowers', 'Trees']
 
   return (
     <div className="w-full">
@@ -74,7 +75,7 @@ const PostsPage: React.FC = () => {
           <div className="flex flex-wrap justify-end items-center gap-4">
             <div className="w-full md:w-60">
               <Input
-                icon={Search}
+                icon={Search as IconType}
                 placeholder="Search plants..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -82,7 +83,7 @@ const PostsPage: React.FC = () => {
             </div>
             <div className="w-full md:w-40">
               <Select
-                icon={Filter}
+                icon={Filter as IconType}
                 value={categoryFilter}
                 onChange={(value) => setCategoryFilter(value as string)}
                 options={[
@@ -94,12 +95,11 @@ const PostsPage: React.FC = () => {
                   { value: 'Flowering Plants', label: 'Flowering Plants' },
                   { value: 'Rare & Exotic Species', label: 'Rare & Exotic Species' },
                 ]}
-                className="bg-white border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
               />
             </div>
             <div className="w-full md:w-40">
               <Select
-                icon={Calendar}
+                icon={Calendar as IconType}
                 value={sortBy}
                 onChange={(value) => setSortBy(value as string)}
                 options={[
@@ -107,7 +107,6 @@ const PostsPage: React.FC = () => {
                   { value: 'oldest', label: 'Oldest' },
                   { value: 'alphabetical', label: 'A-Z' },
                 ]}
-                className="bg-white border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
               />
             </div>
           </div>
@@ -154,7 +153,7 @@ const PostsPage: React.FC = () => {
                       <MapPin size={16} className="mr-1" />
                       <span>{announce.city}, {announce.postal_code}</span>
                     </div>
-                    <Badge className="mb-2 bg-green-100 text-green-800">{announce.category}</Badge>
+                    <Badge className="mb-2 bg-green-100 text-green-800">{announce?.article_category}</Badge>
                     <div className="flex items-center justify-between mt-2">
                       <span className="text-sm text-gray-600">
                         {new Date(announce.created_at).toLocaleDateString()}

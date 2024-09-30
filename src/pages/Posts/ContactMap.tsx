@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MapContainer, TileLayer, Rectangle } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -31,24 +31,21 @@ interface City {
 }
 
 const ContactMap: React.FC<City> = ({ country, city }) => {
-  const [selectedCity, setSelectedCity] = useState({
-    country: country.toLowerCase(),
-    city: city.toLowerCase(),
-  });
 
-  const handleCityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const [country, city] = event.target.value.split('_');
-    setSelectedCity({ country: country.toLowerCase(), city: city.toLowerCase() });
-  };
 
-  const cityData = cityConfig[selectedCity.country][selectedCity.city];
+  console.log(country, city);
+  
+  const cityData = cityConfig['france']['lyon'];
 
   return (
     <section className="">
       <div className="mx-auto">
         {/* Map */}
         <MapContainer
-          center={cityData.center}
+        center={{
+          lat: cityData.center[0],
+          lng: cityData.center[1],
+        }}
           zoom={cityData.zoom}
           scrollWheelZoom={false}
           style={{ height: '400px', width: '100%', zIndex:0 }}

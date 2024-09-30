@@ -19,6 +19,7 @@ export const loginUser = createAsyncThunk(
         try{
             const response = await axiosHttp.post('/users/login', credentials)
             saveAuthenticationToken(response.data.token)
+            
             return response.data
         }catch(error){
             throw ApiError.from(error as AxiosError)

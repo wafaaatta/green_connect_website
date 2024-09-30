@@ -3,7 +3,7 @@ import { getAuthenticationToken } from "./authentication";
 import { apiUrl } from "../constants/app_constants";
 
 const axiosHttp = axios.create({
-    baseURL: `${apiUrl}`,
+    baseURL: apiUrl,
 });
 
 axiosHttp.interceptors.request.use((config) => {

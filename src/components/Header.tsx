@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Leaf, LogIn, Menu, User, Bell, Settings, LogOut, MessageCircle } from "lucide-react"
+import { Leaf, LogIn, Menu, User, LogOut, MessageCircle } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../hooks/hooks"
 import Routes from "../constants/routes"
@@ -73,7 +73,9 @@ const Header: React.FC = () => {
             </nav>
           </div>
           <div className="flex items-center space-x-2">
-            <Button
+            {isAuthenticated ? (
+              <>
+                          <Button
               leftIcon={MessageCircle as IconType}
               variant="outline"
               color="green"
@@ -83,8 +85,6 @@ const Header: React.FC = () => {
             >
               Chat
             </Button>
-            {isAuthenticated ? (
-              <>
                 <Button
                   leftIcon={User as IconType}
                   variant="outline"
@@ -185,7 +185,7 @@ const Header: React.FC = () => {
                     color="green"
                     size="md"
                     onClick={() => {
-                      navigate(Routes.PAGES.CHAT)
+                      navigate(Routes.PAGES.CONVERSATIONS)
                       toggleSidebar()
                     }}
                     className="w-full justify-start mb-2"
