@@ -30,7 +30,7 @@ const otherPosts: Post[] = [
   { id: 3, user: 'Alice Green', title: 'Snake Plant', image: '/src/assets/images/plants/snake-plant.png', category: 'Indoor', city: 'New York', postalCode: '10021', creationDate: '2023-06-05', description: 'Snake Plant description...' },
 ]
 
-export default function PostDetails() {
+export default function AnnounceDetails() {
   const { t } = useTranslation()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const navigate = useNavigate()

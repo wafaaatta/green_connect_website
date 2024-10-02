@@ -104,7 +104,6 @@ export default function Login() {
             <div className="flex justify-center">
               <img src={AppImages.logo} alt={t('common.logoAlt')} className="w-60" />
             </div>
-            <h2 className="text-3xl font-bold text-center text-green-800 mb-6">{t('login.title')}</h2>
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">

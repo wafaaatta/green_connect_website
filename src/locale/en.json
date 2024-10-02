@@ -13,7 +13,7 @@
         "feature3Description": "Participate in workshops, seminars, and plant exchanges",
         "feature4Title": "Knowledge Center",
         "feature4Description": "Access a wealth of plant care and gardening advice",
-        "communityHighlights": "Community Highlights",
+        "Plant Sharing Corner ": "Plant Sharing Corner ",
         "by": "By",
         "explorePosts": "Explore more posts",
         "latestInsights": "Latest Green Insights",
@@ -22,7 +22,7 @@
         "upcomingEvents": "Upcoming Green Events",
         "viewAllEvents": "View all events",
         "ourGreenMission": "Our Green Mission",
-        "missionDescription": "At Green Connect, we are committed to fostering a community of plant lovers and environmental advocates. Our mission is to promote sustainable living, biodiversity, and the joy of nurturing nature.",
+        "missionDescription": "We are committed to fostering a community of plant lovers and environmental advocates. Our mission is to promote sustainable living, biodiversity, and the joy of nurturing nature.",
         "missionPoint1": "Promote plant adoption",
         "missionPoint2": "Encourage sustainability",
         "missionPoint3": "Spread ecological knowledge",
@@ -43,7 +43,7 @@
     "header": {
         "home": "Home",
         "announcements": "Announcements",
-        "blog": "Blog",
+        "articles": "Articles",
         "events": "Events",
         "about": "About",
         "chat": "Chat",
@@ -59,8 +59,8 @@
 
     "footer": {
         "home": "Home",
-        "posts": "Posts",
-        "blogs": "Blogs",
+        "announces": "Announcements",
+        "articles": "Articles",
         "events": "Events",
         "about": "About",
         "privacyPolicy": "Privacy Policy",

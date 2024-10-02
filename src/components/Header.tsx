@@ -18,8 +18,8 @@ const Header: React.FC = () => {
 
   const sidebarItems = [
     { label: t('header.home'), href: Routes.HOME },
-    { label: t('header.announcements'), href: Routes.PAGES.POSTS },
-    { label: t('header.blog'), href: Routes.PAGES.BLOGS },
+    { label: t('header.announcements'), href: Routes.PAGES.ANNOUNCEMENTS },
+    { label: t('header.articles'), href: Routes.PAGES.ARTICLES },
     { label: t('header.events'), href: Routes.PAGES.EVENTS },
     { label: t('header.about'), href: Routes.PAGES.ABOUT },
   ]

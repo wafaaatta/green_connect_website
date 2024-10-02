@@ -2,17 +2,15 @@ class Routes {
     public static HOME = '/';
 
     public static PAGES = class {
-        public static POSTS = '/posts'
-        public static POST_DETAILS = '/posts/:id/details'
+        public static ANNOUNCEMENTS = '/announcements'
+        public static ANNOUNCE_DETAILS = '/announcements/:id/details'
         public static EVENTS = '/events'
         public static EVENT_DETAILS = '/events/:id'
-        public static BLOGS = '/blogs'
+        public static ARTICLES = '/articles'
         public static PROFILE = '/profile'
         public static CONVERSATIONS = '/conversations'
         public static ABOUT = '/about'
 
-        public static PLANTS_WIKI = '/plants-wiki'
-        public static PLANT_DETAILS = '/plants-wiki/:id'
 
         public static CHAT_ROOMS = '/chats'
         public static PRIVACY_POLICY = '/privacy-policy'

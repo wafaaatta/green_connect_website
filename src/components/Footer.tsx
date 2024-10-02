@@ -8,8 +8,8 @@ export default function Footer() {
 
   const quickLinks: { name: string, path: string }[] = [
     { name: t('footer.home'), path: "/" },
-    { name: t('footer.posts'), path: Routes.PAGES.POSTS },
-    { name: t('footer.blogs'), path: Routes.PAGES.BLOGS },
+    { name: t('footer.announces'), path: Routes.PAGES.ANNOUNCEMENTS },
+    { name: t('footer.articles'), path: Routes.PAGES.ARTICLES },
     { name: t('footer.events'), path: Routes.PAGES.EVENTS },
     { name: t('footer.about'), path: Routes.PAGES.ABOUT },
   ]

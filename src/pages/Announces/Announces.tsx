@@ -16,7 +16,7 @@ import { IconType } from 'react-icons'
 
 const ITEMS_PER_PAGE = 15
 
-const PostsPage: React.FC = () => {
+const AnnouncesPage: React.FC = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -52,7 +52,7 @@ const PostsPage: React.FC = () => {
 
   const navigateToAnnounceDetails = useCallback((announce: Announce) => {
     dispatch(setCurrentAnnounce(announce))
-    navigate(Routes.PAGES.POST_DETAILS.replace(':id', announce.id.toString()))
+    navigate(Routes.PAGES.ANNOUNCE_DETAILS.replace(':id', announce.id.toString()))
   }, [dispatch, navigate])
 
   const resetFilters = () => {
@@ -182,4 +182,4 @@ const PostsPage: React.FC = () => {
   )
 }
 
-export default PostsPage
+export default AnnouncesPage

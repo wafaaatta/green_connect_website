@@ -130,7 +130,7 @@ const HomePage = () => {
       {/* Community Posts Section */}
       <section className="bg-gradient-to-r from-green-500 to-green-800 py-20">
         <div className=" mx-auto px-4">
-          <h2 className="text-3xl text-white font-bold text-center mb-12">{t('homePage.communityHighlights')}</h2>
+          <h2 className="text-3xl text-white font-bold text-center mb-12">{t('homePage.Plant Sharing Corner ')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {announces.slice(0, 4).map((post, index) => (
               <motion.div
@@ -208,7 +208,7 @@ const HomePage = () => {
                   <h3 className="text-xl font-semibold mb-4">{event.title}</h3>
                   <p className="text-gray-600 mb-2 flex items-center">
                     <Calendar className="mr-2 h-5 w-5 text-green-600" />
-                    {moment(event.event_date).format('MMMM DD, YYYY')}
+                    {new Date(event.event_date).toLocaleDateString()}
                   </p>
                   <p className="text-gray-600 flex items-center">
                     <MapPin className="mr-2 h-5 w-5 text-green-600" />
