@@ -13,6 +13,7 @@ import Input from '../../components/Input'
 import Select from '../../components/Select'
 import Badge from '../../components/Badge'
 import { IconType } from 'react-icons'
+import { getFileUrl } from '../../utils/laravel_storage'
 
 const ITEMS_PER_PAGE = 15
 
@@ -142,9 +143,9 @@ const AnnouncesPage: React.FC = () => {
                   className="h-full cursor-pointer transition-shadow duration-300 bg-white"
                 >
                   <img 
-                    src={'/src/assets/images/plants/bonsai.png'} 
+                    src={getFileUrl(announce.image)} 
                     alt={announce.title} 
-                    className="w-full h-48 object-cover rounded-t" 
+                    className="w-full h-48 object-contain rounded-t" 
                   />
                   <div className="mt-2">
                     <h2 className="text-xl font-semibold mb-2 text-gray-800">{announce.title}</h2>

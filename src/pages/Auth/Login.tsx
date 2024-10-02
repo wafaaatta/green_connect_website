@@ -91,7 +91,7 @@ export default function Login() {
           {/* Left Column - Image */}
           <div className="md:w-1/2 relative">
             <img 
-              src="/src/assets/images/plants-workshop/workshop-house.png" 
+              src="/assets/images/plants-workshop/workshop-house.png" 
               alt={t('login.imageAlt')}
               className="object-cover h-full w-full"
             />

@@ -88,7 +88,10 @@
         "title": "Green Connect Articles",
         "searchPlaceholder": "Search articles...",
         "readMore": "Read More",
-        "loadMore": "Load More Articles"
+        "loadMore": "Load More Articles",
+        "modal": {
+            "close": "Close"
+        }
     },
 
     "conversationsPage": {
@@ -157,7 +160,14 @@
         "connectWith": "Connect with {{name}}",
         "signInRequired": "Sign In Required",
         "signInMessage": "Please sign in to connect with other plant enthusiasts.",
-        "goToSignIn": "Go to Sign In"
+        "goToSignIn": "Go to Sign In",
+        "policyReminder": "Please remember to follow our community guidelines.",
+        "seePolicy": "See policy",
+        "confirmConnect": {
+            "title": "Confirm Connection",
+            "content": "Are you sure you want to connect with {{name}}?"
+        },
+        "seeDetails": "See Details"
     },
 
     "policyPage": {

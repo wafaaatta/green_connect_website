@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Calendar } from 'lucide-react'
+import { Search, Calendar, X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { getAllArticles } from '../../redux/stores/article_store'
@@ -8,6 +8,8 @@ import { Card } from '../../components/Card'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
 import { IconType } from 'react-icons'
+import Modal from '../../components/Modal'
+import { getFileUrl } from '../../utils/laravel_storage'
 
 const ITEMS_PER_PAGE = 12
 
@@ -17,6 +19,7 @@ const ArticlesPage: React.FC = () => {
   const { articles } = useAppSelector(state => state.article_store)
   const [displayedArticles, setDisplayedArticles] = useState<typeof articles>([])
   const [searchTerm, setSearchTerm] = useState('')
+  const [selectedArticle, setSelectedArticle] = useState<typeof articles[0] | null>(null)
 
   useEffect(() => {
     dispatch(getAllArticles())
@@ -77,14 +80,14 @@ const ArticlesPage: React.FC = () => {
                 transition={{ duration: 0.3, delay: index * 0.05 }}
               >
                 <Card 
-                  className="h-full cursor-pointer transition-shadow duration-300 bg-white"
+                  className="h-[400px] cursor-pointer transition-shadow duration-300 bg-white flex flex-col"
                 >
                   <img 
-                    src={'/src/assets/images/plants-workshop/workshop-care.png'} 
+                    src={getFileUrl(article.image)} 
                     alt={article.title} 
-                    className="w-full h-48 object-cover rounded-t" 
+                    className="w-full h-48 object-contain rounded-t" 
                   />
-                  <div className="mt-4">
+                  <div className="mt-4 flex flex-col flex-grow">
                     <h2 className="text-xl font-semibold mb-2 text-green-800">{article.title}</h2>
                     <div className="flex items-center mb-2 text-green-600">
                       <Calendar size={16} className="mr-1" />
@@ -93,8 +96,15 @@ const ArticlesPage: React.FC = () => {
                     <div className="flex items-center mb-2 text-green-600">
                       <span>{article.article_category.name}</span>
                     </div>
-                    <div className="flex items-center justify-between mt-2">
-                      <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">
+                    <p className="text-gray-600 mb-4 flex-grow overflow-hidden">
+                      {article.content.slice(0, 100)}...
+                    </p>
+                    <div className="flex items-center justify-between mt-auto">
+                      <Button 
+                        size="sm" 
+                        className="bg-green-600 hover:bg-green-700 text-white"
+                        onClick={() => setSelectedArticle(article)}
+                      >
                         {t('articlesPage.readMore')}
                       </Button>
                     </div>
@@ -117,6 +127,60 @@ const ArticlesPage: React.FC = () => {
           </div>
         )}
       </div>
+
+      <Modal isOpen={!!selectedArticle} onClose={() => setSelectedArticle(null)} title='Article'>
+      {selectedArticle && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+            onClick={() => setSelectedArticle(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-lg shadow-xl max-w-3xl w-full max-h-[80vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-2xl font-bold text-green-800">{selectedArticle.title}</h2>
+                  <button
+                    onClick={() => setSelectedArticle(null)}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    <X size={24} />
+                  </button>
+                </div>
+                <div className="flex items-center mb-4 text-green-600">
+                  <Calendar size={16} className="mr-1" />
+                  <span>{new Date(selectedArticle.created_at).toLocaleDateString()}</span>
+                </div>
+                <div className="mb-4 ">
+                  {selectedArticle.image && (
+                    <img
+                      src={getFileUrl(selectedArticle.image)}
+                      alt={selectedArticle.title}
+                      className="object-contain rounded  w-full h-64 mb-4 shadow border"
+                      
+                    />
+                  )}
+                </div>
+                <div className="mb-4">
+                  <span className="text-green-600 font-semibold">{selectedArticle.article_category.name}</span>
+                </div>
+                <div className="prose max-w-none">
+                  {selectedArticle.content.split('\n').map((paragraph, index) => (
+                    <p key={index} className="mb-4">{paragraph}</p>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </Modal>
     </div>
   )
 }

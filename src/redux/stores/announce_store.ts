@@ -65,6 +65,20 @@ export const deleteAnnounce = createAsyncThunk(
     }
 )
 
+export const getOtherUserAcceptedAnnounces = createAsyncThunk(
+    'announce/getOtherUserAcceptedAnnounces',
+    async (announce_id: number) => {
+        try{
+            const response = await axiosHttp.post(`users/announces/other`, {
+                announce_id
+            })
+            return response.data
+        }catch(error){
+            throw ApiError.from(error as AxiosError)
+        }   
+    }
+)
+
 interface UpdateAnnouncePayload {
     id: number
     data: FormData
@@ -157,6 +171,19 @@ const announceSlice = createSlice({
                 })
             })
             .addCase(updateAnnounce.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.error.message || 'Something went wrong'
+            })
+
+
+            .addCase(getOtherUserAcceptedAnnounces.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(getOtherUserAcceptedAnnounces.fulfilled, (state, action) => {
+                state.loading = false
+                state.announces = action.payload
+            })
+            .addCase(getOtherUserAcceptedAnnounces.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.error.message || 'Something went wrong'
             })

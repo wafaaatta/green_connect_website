@@ -106,7 +106,7 @@ const EventsPage: React.FC = () => {
                 >
                   <div className="flex flex-col md:flex-row">
                     <img 
-                      src={'/src/assets/images/plants-workshop/workshop-group.jpg'} 
+                      src={'/assets/images/plants-workshop/workshop-group.jpg'} 
                       alt={event.title} 
                       className="w-full md:w-48 h-48 object-cover rounded-t md:rounded-l md:rounded-t-none" 
                     />
@@ -165,7 +165,7 @@ const EventsPage: React.FC = () => {
             >
               <div className="relative">
                 <img 
-                  src={'/src/assets/images/plants-workshop/workshop-group.jpg'} 
+                  src={'/assets/images/plants-workshop/workshop-group.jpg'} 
                   alt={selectedEvent.title} 
                   className="w-full h-64 object-cover"
                 />

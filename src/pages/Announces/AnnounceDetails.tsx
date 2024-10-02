@@ -1,64 +1,67 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Calendar, MapPin, User, X } from 'lucide-react'
+import { Calendar, MapPin, User, X, ArrowRight } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import ContactMap from './ContactMap'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import Routes from '../../constants/routes'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { createConversation } from '../../redux/stores/conversation_store'
 import { unwrapResult } from '@reduxjs/toolkit'
 import moment from 'moment'
-
-interface Post {
-  id: number
-  user: string
-  title: string
-  image: string
-  category: string
-  city: string
-  postalCode: string
-  creationDate: string
-  description: string
-  userImage?: string
-}
-
-const otherPosts: Post[] = [
-  { id: 2, user: 'Alice Green', title: 'Fiddle Leaf Fig', image: '/src/assets/images/plants/fiddle-leaf-fig.png', category: 'Indoor', city: 'New York', postalCode: '10021', creationDate: '2023-06-10', description: 'Fiddle Leaf Fig description...' },
-  { id: 3, user: 'Alice Green', title: 'Snake Plant', image: '/src/assets/images/plants/snake-plant.png', category: 'Indoor', city: 'New York', postalCode: '10021', creationDate: '2023-06-05', description: 'Snake Plant description...' },
-  { id: 3, user: 'Alice Green', title: 'Snake Plant', image: '/src/assets/images/plants/snake-plant.png', category: 'Indoor', city: 'New York', postalCode: '10021', creationDate: '2023-06-05', description: 'Snake Plant description...' },
-  { id: 3, user: 'Alice Green', title: 'Snake Plant', image: '/src/assets/images/plants/snake-plant.png', category: 'Indoor', city: 'New York', postalCode: '10021', creationDate: '2023-06-05', description: 'Snake Plant description...' },
-]
+import { getFileUrl } from '../../utils/laravel_storage'
+import { ConfirmationModal } from '../../components/ConfirmationDialog'
+import { getOtherUserAcceptedAnnounces, setCurrentAnnounce } from '../../redux/stores/announce_store'
+import Announce from '../../interfaces/Announce'
 
 export default function AnnounceDetails() {
   const { t } = useTranslation()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
   const navigate = useNavigate()
-  const {isAuthenticated} = useAppSelector(state => state.auth_store)
+  const { isAuthenticated } = useAppSelector(state => state.auth_store)
   const dispatch = useAppDispatch()
-  const {currentAnnounce} = useAppSelector(state => state.announce_store)
+  const { currentAnnounce, announces } = useAppSelector(state => state.announce_store)
+
+  useEffect(() => {
+    if (currentAnnounce?.id) {
+      dispatch(getOtherUserAcceptedAnnounces(currentAnnounce.id))
+    }
+  }, [dispatch, currentAnnounce?.id])
 
   const handleConnect = async () => {
-    if(!isAuthenticated) {
+    if (!isAuthenticated) {
       return setIsDialogOpen(true)
     }
     
-    await dispatch(
-      createConversation({
-        receiver_id: currentAnnounce?.user.id as number, 
-        announce_id: currentAnnounce?.id as number
-    })
-    ).then(unwrapResult)
-    .then(() => {
-      navigate(Routes.PAGES.CONVERSATIONS)
-    }).catch((error) => {
-      console.log(error)
-    })
+    setIsConfirmModalOpen(true)
+  }
+
+  const confirmConnect = async () => {
+    if (currentAnnounce?.user.id && currentAnnounce?.id) {
+      await dispatch(
+        createConversation({
+          receiver_id: currentAnnounce.user.id,
+          announce_id: currentAnnounce.id
+        })
+      ).then(unwrapResult)
+      .then(() => {
+        navigate(Routes.PAGES.CONVERSATIONS)
+      }).catch((error) => {
+        console.error('Error creating conversation:', error)
+      })
+    }
   }
 
   const handleCloseDialog = () => {
     setIsDialogOpen(false)
     navigate(Routes.AUTH.LOGIN)
+  }
+
+  const navigateToAnnounceDetails = (announce: Announce) => {
+    dispatch(
+      setCurrentAnnounce(announce)
+    )
+    navigate(Routes.PAGES.ANNOUNCE_DETAILS.replace(':id', announce.id.toString()))
   }
 
   return (
@@ -70,15 +73,9 @@ export default function AnnounceDetails() {
         className="bg-white rounded border shadow overflow-hidden"
       >
         <img 
-          src={'/src/assets/images/plants/bonsai.png'} 
-          alt={currentAnnounce?.title} 
-          className="w-full h-96 "
-          style={{
-            aspectRatio: '16/9',
-            objectFit: 'cover',
-            objectPosition: 'center',
-            width: '100%',
-          }}
+          src={getFileUrl(currentAnnounce?.image || '')}
+          alt={currentAnnounce?.title}
+          className="w-full h-96 object-contain"
         />
         <div className="p-6">
           <div className="flex justify-between items-start mb-4">
@@ -100,7 +97,7 @@ export default function AnnounceDetails() {
           <div className="flex items-center mb-6">
             <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
               <div className="w-full h-full bg-green-500 flex items-center justify-center text-white text-xl font-bold">
-                {(currentAnnounce?.user?.name ? currentAnnounce?.user?.name[0] + currentAnnounce?.user?.name[1] : '')}
+                {currentAnnounce?.user?.name ? currentAnnounce.user.name.slice(0, 2).toUpperCase() : ''}
               </div>
             </div>
             <div>
@@ -113,26 +110,39 @@ export default function AnnounceDetails() {
             <p className="text-gray-700">{currentAnnounce?.description}</p>
           </div>
 
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-2">{t('postDetails.location')}</h3>
-            <ContactMap city='lyon' country='france'  />
+          <div className="mb-6 bg-green-50 p-4 rounded-lg">
+            <p className="text-lg text-gray-800">
+              {t('postDetails.policyReminder')} 
+              <Link to={Routes.PAGES.PRIVACY_POLICY} className="ml-1 text-green-800 hover:underline">
+                {t('postDetails.seePolicy')}
+              </Link>
+            </p>
           </div>
 
           <div>
             <h3 className="text-xl font-semibold mb-4">{t('postDetails.morePosts', { name: currentAnnounce?.user.name })}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {otherPosts.map((post) => (
+              {announces.map((announce) => (
                 <motion.div
-                  key={post.id}
+                  key={announce.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="bg-white rounded shadow overflow-hidden border"
+                  className="bg-white rounded shadow overflow-hidden border flex flex-col"
                 >
-                  <img src={post.image} alt={post.title} className="w-full h-40 object-cover" />
-                  <div className="p-3">
-                    <h4 className="text-lg font-semibold mb-1">{post.title}</h4>
-                    <p className="text-gray-600 text-sm">{`${post.city} . ${post.postalCode}`}</p>
+                  <img src={getFileUrl(announce.image)} alt={announce.title} className="w-full h-40 object-contain" />
+                  <div className="p-3 flex-grow">
+                    <h4 className="text-lg font-semibold mb-1">{announce.title}</h4>
+                    <p className="text-gray-600 text-sm mb-2">{`${announce.city} . ${announce.postal_code}`}</p>
+                    <div className='flex justify-end'>
+                      <button
+                        onClick={() => navigateToAnnounceDetails(announce)}
+                        className="mt-auto bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition duration-300 flex items-center justify-center"
+                      >
+                        {t('postDetails.seeDetails')}
+                        <ArrowRight className="ml-2 w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
                 </motion.div>
               ))}
@@ -141,10 +151,10 @@ export default function AnnounceDetails() {
         </div>
       </motion.div>
 
-      <div className="flex items-center justify-end fixed bottom-0 left-0 right-0  p-4 shadow-md z-50">
+      <div className="flex items-center justify-end fixed bottom-0 left-0 right-0 p-4 shadow-md z-50">
         <button
           onClick={handleConnect}
-          className=" bg-green-700 text-white py-2 px-6 rounded hover:bg-green-900 transition duration-300"
+          className="bg-green-700 text-white py-2 px-6 rounded hover:bg-green-900 transition duration-300"
         >
           {t('postDetails.connectWith', { name: currentAnnounce?.user.name })}
         </button>
@@ -170,6 +180,15 @@ export default function AnnounceDetails() {
           </div>
         </div>
       )}
+
+      <ConfirmationModal
+        onCancel={() => setIsConfirmModalOpen(false)}
+        isOpen={isConfirmModalOpen}
+        onClose={() => setIsConfirmModalOpen(false)}
+        onAccept={confirmConnect}
+        title={t('postDetails.confirmConnect.title')}
+        content={t('postDetails.confirmConnect.content', { name: currentAnnounce?.user.name })}
+      />
     </div>
   )
 }

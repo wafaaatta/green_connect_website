@@ -6,11 +6,11 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { getAllAnnounces } from '../../redux/stores/announce_store'
 import { getAllArticles } from '../../redux/stores/article_store'
 import { getAllEvents } from '../../redux/stores/event_store'
-import moment from 'moment'
 import axiosHttp from '../../utils/axios_client'
 import { showNotification } from '../../redux/stores/notification_store'
 import { BiEnvelope } from 'react-icons/bi'
 import { useTranslation } from 'react-i18next'
+import { getFileUrl } from '../../utils/laravel_storage'
 
 const HomePage = () => {
   const { t } = useTranslation()
@@ -140,7 +140,7 @@ const HomePage = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="bg-white rounded overflow-hidden shadow border-shadow duration-300"
               >
-                <img src={post.image} alt={post.title} className="w-full h-48 object-cover" />
+                <img src={getFileUrl(post.image)} alt={post.title} className="w-full h-48 object-cover" />
                 <div className="p-4">
                   <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
                   <p className="text-gray-600">{t('homePage.by')} {post?.user?.name}</p>
@@ -170,7 +170,7 @@ const HomePage = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="bg-white rounded overflow-hidden shadow border  transition-shadow duration-300"
               >
-                <img src={article.image} alt={article.title} className="w-full h-48 object-cover" />
+                <img src={getFileUrl(article.image)} alt={article.title} className="w-full h-48 object-cover" />
                 <div className="p-4">
                   <h3 className="text-xl font-semibold mb-2">{article.title}</h3>
                   <p className="text-gray-500">{article.content.substring(0, 100)}</p>
@@ -203,7 +203,7 @@ const HomePage = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="bg-white rounded overflow-hidden shadow border transition-shadow duration-300"
               >
-                <img src={event.image} alt={event.title} className="w-full h-48 object-cover" />
+                <img src={getFileUrl(event.image)} alt={event.title} className="w-full h-48 object-cover" />
                 <div className="p-4">
                   <h3 className="text-xl font-semibold mb-4">{event.title}</h3>
                   <p className="text-gray-600 mb-2 flex items-center">

@@ -320,7 +320,7 @@ const ConversationsPage: React.FC = () => {
         ) : (
           <div className="flex-grow flex items-center justify-center bg-gray-50">
             <div className="text-center">
-              <img src="/src/assets/green_connect.png" alt={t('conversationsPage.defaultPlant')} className=" h-32 mx-auto mb-4" />
+              <img src="/assets/green_connect.png" alt={t('conversationsPage.defaultPlant')} className=" h-32 mx-auto mb-4" />
               <h2 className="text-2xl font-semibold text-gray-700 mb-2">{t('conversationsPage.noConversationSelected')}</h2>
               <p className="text-gray-500">{t('conversationsPage.chooseConversation')}</p>
             </div>

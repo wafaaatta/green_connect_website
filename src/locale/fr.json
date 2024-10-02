@@ -88,7 +88,10 @@
         "title": "Articles Green Connect",
         "searchPlaceholder": "Rechercher des articles...",
         "readMore": "Lire la suite",
-        "loadMore": "Charger plus d'articles"
+        "loadMore": "Charger plus d'articles",
+        "modal": {
+            "close": "Fermer"
+        }
     },
 
     "conversationsPage": {
@@ -157,7 +160,14 @@
         "connectWith": "Contacter {{name}}",
         "signInRequired": "Connexion Requise",
         "signInMessage": "Veuillez vous connecter pour échanger avec d'autres passionnés de plantes.",
-        "goToSignIn": "Aller à la page de connexion"
+        "goToSignIn": "Aller à la page de connexion",
+        "policyReminder": "N'oubliez pas de suivre nos règles communautaires.",
+        "seePolicy": "Voir la politique",
+        "confirmConnect": {
+            "title": "Confirmer la connexion",
+            "content": "Êtes-vous sûr de vouloir contacter {{name}} ?"
+        },
+        "seeDetails": "Voir les détails"
     },
 
     "policyPage": {

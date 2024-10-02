@@ -33,7 +33,7 @@ const About = () => {
             </p>
           </div>
           <div className="md:w-1/2 mt-8 md:mt-0">
-            <img src="/src/assets/images/plants-workshop/workshop-care.png" alt={t('about.imageAlt')} className="w-full h-auto rounded-lg shadow-lg" />
+            <img src="/assets/images/plants-workshop/workshop-care.png" alt={t('about.imageAlt')} className="w-full h-auto rounded-lg shadow-lg" />
           </div>
         </div>
 
