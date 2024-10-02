@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Leaf, LogIn, Menu, User, LogOut, MessageCircle } from "lucide-react"
+import { Leaf, LogIn, Menu, User, LogOut, MessageCircle, Globe } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../hooks/hooks"
 import Routes from "../constants/routes"
@@ -8,18 +8,20 @@ import AppImages from "../constants/app_images"
 import Button from "./Button"
 import { IconType } from "react-icons"
 import { logoutUser } from "../redux/stores/auth_store"
+import { useTranslation } from "react-i18next"
 
 const Header: React.FC = () => {
+  const { t, i18n } = useTranslation()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const navigate = useNavigate()
   const { isAuthenticated, user } = useAppSelector(state => state.auth_store)
 
   const sidebarItems = [
-    { label: 'Home', href: Routes.HOME },
-    { label: 'Announces', href: Routes.PAGES.POSTS },
-    { label: 'Blog', href: Routes.PAGES.BLOGS },
-    { label: 'Events', href: Routes.PAGES.EVENTS },
-    { label: 'About', href: Routes.PAGES.ABOUT },
+    { label: t('header.home'), href: Routes.HOME },
+    { label: t('header.announcements'), href: Routes.PAGES.POSTS },
+    { label: t('header.blog'), href: Routes.PAGES.BLOGS },
+    { label: t('header.events'), href: Routes.PAGES.EVENTS },
+    { label: t('header.about'), href: Routes.PAGES.ABOUT },
   ]
 
   const dispatch = useAppDispatch()
@@ -30,18 +32,20 @@ const Header: React.FC = () => {
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen)
 
+  const toggleLanguage = () => {
+    i18n.changeLanguage(i18n.language === 'en' ? 'fr' : 'en')
+  }
+
   useEffect(() => {
     const handleScroll = () => {
-      /*
-        const header = document.getElementById('main-header')
-        if (header) {
-          if (window.scrollY > 0) {
-            header.classList.add('shadow-md')
-          } else {
-            header.classList.remove('shadow-md')
-          }
+      const header = document.getElementById('main-header')
+      if (header) {
+        if (window.scrollY > 0) {
+          header.classList.add('shadow-md')
+        } else {
+          header.classList.remove('shadow-md')
         }
-        */
+      }
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -51,14 +55,13 @@ const Header: React.FC = () => {
     }
   }, [])
 
-
   return (
-    <header id="main-header" className="bg-[#E6DFC3] sticky top-0 z-10 transition-shadow duration-300">
-      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <header id="main-header" className="bg-[#f3ecd6] sticky top-0 z-10 transition-shadow duration-300">
+      <div className="max-w-8xl mx-auto py-2 px-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <a href="/" className="flex-shrink-0">
-              <img src={AppImages.logo} className="h-20 w-auto transition-transform duration-300 hover:scale-105" alt="Green Connect logo" />
+              <img src={AppImages.logo} className="h-28 w-auto" alt={t('header.logoAlt')} />
             </a>
             <nav className="hidden md:ml-10 md:flex md:space-x-8">
               {sidebarItems.map((item) => (
@@ -73,18 +76,27 @@ const Header: React.FC = () => {
             </nav>
           </div>
           <div className="flex items-center space-x-2">
-            {isAuthenticated ? (
-              <>
-                          <Button
-              leftIcon={MessageCircle as IconType}
+            <Button
+              leftIcon={Globe as IconType}
               variant="outline"
               color="green"
               size="sm"
-              onClick={() => navigate(Routes.PAGES.CONVERSATIONS)}
+              onClick={toggleLanguage}
               className="hidden md:flex"
             >
-              Chat
             </Button>
+            {isAuthenticated ? (
+              <>
+                <Button
+                  leftIcon={MessageCircle as IconType}
+                  variant="outline"
+                  color="green"
+                  size="sm"
+                  onClick={() => navigate(Routes.PAGES.CONVERSATIONS)}
+                  className="hidden md:flex"
+                >
+                  {t('header.chat')}
+                </Button>
                 <Button
                   leftIcon={User as IconType}
                   variant="outline"
@@ -93,9 +105,8 @@ const Header: React.FC = () => {
                   onClick={() => navigate(Routes.PAGES.PROFILE)}
                   className="hidden md:flex"
                 >
-                  Profile
+                  {t('header.profile')}
                 </Button>
-
                 <Button
                   leftIcon={LogOut as IconType}
                   variant="outline"
@@ -104,7 +115,7 @@ const Header: React.FC = () => {
                   onClick={handleLogout}
                   className="hidden md:flex"
                 >
-                  Logout
+                  {t('header.logout')}
                 </Button>
               </>
             ) : (
@@ -117,7 +128,7 @@ const Header: React.FC = () => {
                   onClick={() => navigate(Routes.AUTH.LOGIN)}
                   className="hidden md:flex"
                 >
-                  Sign in
+                  {t('header.signIn')}
                 </Button>
                 <Button
                   leftIcon={Leaf as IconType}
@@ -127,7 +138,7 @@ const Header: React.FC = () => {
                   onClick={() => navigate(Routes.AUTH.REGISTER)}
                   className="hidden md:flex"
                 >
-                  Join Us
+                  {t('header.joinUs')}
                 </Button>
               </>
             )}
@@ -135,7 +146,7 @@ const Header: React.FC = () => {
               onClick={toggleSidebar}
               className="md:hidden bg-[#E6DFC3] rounded-md p-2 inline-flex items-center justify-center text-green-800 hover:text-green-600 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500 transition-colors duration-300"
             >
-              <span className="sr-only">Open menu</span>
+              <span className="sr-only">{t('header.openMenu')}</span>
               <Menu className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
@@ -154,13 +165,13 @@ const Header: React.FC = () => {
             <nav className="relative max-w-xs w-full bg-white shadow-xl h-full overflow-y-auto">
               <div className="px-6 pt-6 pb-4 flex items-center justify-between">
                 <a href="/" className="-m-1.5 p-1.5">
-                  <img src={AppImages.logo} className="h-12 w-auto" alt="Green Connect logo" />
+                  <img src={AppImages.logo} className="h-12 w-auto" alt={t('header.logoAlt')} />
                 </a>
                 <button
                   onClick={toggleSidebar}
                   className="rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500"
                 >
-                  <span className="sr-only">Close menu</span>
+                  <span className="sr-only">{t('header.closeMenu')}</span>
                   <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                   </svg>
@@ -180,6 +191,18 @@ const Header: React.FC = () => {
                 </div>
                 <div className="mt-6 pt-6 border-t border-gray-200">
                   <Button
+                    leftIcon={Globe as IconType}
+                    variant="link"
+                    color="green"
+                    size="md"
+                    onClick={() => {
+                      toggleLanguage()
+                      toggleSidebar()
+                    }}
+                    className="w-full justify-start mb-2"
+                  >
+                  </Button>
+                  <Button
                     leftIcon={MessageCircle as IconType}
                     variant="link"
                     color="green"
@@ -190,20 +213,19 @@ const Header: React.FC = () => {
                     }}
                     className="w-full justify-start mb-2"
                   >
-                    Chat
+                    {t('header.chat')}
                   </Button>
                   {isAuthenticated ? (
                     <>
                       <div className="flex items-center mb-4">
                         <div className="flex-shrink-0">
-                          <img src="https://via.placeholder.com/40" alt="User Avatar" className="w-10 h-10 rounded-full" />
+                          <img src="https://via.placeholder.com/40" alt={t('header.userAvatarAlt')} className="w-10 h-10 rounded-full" />
                         </div>
                         <div className="ml-3">
                           <p className="text-base font-medium text-gray-800">{user?.name}</p>
                           <p className="text-sm text-gray-500">{user?.email}</p>
                         </div>
                       </div>
-  
                       <Button
                         leftIcon={User as IconType}
                         variant="link"
@@ -215,7 +237,7 @@ const Header: React.FC = () => {
                         }}
                         className="w-full justify-start mb-2"
                       >
-                        Profile
+                        {t('header.profile')}
                       </Button>
                       <Button
                         leftIcon={LogOut as IconType}
@@ -228,7 +250,7 @@ const Header: React.FC = () => {
                         }}
                         className="w-full justify-start"
                       >
-                        Logout
+                        {t('header.logout')}
                       </Button>
                     </>
                   ) : (
@@ -244,7 +266,7 @@ const Header: React.FC = () => {
                         }}
                         className="w-full justify-start mb-2"
                       >
-                        Sign in
+                        {t('header.signIn')}
                       </Button>
                       <Button
                         leftIcon={Leaf as IconType}
@@ -257,7 +279,7 @@ const Header: React.FC = () => {
                         }}
                         className="w-full justify-start"
                       >
-                        Join Us
+                        {t('header.joinUs')}
                       </Button>
                     </>
                   )}

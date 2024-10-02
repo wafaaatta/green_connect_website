@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Calendar } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { getAllArticles } from '../../redux/stores/article_store'
 import { Card } from '../../components/Card'
@@ -11,6 +12,7 @@ import { IconType } from 'react-icons'
 const ITEMS_PER_PAGE = 12
 
 const ArticlesPage: React.FC = () => {
+  const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { articles } = useAppSelector(state => state.article_store)
   const [displayedArticles, setDisplayedArticles] = useState<typeof articles>([])
@@ -45,13 +47,13 @@ const ArticlesPage: React.FC = () => {
 
   return (
     <div className="w-full bg-gray-50">
-      <Card className='sticky top-28'>
+      <Card className='sticky top-32 shadow'>
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">
-          <h1 className="text-3xl font-bold text-green-800">Green Connect Articles</h1>
+          <h1 className="text-3xl font-bold text-green-800">{t('articlesPage.title')}</h1>
           <div className="w-full md:w-64">
             <Input
               icon={Search as IconType}
-              placeholder="Search articles..."
+              placeholder={t('articlesPage.searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -89,13 +91,11 @@ const ArticlesPage: React.FC = () => {
                       <span>{new Date(article.created_at).toLocaleDateString()}</span>
                     </div>
                     <div className="flex items-center mb-2 text-green-600">
-
-                      <span>{article.articleCategory.name}</span>
+                      <span>{article.article_category.name}</span>
                     </div>
                     <div className="flex items-center justify-between mt-2">
-                      
                       <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">
-                        Read More
+                        {t('articlesPage.readMore')}
                       </Button>
                     </div>
                   </div>
@@ -112,7 +112,7 @@ const ArticlesPage: React.FC = () => {
               onClick={loadMore}
               className="px-8 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-full shadow transition-all duration-300"
             >
-              Load More Articles
+              {t('articlesPage.loadMore')}
             </Button>
           </div>
         )}

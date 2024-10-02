@@ -1,0 +1,386 @@
+{
+    "homePage": {
+        "heroTitle": "Green Connect",
+        "heroSubtitle": "Cultivate connections, share the joy of plants, and grow together in our vibrant community.",
+        "joinCommunity": "Join our community",
+        "heroImageAlt": "Green Connect Community",
+        "featuresTitle": "Discover the Green Connect Experience",
+        "feature1Title": "Plant Adoption",
+        "feature1Description": "Offer a new home to plants or find your ideal green companion",
+        "feature2Title": "Community",
+        "feature2Description": "Connect with plant enthusiasts and share your green journey",
+        "feature3Title": "Events",
+        "feature3Description": "Participate in workshops, seminars, and plant exchanges",
+        "feature4Title": "Knowledge Center",
+        "feature4Description": "Access a wealth of plant care and gardening advice",
+        "communityHighlights": "Community Highlights",
+        "by": "By",
+        "explorePosts": "Explore more posts",
+        "latestInsights": "Latest Green Insights",
+        "category": "Category",
+        "readMoreArticles": "Read more articles",
+        "upcomingEvents": "Upcoming Green Events",
+        "viewAllEvents": "View all events",
+        "ourGreenMission": "Our Green Mission",
+        "missionDescription": "At Green Connect, we are committed to fostering a community of plant lovers and environmental advocates. Our mission is to promote sustainable living, biodiversity, and the joy of nurturing nature.",
+        "missionPoint1": "Promote plant adoption",
+        "missionPoint2": "Encourage sustainability",
+        "missionPoint3": "Spread ecological knowledge",
+        "missionImageAlt": "Green Connect Mission",
+        "getInTouch": "Get in touch",
+        "contactDescription": "Have a question or want to collaborate? Fill out the form below and we'll get back to you as soon as possible.",
+        "yourName": "Your name",
+        "enterYourName": "Enter your name",
+        "email": "Email",
+        "enterYourEmail": "Enter your email",
+        "message": "Message",
+        "tellUsHowWeCanHelp": "Tell us how we can help",
+        "submit": "Submit",
+        "messageSentSuccess": "Message sent successfully!",
+        "messageSentFail": "Failed to send message!"
+    },
+
+    "header": {
+        "home": "Home",
+        "announcements": "Announcements",
+        "blog": "Blog",
+        "events": "Events",
+        "about": "About",
+        "chat": "Chat",
+        "profile": "Profile",
+        "logout": "Logout",
+        "signIn": "Sign in",
+        "joinUs": "Join Us",
+        "openMenu": "Open menu",
+        "closeMenu": "Close menu",
+        "logoAlt": "Green Connect logo",
+        "userAvatarAlt": "User Avatar"
+    },
+
+    "footer": {
+        "home": "Home",
+        "posts": "Posts",
+        "blogs": "Blogs",
+        "events": "Events",
+        "about": "About",
+        "privacyPolicy": "Privacy Policy",
+        "homeAriaLabel": "GreenConnect Home",
+        "logoAlt": "GreenConnect logo",
+        "quickLinksAriaLabel": "Quick links",
+        "legalLinksAriaLabel": "Legal",
+        "copyright": "© {{year}} GreenConnect. All rights reserved."
+    },
+
+    "about": {
+        "title": "About us",
+        "description1": "GreenConnect is an innovative platform created for plant lovers, designed to bring together a passionate community to share, donate, and exchange plants and gardening knowledge.",
+        "description2": "Born from a love for plants and a desire to promote sustainability, GreenConnect is a unique online space where users can offer and adopt plants for free. It serves as a bridge between gardeners, enabling them to share their resources, advice, and enthusiasm with one another.",
+        "imageAlt": "Decorative plant",
+        "tagline": "Together, let's cultivate a green future!",
+        "taglineDescription": "Discover our passionate commitment to a greener and more sustainable world, guided by our vision and mission.",
+        "missionTitle": "Our Mission",
+        "missionDescription": "We are committed to promoting an ecological culture by raising awareness among citizens about the importance of a healthy environment and a life in harmony with nature.",
+        "visionTitle": "Our Vision",
+        "visionDescription": "A future where every home is a living ecosystem that respects the environment, where nature and humans coexist in perfect harmony."
+    },
+
+    "articlesPage": {
+        "title": "Green Connect Articles",
+        "searchPlaceholder": "Search articles...",
+        "readMore": "Read More",
+        "loadMore": "Load More Articles"
+    },
+
+    "conversationsPage": {
+        "yourConversations": "Your Conversations",
+        "with": "with",
+        "you": "You",
+        "uploadedImage": "Uploaded image",
+        "preview": "Preview",
+        "typeYourMessage": "Type your message...",
+        "defaultPlant": "Default Plant",
+        "noConversationSelected": "No conversation selected",
+        "chooseConversation": "Choose a conversation from the list to start chatting",
+        "plantDetails": "Plant Details",
+        "owner": "Owner",
+        "copy": "Copy",
+        "reply": "Reply",
+        "delete": "Delete"
+    },
+
+    "errorPage": {
+        "notFoundTitle": "Oops! Page Not Found",
+        "serverErrorTitle": "Uh-oh! Something went wrong",
+        "notFoundDescription": "It seems the page you're looking for has withered away.",
+        "serverErrorDescription": "Our servers are experiencing some technical difficulties. We're working on fixing it!",
+        "imageAlt": "Error {{statusCode}}",
+        "returnHome": "Return to Home",
+        "tryAgain": "Try Again",
+        "contactSupportPrefix": "If you believe this is an error, please",
+        "contactSupport": "contact our support team",
+        "contactSupportSuffix": ".",
+        "apology": "We apologize for the inconvenience. Our team has been notified and is working on a solution."
+    },
+
+    "eventsPage": {
+        "title": "Upcoming Green Events",
+        "searchPlaceholder": "Search events...",
+        "sortUpcoming": "Upcoming",
+        "sortLatest": "Latest",
+        "viewDetails": "View Details",
+        "loadMore": "Load More Events"
+    },
+
+    "postsPage": {
+        "title": "Discover Amazing Plants",
+        "searchPlaceholder": "Search plants...",
+        "allCategories": "All Categories",
+        "indoorPlants": "Indoor Plants",
+        "outdoorPlants": "Outdoor Plants",
+        "succulentsCacti": "Succulents & Cacti",
+        "herbGarden": "Herb Garden",
+        "floweringPlants": "Flowering Plants",
+        "rareExoticSpecies": "Rare & Exotic Species",
+        "latest": "Latest",
+        "oldest": "Oldest",
+        "alphabetical": "A-Z",
+        "noPlants": "No plants found. Try adjusting your filters.",
+        "resetFilters": "Reset Filters",
+        "viewDetails": "View Details",
+        "loadMore": "Load More Plants"
+    },
+
+    "postDetails": {
+        "aboutPlant": "About this plant",
+        "location": "Location",
+        "morePosts": "More posts by {{name}}",
+        "connectWith": "Connect with {{name}}",
+        "signInRequired": "Sign In Required",
+        "signInMessage": "Please sign in to connect with other plant enthusiasts.",
+        "goToSignIn": "Go to Sign In"
+    },
+
+    "policyPage": {
+        "title": "GreenConnect Policies",
+        "subtitle": "Nurturing a safe, sustainable, and thriving community of plant enthusiasts while protecting our users and the environment.",
+        "communityGuidelines": {
+        "title": "Community Guidelines",
+        "content": [
+            "Respect all members of the GreenConnect community, regardless of their experience level or background.",
+            "Share knowledge, experiences, and tips openly to help others grow in their plant care journey.",
+            "Avoid promotional or spam content that doesn't contribute to meaningful discussions.",
+            "Report any inappropriate behavior, harassment, or content that violates our guidelines.",
+            "Be patient, supportive, and encouraging, especially with new plant enthusiasts.",
+            "Use inclusive language and avoid discriminatory comments or posts.",
+            "Give credit when sharing others' content or photos.",
+            "Engage in constructive discussions and provide helpful feedback when possible."
+        ]
+        },
+        "privacyPolicy": {
+        "title": "Privacy Policy",
+        "content": [
+            "We collect minimal personal information necessary for account creation and platform functionality.",
+            "Your plant data and personal information are kept confidential and never sold to third parties.",
+            "You can request the deletion of your account and associated data at any time through our support channels.",
+            "We use cookies to enhance your browsing experience and provide personalized content.",
+            "We may send occasional emails about important updates, new features, or community events. You can opt-out at any time.",
+            "Your profile information is visible to other users by default, but you can adjust your privacy settings.",
+            "We use industry-standard security measures to protect your data from unauthorized access.",
+            "In case of a data breach, we will notify affected users promptly and take necessary steps to secure the platform."
+        ]
+        },
+        "rightsObligations": {
+        "title": "Your Rights and Obligations",
+        "content": [
+            "Right to access and rectify your personal data at any time.",
+            "Obligation to respect the copyrights of content shared on the platform.",
+            "Right to delete your account and data, in accordance with applicable laws.",
+            "Obligation not to use the platform for illegal or harmful purposes.",
+            "Right to contest any automated decision concerning you and request human intervention.",
+            "Obligation to maintain the confidentiality of your login information.",
+            "Right to data portability to other services, where possible.",
+            "Obligation to report any inappropriate content or violation of terms of use."
+        ]
+        },
+        "sustainabilityCommitment": {
+        "title": "Sustainability Commitment",
+        "content": [
+            "We use eco-friendly hosting solutions powered by 100% renewable energy for our servers.",
+            "Our office operations are carbon-neutral, utilizing energy-efficient equipment and practices.",
+            "We organize annual tree-planting events in local communities to offset our carbon footprint.",
+            "We actively promote sustainable gardening practices through educational content and workshops.",
+            "We partner with organizations dedicated to biodiversity conservation and environmental protection.",
+            "Our merchandise is made from sustainable materials and shipped using eco-friendly packaging.",
+            "We encourage users to trade or donate plants locally to reduce transportation emissions.",
+            "We're committed to continuous improvement in our sustainability efforts and welcome user suggestions."
+        ]
+        },
+        "greenPledge": {
+        "title": "Our Green Pledge",
+        "biodiversity": "Promote Biodiversity",
+        "sustainablePractices": "Sustainable Practices",
+        "environmentalEducation": "Environmental Education",
+        "userDataProtection": "User Data Protection"
+        },
+        "importantNotice": {
+        "title": "Important Notice",
+        "content": "By using GreenConnect, you agree to abide by these policies and contribute to our growing, eco-conscious community. We reserve the right to update these policies as needed to ensure the best experience for all users and to comply with changing regulations."
+        }
+    },
+
+    "userProfile": {
+        "editProfile": "Edit Profile",
+        "createPost": "Create Post",
+        "joined": "Joined {{date}}",
+        "postCount": "{{count}} posts",
+        "myPosts": "My Posts",
+        "editProfileModal": {
+            "title": "Edit Profile",
+            "nameLabel": "Name",
+            "namePlaceholder": "Enter your name",
+            "emailLabel": "Email",
+            "emailPlaceholder": "Enter your email"
+        },
+        "createPostModal": {
+            "title": "Create New Post",
+            "titleLabel": "Title",
+            "titlePlaceholder": "Enter post title",
+            "countryLabel": "Country",
+            "countryPlaceholder": "Enter country",
+            "cityLabel": "City",
+            "cityPlaceholder": "Enter city",
+            "postalCodeLabel": "Postal Code",
+            "postalCodePlaceholder": "Enter postal code",
+            "categoryLabel": "Category",
+            "categoryPlaceholder": "Select a category",
+            "contentLabel": "Content",
+            "contentPlaceholder": "Write something...",
+            "createButton": "Create Post"
+        },
+        "editPostModal": {
+            "title": "Edit Post",
+            "titleLabel": "Title",
+            "titlePlaceholder": "Enter post title",
+            "countryLabel": "Country",
+            "countryPlaceholder": "Enter country",
+            "cityLabel": "City",
+            "cityPlaceholder": "Enter city",
+            "postalCodeLabel": "Postal Code",
+            "postalCodePlaceholder": "Enter postal code",
+            "categoryLabel": "Category",
+            "categoryPlaceholder": "Select a category",
+            "contentLabel": "Content",
+            "contentPlaceholder": "Write something...",
+            "updateButton": "Update Post"
+        },
+        "deletePostModal": {
+            "title": "Delete Post",
+            "content": "Are you sure you want to delete this post? This action cannot be undone."
+        },
+        "categories": [
+            { "value": "Indoor Plants", "label": "Indoor Plants" },
+            { "value": "Outdoor Plants", "label": "Outdoor Plants" },
+            { "value": "Succulents & Cacti", "label": "Succulents & Cacti" },
+            { "value": "Herb Garden", "label": "Herb Garden" },
+            { "value": "Flowering Plants", "label": "Flowering Plants" },
+            { "value": "Rare & Exotic Species", "label": "Rare & Exotic Species" }
+        ],
+        "postStatus": {
+            "pending": "Pending",
+            "accepted": "Accepted",
+            "rejected": "Rejected"
+        },
+        "notifications": {
+            "userUpdateSuccess": "User updated successfully!",
+            "userUpdateFail": "User update failed!",
+            "announceCreateSuccess": "Announce created successfully!",
+            "announceCreateFail": "Announce creation failed!",
+            "announceDeleteSuccess": "Announce deleted successfully!",
+            "announceDeleteFail": "Announce deletion failed!",
+            "announceUpdateSuccess": "Announce updated successfully!",
+            "announceUpdateFail": "Announce update failed!"
+        }
+    },
+
+    "common": {
+        "cancel": "Cancel",
+        "saveChanges": "Save Changes",
+        "logoAlt": "GreenConnect Logo"
+    },
+
+    "confirmationModal": {
+        "cancelButton": "Cancel",
+        "confirmButton": "Confirm"
+    },
+
+    "dangerModal": {
+        "warningMessage": "This action cannot be undone.",
+        "cancelButton": "Cancel",
+        "deleteButton": "Delete"
+    },
+
+    "fileUpload": {
+        "dragDropText_single": "Drag and drop your file here, or",
+        "dragDropText_multi": "Drag and drop your files here, or",
+        "browse": "browse",
+        "acceptedTypes": "Accepted file types: {{types}}",
+        "allTypesAccepted": "All file types accepted",
+        "maxFileSize": "Max file size: {{size}}MB",
+        "maxFiles": " | Max files: {{max}}",
+        "removeFile": "Remove file",
+        "remove": "remove",
+        "addMore": "Add More",
+        "filesSelected": "{{count}} file selected",
+        "filesSelected_plural": "{{count}} files selected",
+        "clearFiles_single": "Clear file",
+        "clearFiles_multi": "Clear all",
+        "errors": {
+            "invalidType": "One or more files are not of accepted type",
+            "exceedSize": "One or more files exceed {{size}}MB",
+            "maxFiles": "You can only upload a maximum of {{max}} files"
+        }
+    },
+
+    "register": {
+        "imageAlt": "Register Nature Scene",
+        "username": "Username",
+        "usernamePlaceholder": "Choose a unique username",
+        "email": "Email",
+        "emailPlaceholder": "your@email.com",
+        "password": "Password",
+        "passwordPlaceholder": "Create a strong password",
+        "confirmPassword": "Confirm Password",
+        "confirmPasswordPlaceholder": "Confirm your password",
+        "termsAgreement": "I agree to the",
+        "termsLink": "Terms and Conditions",
+        "createAccount": "Create Account",
+        "alreadyHaveAccount": "Already have an account?",
+        "signIn": "Sign in",
+        "errors": {
+            "passwordMismatch": "Passwords do not match"
+        },
+        "success": "Registration successful"
+    },
+
+    "login": {
+        "imageAlt": "Login Nature Scene",
+        "title": "Login to GreenConnect",
+        "email": "Email",
+        "emailPlaceholder": "your@email.com",
+        "password": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "passwordRequirements": "Password must contain at least 8 characters, one uppercase, one lowercase, and one number",
+        "rememberMe": "Remember me",
+        "forgotPassword": "Forgot your password?",
+        "loading": "Loading...",
+        "loginButton": "Login",
+        "noAccount": "Don't have an account?",
+        "joinGreenConnect": "Join GreenConnect",
+        "notifications": {
+            "loginAgain": "Login Again",
+            "loggedOut": "You have been logged out. Please login again.",
+            "loginSuccess": "Login successful",
+            "loginFailed": "Login failed"
+        }
+    }
+}

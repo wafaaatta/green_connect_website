@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Filter, MapPin, Calendar, X, User, Mail } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { getAllEvents } from '../../redux/stores/event_store'
 import Event from '../../interfaces/Event'
@@ -13,6 +14,7 @@ import { IconType } from 'react-icons'
 const ITEMS_PER_PAGE = 10
 
 const EventsPage: React.FC = () => {
+  const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { events } = useAppSelector(state => state.event_store)
   const [searchTerm, setSearchTerm] = useState('')
@@ -60,12 +62,12 @@ const EventsPage: React.FC = () => {
       <div className="sticky top-28 z-10 bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">
-            <h1 className="text-3xl font-bold text-green-800">Upcoming Green Events</h1>
+            <h1 className="text-3xl font-bold text-green-800">{t('eventsPage.title')}</h1>
             <div className="flex flex-wrap items-center gap-4">
               <div className="w-full md:w-64">
                 <Input
                   icon={Search as IconType}
-                  placeholder="Search events..."
+                  placeholder={t('eventsPage.searchPlaceholder')}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -76,8 +78,8 @@ const EventsPage: React.FC = () => {
                   value={sortBy}
                   onChange={(value) => setSortBy(value as string)}
                   options={[
-                    { value: 'upcoming', label: 'Upcoming' },
-                    { value: 'latest', label: 'Latest' },
+                    { value: 'upcoming', label: t('eventsPage.sortUpcoming') },
+                    { value: 'latest', label: t('eventsPage.sortLatest') },
                   ]}
                 />
               </div>
@@ -123,7 +125,7 @@ const EventsPage: React.FC = () => {
                       </div>
                     </div>
                     <div className="p-4 flex items-center">
-                      <Button className="bg-green-600 hover:bg-green-700 text-white">View Details</Button>
+                      <Button className="bg-green-600 hover:bg-green-700 text-white">{t('eventsPage.viewDetails')}</Button>
                     </div>
                   </div>
                 </Card>
@@ -139,7 +141,7 @@ const EventsPage: React.FC = () => {
               onClick={loadMore}
               className="px-8 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
             >
-              Load More Events
+              {t('eventsPage.loadMore')}
             </Button>
           </div>
         )}

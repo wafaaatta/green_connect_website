@@ -1,0 +1,385 @@
+{
+    "homePage": {
+      "heroTitle": "Green Connect",
+      "heroSubtitle": "Cultivez des connexions, partagez la joie des plantes, et grandissons ensemble au sein de notre communauté vibrante.",
+      "joinCommunity": "Rejoignez notre communauté",
+      "heroImageAlt": "Communauté Green Connect",
+      "featuresTitle": "Découvrez l'expérience Green Connect",
+      "feature1Title": "Adoption de Plantes",
+      "feature1Description": "Offrez un nouveau foyer aux plantes ou trouvez votre compagnon vert idéal",
+      "feature2Title": "Communauté",
+      "feature2Description": "Connectez-vous avec des passionnés de plantes et partagez votre parcours vert",
+      "feature3Title": "Événements",
+      "feature3Description": "Participez à des ateliers, séminaires, et échanges de plantes",
+      "feature4Title": "Centre de Connaissances",
+      "feature4Description": "Accédez à une mine de conseils sur les soins des plantes et le jardinage",
+      "communityHighlights": "Temps forts de la communauté",
+      "by": "Par",
+      "explorePosts": "Explorer d'autres publications",
+      "latestInsights": "Dernières perspectives écologiques",
+      "category": "Catégorie",
+      "readMoreArticles": "Lire plus d'articles",
+      "upcomingEvents": "Événements verts à venir",
+      "viewAllEvents": "Voir tous les événements",
+      "ourGreenMission": "Notre mission verte",
+      "missionDescription": "Chez Green Connect, nous nous engageons à favoriser une communauté d'amoureux des plantes et de défenseurs de l'environnement. Notre mission est de promouvoir un mode de vie durable, la biodiversité, et la joie de prendre soin de la nature.",
+      "missionPoint1": "Promouvoir l'adoption de plantes",
+      "missionPoint2": "Encourager la durabilité",
+      "missionPoint3": "Diffuser les connaissances sur l'écologie",
+      "missionImageAlt": "Mission Green Connect",
+      "getInTouch": "Contactez-nous",
+      "contactDescription": "Vous avez une question ou souhaitez collaborer ? Remplissez le formulaire ci-dessous et nous vous contacterons dès que possible.",
+      "yourName": "Votre nom",
+      "enterYourName": "Entrez votre nom",
+      "email": "Email",
+      "enterYourEmail": "Entrez votre email",
+      "message": "Message",
+      "tellUsHowWeCanHelp": "Dites-nous comment nous pouvons vous aider",
+      "submit": "Soumettre",
+      "messageSentSuccess": "Message envoyé avec succès !",
+      "messageSentFail": "Échec de l'envoi du message !"
+    },
+
+    "header": {
+        "home": "Accueil",
+        "announcements": "Annonces",
+        "blog": "Blog",
+        "events": "Événements",
+        "about": "À propos",
+        "chat": "Chat",
+        "profile": "Profil",
+        "logout": "Déconnexion",
+        "signIn": "Se connecter",
+        "joinUs": "Rejoignez-nous",
+        "openMenu": "Ouvrir le menu",
+        "closeMenu": "Fermer le menu",
+        "logoAlt": "Logo Green Connect",
+        "userAvatarAlt": "Avatar de l'utilisateur"
+    },
+
+    "footer": {
+        "home": "Accueil",
+        "posts": "Publications",
+        "blogs": "Blogs",
+        "events": "Événements",
+        "about": "À propos",
+        "privacyPolicy": "Politique de confidentialité",
+        "homeAriaLabel": "Accueil GreenConnect",
+        "logoAlt": "Logo GreenConnect",
+        "quickLinksAriaLabel": "Liens rapides",
+        "legalLinksAriaLabel": "Mentions légales",
+        "copyright": "© {{year}} GreenConnect. Tous droits réservés."
+    },
+
+    "about": {
+        "title": "À propos de nous",
+        "description1": "GreenConnect est une plateforme innovante créée pour les amoureux des plantes, conçue pour rassembler une communauté passionnée pour partager, donner et échanger des plantes et des connaissances en jardinage.",
+        "description2": "Née d'un amour pour les plantes et d'un désir de promouvoir la durabilité, GreenConnect est un espace en ligne unique où les utilisateurs peuvent offrir et adopter des plantes gratuitement. Elle sert de pont entre les jardiniers, leur permettant de partager leurs ressources, leurs conseils et leur enthousiasme les uns avec les autres.",
+        "imageAlt": "Plante décorative",
+        "tagline": "Ensemble, cultivons un avenir vert !",
+        "taglineDescription": "Découvrez notre engagement passionné pour un monde plus vert et plus durable, guidé par notre vision et notre mission.",
+        "missionTitle": "Notre Mission",
+        "missionDescription": "Nous nous engageons à promouvoir une culture écologique en sensibilisant les citoyens à l'importance d'un environnement sain et d'une vie en harmonie avec la nature.",
+        "visionTitle": "Notre Vision",
+        "visionDescription": "Un avenir où chaque foyer est un écosystème vivant qui respecte l'environnement, où la nature et les humains coexistent en parfaite harmonie."
+    },
+
+    "articlesPage": {
+        "title": "Articles Green Connect",
+        "searchPlaceholder": "Rechercher des articles...",
+        "readMore": "Lire la suite",
+        "loadMore": "Charger plus d'articles"
+    },
+
+    "conversationsPage": {
+        "yourConversations": "Vos conversations",
+        "with": "avec",
+        "you": "Vous",
+        "uploadedImage": "Image téléchargée",
+        "preview": "Aperçu",
+        "typeYourMessage": "Tapez votre message...",
+        "defaultPlant": "Plante par défaut",
+        "noConversationSelected": "Aucune conversation sélectionnée",
+        "chooseConversation": "Choisissez une conversation dans la liste pour commencer à discuter",
+        "plantDetails": "Détails de la plante",
+        "owner": "Propriétaire",
+        "copy": "Copier",
+        "reply": "Répondre",
+        "delete": "Supprimer"
+    },
+
+    "errorPage": {
+        "notFoundTitle": "Oups ! Page non trouvée",
+        "serverErrorTitle": "Oh non ! Quelque chose s'est mal passé",
+        "notFoundDescription": "Il semble que la page que vous recherchez se soit fanée.",
+        "serverErrorDescription": "Nos serveurs rencontrent des difficultés techniques. Nous travaillons à les résoudre !",
+        "imageAlt": "Erreur {{statusCode}}",
+        "returnHome": "Retour à l'accueil",
+        "tryAgain": "Réessayer",
+        "contactSupportPrefix": "Si vous pensez qu'il s'agit d'une erreur, veuillez",
+        "contactSupport": "contacter notre équipe de support",
+        "contactSupportSuffix": ".",
+        "apology": "Nous nous excusons pour le désagrément. Notre équipe a été informée et travaille sur une solution."
+    },
+
+    "eventsPage": {
+        "title": "Événements Verts à Venir",
+        "searchPlaceholder": "Rechercher des événements...",
+        "sortUpcoming": "À venir",
+        "sortLatest": "Plus récents",
+        "viewDetails": "Voir les détails",
+        "loadMore": "Charger plus d'événements"
+    },
+
+    "postsPage": {
+        "title": "Découvrez des Plantes Incroyables",
+        "searchPlaceholder": "Rechercher des plantes...",
+        "allCategories": "Toutes les Catégories",
+        "indoorPlants": "Plantes d'Intérieur",
+        "outdoorPlants": "Plantes d'Extérieur",
+        "succulentsCacti": "Succulentes et Cactus",
+        "herbGarden": "Jardin d'Herbes Aromatiques",
+        "floweringPlants": "Plantes à Fleurs",
+        "rareExoticSpecies": "Espèces Rares et Exotiques",
+        "latest": "Plus Récentes",
+        "oldest": "Plus Anciennes",
+        "alphabetical": "A-Z",
+        "noPlants": "Aucune plante trouvée. Essayez d'ajuster vos filtres.",
+        "resetFilters": "Réinitialiser les Filtres",
+        "viewDetails": "Voir les Détails",
+        "loadMore": "Charger Plus de Plantes"
+    },
+
+    "postDetails": {
+        "aboutPlant": "À propos de cette plante",
+        "location": "Emplacement",
+        "morePosts": "Plus d'annonces de {{name}}",
+        "connectWith": "Contacter {{name}}",
+        "signInRequired": "Connexion Requise",
+        "signInMessage": "Veuillez vous connecter pour échanger avec d'autres passionnés de plantes.",
+        "goToSignIn": "Aller à la page de connexion"
+    },
+
+    "policyPage": {
+        "title": "Politiques de GreenConnect",
+        "subtitle": "Cultiver une communauté sûre, durable et florissante d'amateurs de plantes tout en protégeant nos utilisateurs et l'environnement.",
+        "communityGuidelines": {
+        "title": "Lignes directrices de la communauté",
+        "content": [
+            "Respectez tous les membres de la communauté GreenConnect, quel que soit leur niveau d'expérience ou leur origine.",
+            "Partagez ouvertement vos connaissances, expériences et conseils pour aider les autres à progresser dans leur parcours de soins des plantes.",
+            "Évitez le contenu promotionnel ou spam qui ne contribue pas à des discussions significatives.",
+            "Signalez tout comportement inapproprié, harcèlement ou contenu qui viole nos directives.",
+            "Soyez patient, solidaire et encourageant, en particulier avec les nouveaux amateurs de plantes.",
+            "Utilisez un langage inclusif et évitez les commentaires ou les publications discriminatoires.",
+            "Donnez crédit lorsque vous partagez le contenu ou les photos d'autres personnes.",
+            "Engagez-vous dans des discussions constructives et fournissez des commentaires utiles lorsque possible."
+        ]
+        },
+        "privacyPolicy": {
+        "title": "Politique de confidentialité",
+        "content": [
+            "Nous collectons les informations personnelles minimales nécessaires à la création de compte et à la fonctionnalité de la plateforme.",
+            "Vos données sur les plantes et vos informations personnelles sont gardées confidentielles et ne sont jamais vendues à des tiers.",
+            "Vous pouvez demander la suppression de votre compte et des données associées à tout moment via nos canaux de support.",
+            "Nous utilisons des cookies pour améliorer votre expérience de navigation et fournir du contenu personnalisé.",
+            "Nous pouvons envoyer des emails occasionnels concernant des mises à jour importantes, de nouvelles fonctionnalités ou des événements communautaires. Vous pouvez vous désabonner à tout moment.",
+            "Vos informations de profil sont visibles par défaut pour les autres utilisateurs, mais vous pouvez ajuster vos paramètres de confidentialité.",
+            "Nous utilisons des mesures de sécurité standard de l'industrie pour protéger vos données contre tout accès non autorisé.",
+            "En cas de violation de données, nous informerons rapidement les utilisateurs concernés et prendrons les mesures nécessaires pour sécuriser la plateforme."
+        ]
+        },
+        "rightsObligations": {
+        "title": "Vos droits et obligations",
+        "content": [
+            "Droit d'accès et de rectification de vos données personnelles à tout moment.",
+            "Obligation de respecter les droits d'auteur des contenus partagés sur la plateforme.",
+            "Droit à la suppression de votre compte et de vos données, conformément aux lois en vigueur.",
+            "Obligation de ne pas utiliser la plateforme à des fins illégales ou nuisibles.",
+            "Droit de contester toute décision automatisée vous concernant et de demander une intervention humaine.",
+            "Obligation de maintenir la confidentialité de vos informations de connexion.",
+            "Droit à la portabilité de vos données vers d'autres services, dans la mesure du possible.",
+            "Obligation de signaler tout contenu inapproprié ou violation des conditions d'utilisation."
+        ]
+        },
+        "sustainabilityCommitment": {
+        "title": "Engagement en faveur du développement durable",
+        "content": [
+            "Nous utilisons des solutions d'hébergement écologiques alimentées à 100% par des énergies renouvelables pour nos serveurs.",
+            "Nos opérations de bureau sont neutres en carbone, utilisant des équipements et des pratiques écoénergétiques.",
+            "Nous organisons des événements annuels de plantation d'arbres dans les communautés locales pour compenser notre empreinte carbone.",
+            "Nous promouvons activement des pratiques de jardinage durables à travers du contenu éducatif et des ateliers.",
+            "Nous nous associons à des organisations dédiées à la conservation de la biodiversité et à la protection de l'environnement.",
+            "Nos produits dérivés sont fabriqués à partir de matériaux durables et expédiés dans des emballages écologiques.",
+            "Nous encourageons les utilisateurs à échanger ou à donner des plantes localement pour réduire les émissions liées au transport.",
+            "Nous nous engageons à améliorer continuellement nos efforts de durabilité et accueillons les suggestions des utilisateurs."
+        ]
+        },
+        "greenPledge": {
+        "title": "Notre engagement vert",
+        "biodiversity": "Promouvoir la biodiversité",
+        "sustainablePractices": "Pratiques durables",
+        "environmentalEducation": "Éducation environnementale",
+        "userDataProtection": "Protection des données utilisateur"
+        },
+        "importantNotice": {
+        "title": "Avis important",
+        "content": "En utilisant GreenConnect, vous acceptez de respecter ces politiques et de contribuer à notre communauté grandissante et éco-consciente. Nous nous réservons le droit de mettre à jour ces politiques si nécessaire pour assurer la meilleure expérience possible à tous les utilisateurs et pour nous conformer aux réglementations changeantes."
+        }
+    },
+
+    "userProfile": {
+        "editProfile": "Modifier le profil",
+        "createPost": "Créer une annonce",
+        "joined": "Inscrit le {{date}}",
+        "postCount": "{{count}} annonces",
+        "myPosts": "Mes annonces",
+        "editProfileModal": {
+        "title": "Modifier le profil",
+        "nameLabel": "Nom",
+        "namePlaceholder": "Entrez votre nom",
+        "emailLabel": "Email",
+        "emailPlaceholder": "Entrez votre email"
+        },
+        "createPostModal": {
+        "title": "Créer une nouvelle annonce",
+        "titleLabel": "Titre",
+        "titlePlaceholder": "Entrez le titre de l'annonce",
+        "countryLabel": "Pays",
+        "countryPlaceholder": "Entrez le pays",
+        "cityLabel": "Ville",
+        "cityPlaceholder": "Entrez la ville",
+        "postalCodeLabel": "Code postal",
+        "postalCodePlaceholder": "Entrez le code postal",
+        "categoryLabel": "Catégorie",
+        "categoryPlaceholder": "Sélectionnez une catégorie",
+        "contentLabel": "Contenu",
+        "contentPlaceholder": "Écrivez quelque chose...",
+        "createButton": "Créer l'annonce"
+        },
+        "editPostModal": {
+        "title": "Modifier l'annonce",
+        "titleLabel": "Titre",
+        "titlePlaceholder": "Entrez le titre de l'annonce",
+        "countryLabel": "Pays",
+        "countryPlaceholder": "Entrez le pays",
+        "cityLabel": "Ville",
+        "cityPlaceholder": "Entrez la ville",
+        "postalCodeLabel": "Code postal",
+        "postalCodePlaceholder": "Entrez le code postal",
+        "categoryLabel": "Catégorie",
+        "categoryPlaceholder": "Sélectionnez une catégorie",
+        "contentLabel": "Contenu",
+        "contentPlaceholder": "Écrivez quelque chose...",
+        "updateButton": "Mettre à jour l'annonce"
+        },
+        "deletePostModal": {
+        "title": "Supprimer l'annonce",
+        "content": "Êtes-vous sûr de vouloir supprimer cette annonce ? Cette action ne peut pas être annulée."
+        },
+        "categories": [
+        { "value": "Indoor Plants", "label": "Plantes d'intérieur" },
+        { "value": "Outdoor Plants", "label": "Plantes d'extérieur" },
+        { "value": "Succulents & Cacti", "label": "Succulentes et cactus" },
+        { "value": "Herb Garden", "label": "Jardin d'herbes aromatiques" },
+        { "value": "Flowering Plants", "label": "Plantes à fleurs" },
+        { "value": "Rare & Exotic Species", "label": "Espèces rares et exotiques" }
+        ],
+        "postStatus": {
+        "pending": "En attente",
+        "accepted": "Acceptée",
+        "rejected": "Rejetée"
+        },
+        "notifications": {
+        "userUpdateSuccess": "Utilisateur mis à jour avec succès !",
+        "userUpdateFail": "La mise à jour de l'utilisateur a échoué !",
+        "announceCreateSuccess": "Annonce créée avec succès !",
+        "announceCreateFail": "La création de l'annonce a échoué !",
+        "announceDeleteSuccess": "Annonce supprimée avec succès !",
+        "announceDeleteFail": "La suppression de l'annonce a échoué !",
+        "announceUpdateSuccess": "Annonce mise à jour avec succès !",
+        "announceUpdateFail": "La mise à jour de l'annonce a échoué !"
+        }
+    },
+    "common": {
+        "cancel": "Annuler",
+        "saveChanges": "Enregistrer les modifications",
+        "logoAlt": "Logo GreenConnect"
+    },
+
+    "confirmationModal": {
+        "cancelButton": "Annuler",
+        "confirmButton": "Confirmer"
+    },
+
+    "dangerModal": {
+        "warningMessage": "Cette action ne peut pas être annulée.",
+        "cancelButton": "Annuler",
+        "deleteButton": "Supprimer"
+    },
+
+    "fileUpload": {
+        "dragDropText_single": "Glissez et déposez votre fichier ici, ou",
+        "dragDropText_multi": "Glissez et déposez vos fichiers ici, ou",
+        "browse": "parcourir",
+        "acceptedTypes": "Types de fichiers acceptés : {{types}}",
+        "allTypesAccepted": "Tous les types de fichiers sont acceptés",
+        "maxFileSize": "Taille maximale du fichier : {{size}}MB",
+        "maxFiles": " | Nombre maximum de fichiers : {{max}}",
+        "removeFile": "Supprimer le fichier",
+        "remove": "supprimer",
+        "addMore": "Ajouter plus",
+        "filesSelected": "{{count}} fichier sélectionné",
+        "filesSelected_plural": "{{count}} fichiers sélectionnés",
+        "clearFiles_single": "Effacer le fichier",
+        "clearFiles_multi": "Tout effacer",
+        "errors": {
+            "invalidType": "Un ou plusieurs fichiers ne sont pas d'un type accepté",
+            "exceedSize": "Un ou plusieurs fichiers dépassent {{size}}MB",
+            "maxFiles": "Vous ne pouvez télécharger qu'un maximum de {{max}} fichiers"
+        }
+    },
+
+    "register": {
+        "imageAlt": "Scène de la nature pour l'inscription",
+        "username": "Nom d'utilisateur",
+        "usernamePlaceholder": "Choisissez un nom d'utilisateur unique",
+        "email": "Email",
+        "emailPlaceholder": "votre@email.com",
+        "password": "Mot de passe",
+        "passwordPlaceholder": "Créez un mot de passe fort",
+        "confirmPassword": "Confirmez le mot de passe",
+        "confirmPasswordPlaceholder": "Confirmez votre mot de passe",
+        "termsAgreement": "J'accepte les",
+        "termsLink": "Conditions générales",
+        "createAccount": "Créer un compte",
+        "alreadyHaveAccount": "Vous avez déjà un compte ?",
+        "signIn": "Se connecter",
+        "errors": {
+            "passwordMismatch": "Les mots de passe ne correspondent pas"
+        },
+        "success": "Inscription réussie"
+    },
+
+    "login": {
+        "imageAlt": "Scène de la nature pour la connexion",
+        "title": "Connexion à GreenConnect",
+        "email": "Email",
+        "emailPlaceholder": "votre@email.com",
+        "password": "Mot de passe",
+        "passwordPlaceholder": "Entrez votre mot de passe",
+        "passwordRequirements": "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre",
+        "rememberMe": "Se souvenir de moi",
+        "forgotPassword": "Mot de passe oublié ?",
+        "loading": "Chargement...",
+        "loginButton": "Se connecter",
+        "noAccount": "Vous n'avez pas de compte ?",
+        "joinGreenConnect": "Rejoignez GreenConnect",
+        "notifications": {
+            "loginAgain": "Reconnexion nécessaire",
+            "loggedOut": "Vous avez été déconnecté. Veuillez vous reconnecter.",
+            "loginSuccess": "Connexion réussie",
+            "loginFailed": "Échec de la connexion"
+        }
+    }
+}

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { Search, Filter, MapPin, Calendar } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { getAllAnnounces, setCurrentAnnounce } from '../../redux/stores/announce_store'
 import Routes from '../../constants/routes'
@@ -16,6 +17,7 @@ import { IconType } from 'react-icons'
 const ITEMS_PER_PAGE = 15
 
 const PostsPage: React.FC = () => {
+  const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { announces } = useAppSelector(state => state.announce_store)
@@ -28,8 +30,6 @@ const PostsPage: React.FC = () => {
   useEffect(() => {
     dispatch(getAllAnnounces())
   }, [dispatch])
-
-
 
   const filteredAnnounces = announces.filter(announce =>
     (categoryFilter === 'all' || announce.article_category === categoryFilter) &&
@@ -66,17 +66,16 @@ const PostsPage: React.FC = () => {
     setPage(prevPage => prevPage + 1)
   }
 
-
   return (
     <div className="w-full">
       <Card className="sticky top-32 z-10 mb-8 mx-4 sm:mx-6 lg:mx-8 bg-white">
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">
-          <h1 className="text-3xl font-bold text-green-600 mb-4 md:mb-0">Discover Amazing Plants</h1>
+          <h1 className="text-3xl font-bold text-green-600 mb-4 md:mb-0">{t('postsPage.title')}</h1>
           <div className="flex flex-wrap justify-end items-center gap-4">
             <div className="w-full md:w-60">
               <Input
                 icon={Search as IconType}
-                placeholder="Search plants..."
+                placeholder={t('postsPage.searchPlaceholder')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -87,13 +86,13 @@ const PostsPage: React.FC = () => {
                 value={categoryFilter}
                 onChange={(value) => setCategoryFilter(value as string)}
                 options={[
-                  { value: 'all', label: 'All Categories' },
-                  { value: 'Indoor Plants', label: 'Indoor Plants' },
-                  { value: 'Outdoor Plants', label: 'Outdoor Plants' },
-                  { value: 'Succulents & Cacti', label: 'Succulents & Cacti' },
-                  { value: 'Herb Garden', label: 'Herb Garden' },
-                  { value: 'Flowering Plants', label: 'Flowering Plants' },
-                  { value: 'Rare & Exotic Species', label: 'Rare & Exotic Species' },
+                  { value: 'all', label: t('postsPage.allCategories') },
+                  { value: 'Indoor Plants', label: t('postsPage.indoorPlants') },
+                  { value: 'Outdoor Plants', label: t('postsPage.outdoorPlants') },
+                  { value: 'Succulents & Cacti', label: t('postsPage.succulentsCacti') },
+                  { value: 'Herb Garden', label: t('postsPage.herbGarden') },
+                  { value: 'Flowering Plants', label: t('postsPage.floweringPlants') },
+                  { value: 'Rare & Exotic Species', label: t('postsPage.rareExoticSpecies') },
                 ]}
               />
             </div>
@@ -103,9 +102,9 @@ const PostsPage: React.FC = () => {
                 value={sortBy}
                 onChange={(value) => setSortBy(value as string)}
                 options={[
-                  { value: 'latest', label: 'Latest' },
-                  { value: 'oldest', label: 'Oldest' },
-                  { value: 'alphabetical', label: 'A-Z' },
+                  { value: 'latest', label: t('postsPage.latest') },
+                  { value: 'oldest', label: t('postsPage.oldest') },
+                  { value: 'alphabetical', label: t('postsPage.alphabetical') },
                 ]}
               />
             </div>
@@ -120,8 +119,8 @@ const PostsPage: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="text-center py-12"
         >
-          <p className="text-xl text-gray-700">No plants found. Try adjusting your filters.</p>
-          <Button className="mt-4 bg-green-600 hover:bg-green-700 text-white" onClick={resetFilters}>Reset Filters</Button>
+          <p className="text-xl text-gray-700">{t('postsPage.noPlants')}</p>
+          <Button className="mt-4 bg-green-600 hover:bg-green-700 text-white" onClick={resetFilters}>{t('postsPage.resetFilters')}</Button>
         </motion.div>
       ) : (
         <AnimatePresence>
@@ -158,7 +157,7 @@ const PostsPage: React.FC = () => {
                       <span className="text-sm text-gray-600">
                         {new Date(announce.created_at).toLocaleDateString()}
                       </span>
-                      <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">View Details</Button>
+                      <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">{t('postsPage.viewDetails')}</Button>
                     </div>
                   </div>
                 </Card>
@@ -175,7 +174,7 @@ const PostsPage: React.FC = () => {
             onClick={loadMore}
             className="px-8 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-full  shadow duration-300"
           >
-            Load More Plants
+            {t('postsPage.loadMore')}
           </Button>
         </div>
       )}

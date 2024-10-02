@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Calendar, MapPin, User, X } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import ContactMap from './ContactMap'
 import { useNavigate } from 'react-router-dom'
 import Routes from '../../constants/routes'
@@ -29,8 +30,8 @@ const otherPosts: Post[] = [
   { id: 3, user: 'Alice Green', title: 'Snake Plant', image: '/src/assets/images/plants/snake-plant.png', category: 'Indoor', city: 'New York', postalCode: '10021', creationDate: '2023-06-05', description: 'Snake Plant description...' },
 ]
 
-
 export default function PostDetails() {
+  const { t } = useTranslation()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const navigate = useNavigate()
   const {isAuthenticated} = useAppSelector(state => state.auth_store)
@@ -58,9 +59,7 @@ export default function PostDetails() {
   const handleCloseDialog = () => {
     setIsDialogOpen(false)
     navigate(Routes.AUTH.LOGIN)
-
   }
-
 
   return (
     <div className="max-w-7xl mx-auto relative p-4">
@@ -100,9 +99,9 @@ export default function PostDetails() {
 
           <div className="flex items-center mb-6">
             <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
-            <div className="w-full h-full bg-green-500 flex items-center justify-center text-white text-xl font-bold">
-                  {(currentAnnounce?.user?.name ? currentAnnounce?.user?.name[0] + currentAnnounce?.user?.name[1] : '')}
-                </div>
+              <div className="w-full h-full bg-green-500 flex items-center justify-center text-white text-xl font-bold">
+                {(currentAnnounce?.user?.name ? currentAnnounce?.user?.name[0] + currentAnnounce?.user?.name[1] : '')}
+              </div>
             </div>
             <div>
               <h2 className="text-xl font-semibold">{currentAnnounce?.user.name}</h2>
@@ -110,18 +109,17 @@ export default function PostDetails() {
           </div>
 
           <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-2">About this plant</h3>
+            <h3 className="text-xl font-semibold mb-2">{t('postDetails.aboutPlant')}</h3>
             <p className="text-gray-700">{currentAnnounce?.description}</p>
           </div>
 
           <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-2">Location</h3>
+            <h3 className="text-xl font-semibold mb-2">{t('postDetails.location')}</h3>
             <ContactMap city='lyon' country='france'  />
           </div>
 
-
           <div>
-            <h3 className="text-xl font-semibold mb-4">More posts by {currentAnnounce?.user.name}</h3>
+            <h3 className="text-xl font-semibold mb-4">{t('postDetails.morePosts', { name: currentAnnounce?.user.name })}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {otherPosts.map((post) => (
                 <motion.div
@@ -148,7 +146,7 @@ export default function PostDetails() {
           onClick={handleConnect}
           className=" bg-green-700 text-white py-2 px-6 rounded hover:bg-green-900 transition duration-300"
         >
-          Connect with {currentAnnounce?.user.name}
+          {t('postDetails.connectWith', { name: currentAnnounce?.user.name })}
         </button>
       </div>
 
@@ -156,17 +154,17 @@ export default function PostDetails() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
           <div className="bg-white rounded p-3 max-w-sm w-full">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-semibold">Sign In Required</h3>
+              <h3 className="text-xl font-semibold">{t('postDetails.signInRequired')}</h3>
               <button onClick={handleCloseDialog} className="text-gray-500 hover:text-gray-700">
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <p className="mb-4">Please sign in to connect with other plant enthusiasts.</p>
+            <p className="mb-4">{t('postDetails.signInMessage')}</p>
             <button
               onClick={handleCloseDialog}
               className="w-full bg-green-700 text-white py-2 px-4 rounded hover:bg-green-900 transition duration-300 flex items-center justify-center"
             >
-              Go to Sign In
+              {t('postDetails.goToSignIn')}
               <User className="ml-2" />
             </button>
           </div>

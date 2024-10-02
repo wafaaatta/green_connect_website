@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { EyeIcon, EyeOffIcon, Mail, Lock, User } from 'lucide-react'
+import { EyeIcon, EyeOffIcon, Mail, Lock, User, Globe } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import AppImages from '../../constants/app_images'
 import { useAppDispatch } from '../../hooks/hooks'
 import { showNotification } from '../../redux/stores/notification_store'
@@ -11,6 +12,7 @@ import Notification from '../../components/Notification'
 import Routes from '../../constants/routes'
 
 export default function Register() {
+  const { t, i18n } = useTranslation()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
@@ -28,7 +30,7 @@ export default function Register() {
     if (password !== confirmPassword) {
       dispatch(
         showNotification({
-          message: 'Passwords do not match',
+          message: t('register.errors.passwordMismatch'),
           type: 'error',
         })
       )
@@ -45,7 +47,7 @@ export default function Register() {
     .then(() => {
       dispatch(
         showNotification({
-          message: 'Registration successful',
+          message: t('register.success'),
           type: 'success',
         })
       )
@@ -68,63 +70,74 @@ export default function Register() {
     setConfirmPassword('')
   }
 
+  const toggleLanguage = () => {
+    i18n.changeLanguage(i18n.language === 'en' ? 'fr' : 'en')
+  }
+
   return (
     <div className="min-h-screen bg-slate-400 flex items-center justify-center p-4">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-white rounded shadow overflow-hidden w-full max-w-6xl"
+        className="bg-white rounded shadow overflow-hidden w-full max-w-6xl relative"
       >
+        <button
+          onClick={toggleLanguage}
+          className="absolute top-4 right-4 p-2 bg-green-700 text-white rounded-full hover:bg-green-800 transition-colors duration-200"
+        >
+          <Globe size={20} />
+        </button>
         <div className="flex flex-col md:flex-row">
           {/* Left Column - Image */}
           <div className="md:w-1/2 relative">
             <img 
               src="/src/assets/images/plants-workshop/workshop-house.png" 
-              alt="Register Nature Scene" 
+              alt={t('register.imageAlt')}
               className="object-cover h-full w-full"
             />
             <div className="absolute inset-0 bg-green-800 bg-opacity-30 flex items-center justify-center">
-
             </div>
           </div>
 
           {/* Right Column - Register Form */}
           <div className="md:w-1/2 w-full p-4 bg-white">
             <div className="flex justify-center">
-              <img src={AppImages.logo} alt="GreenConnect Logo" className="w-52" />
+              <img src={AppImages.logo} alt={t('common.logoAlt')} className="w-52" />
             </div>
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
-                  Username
+                  {t('register.username')}
                 </label>
                 <div className="relative">
                   <input
                     id="username"
+                    name="username"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     type="text"
                     required
                     className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
-                    placeholder="Choose a unique username"
+                    placeholder={t('register.usernamePlaceholder')}
                   />
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
                 </div>
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                  Email
+                  {t('register.email')}
                 </label>
                 <div className="relative">
                   <input
                     id="email"
+                    name="email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
-                    placeholder="your@email.com"
+                    placeholder={t('register.emailPlaceholder')}
                   />
                   <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
                 </div>
@@ -132,17 +145,19 @@ export default function Register() {
 
               <div>
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                  Password
+                  {t('register.password')}
                 </label>
                 <div className="relative">
                   <input
                     id="password"
+                    name="password"
+                    data-testid="password-input"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     type={showPassword ? "text" : "password"}
                     required
                     className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
-                    placeholder="Create a strong password"
+                    placeholder={t('register.passwordPlaceholder')}
                   />
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
                   <button
@@ -160,17 +175,18 @@ export default function Register() {
               </div>
               <div>
                 <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                  Confirm Password
+                  {t('register.confirmPassword')}
                 </label>
                 <div className="relative">
                   <input
                     id="confirmPassword"
+                    name='confirmPassword'
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     type={showConfirmPassword ? "text" : "password"}
                     required
                     className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
-                    placeholder="Confirm your password"
+                    placeholder={t('register.confirmPasswordPlaceholder')}
                   />
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
                   <button
@@ -195,9 +211,9 @@ export default function Register() {
                   required
                 />
                 <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">
-                  I agree to the{" "}
+                  {t('register.termsAgreement')} {" "}
                   <a href="#" className="text-green-700 hover:text-green-900">
-                    Terms and Conditions
+                    {t('register.termsLink')}
                   </a>
                 </label>
               </div>
@@ -205,14 +221,14 @@ export default function Register() {
                 type="submit"
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-green-700 hover:bg-green-900 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-green-500"
               >
-                Create Account
+                {t('register.createAccount')}
               </button>
             </form>
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
-                Already have an account?{" "}
+                {t('register.alreadyHaveAccount')} {" "}
                 <Link to="/login" className="font-medium text-green-700 hover:text-green-900">
-                  Sign in
+                  {t('register.signIn')}
                 </Link>
               </p>
             </div>

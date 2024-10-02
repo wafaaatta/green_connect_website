@@ -1,6 +1,6 @@
-
 import { motion } from 'framer-motion'
 import { Mail, Edit, Calendar, Podcast, X, Plus, Trash2, User, Text, FolderTree, Check, Clock, MapPin, LocateFixedIcon } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { Card } from '../../components/Card'
 import { DangerModal } from '../../components/DangerModal'
@@ -19,6 +19,7 @@ import Announce from '../../interfaces/Announce'
 import { IconType } from 'react-icons'
 
 const UserProfilePage = () => {
+  const { t } = useTranslation()
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [isCreatePostModalOpen, setIsCreatePostModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
@@ -56,18 +57,17 @@ const UserProfilePage = () => {
     try {
       await dispatch(updateUser({ id: user!.id, data: { name: name as string, email: email as string } })).unwrap()
       dispatch(showNotification({
-        message: 'User updated successfully!',
+        message: t('userProfile.notifications.userUpdateSuccess'),
         type: 'success',
       }))
     } catch (error) {
       console.error(error)
       dispatch(showNotification({
-        message: 'User update failed!',
+        message: t('userProfile.notifications.userUpdateFail'),
         type: 'error',
       }))
     }
   }
-  
 
   const handleCreatePost = async () => {
     const formData = new FormData()
@@ -82,7 +82,7 @@ const UserProfilePage = () => {
     try {
       await dispatch(createAnnounce(formData)).unwrap()
       dispatch(showNotification({
-        message: 'Announce created successfully!',
+        message: t('userProfile.notifications.announceCreateSuccess'),
         type: 'success',
       }))
       setNewPost({ title: '', content: '', image: null, category: '', city: '', country: '', postalCode: '' })
@@ -90,7 +90,7 @@ const UserProfilePage = () => {
     } catch (error) {
       console.error(error)
       dispatch(showNotification({
-        message: 'Announce creation failed!',
+        message: t('userProfile.notifications.announceCreateFail'),
         type: 'error',
       }))
     }
@@ -106,13 +106,13 @@ const UserProfilePage = () => {
       try {
         await dispatch(deleteAnnounce(postToDelete)).unwrap()
         dispatch(showNotification({
-          message: 'Announce deleted successfully!',
+          message: t('userProfile.notifications.announceDeleteSuccess'),
           type: 'success',
         }))
       } catch (error) {
         console.error(error)
         dispatch(showNotification({
-          message: 'Announce deletion failed!',
+          message: t('userProfile.notifications.announceDeleteFail'),
           type: 'error',
         }))
       } finally {
@@ -131,23 +131,20 @@ const UserProfilePage = () => {
     if (postToEdit) {
       try {
         const formData = new FormData()
-        //formData.append('image', postToEdit.image as File)
         formData.append('title', postToEdit.title)
         formData.append('description', postToEdit.description)
         formData.append('category', postToEdit.article_category)
         formData.append('city', postToEdit.city)
         formData.append('country', postToEdit.country)
         formData.append('postal_code', postToEdit.postal_code)
-
         formData.append('image', postToEdit.image as unknown as File)
         
-      
         await dispatch(updateAnnounce({
           id: postToEdit.id,
           data: formData
         })).unwrap()
         dispatch(showNotification({
-          message: 'Announce updated successfully!',
+          message: t('userProfile.notifications.announceUpdateSuccess'),
           type: 'success',
         }))
         setIsEditPostModalOpen(false)
@@ -155,7 +152,7 @@ const UserProfilePage = () => {
       } catch (error) {
         console.error(error)
         dispatch(showNotification({
-          message: 'Announce update failed!',
+          message: t('userProfile.notifications.announceUpdateFail'),
           type: 'error',
         }))
       }
@@ -176,7 +173,7 @@ const UserProfilePage = () => {
               className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors duration-300 flex items-center"
               onClick={toggleEditModal}
             >
-              <Edit size={20} className="mr-2" /> Edit Profile
+              <Edit size={20} className="mr-2" /> {t('userProfile.editProfile')}
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -184,7 +181,7 @@ const UserProfilePage = () => {
               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-300 flex items-center"
               onClick={toggleCreatePostModal}
             >
-              <Plus size={20} className="mr-2" /> Create Post
+              <Plus size={20} className="mr-2" /> {t('userProfile.createPost')}
             </motion.button>
           </div>
         </div>
@@ -194,16 +191,16 @@ const UserProfilePage = () => {
             {user?.email}
           </div>
           <div className="flex items-center text-gray-600">
-            <Calendar size={20} className="mr-2" /> Joined {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(user?.created_at ?? ''))}
+            <Calendar size={20} className="mr-2" /> {t('userProfile.joined', { date: new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(user?.created_at ?? '')) })}
           </div>
         </div>
         <div className="flex items-center text-gray-600">
-          <Podcast size={20} className="mr-2" /> {announces.length} posts
+          <Podcast size={20} className="mr-2" /> {t('userProfile.postCount', { count: announces.length })}
         </div>
       </Card>
 
       <div className="mt-8">
-        <h2 className="text-2xl font-semibold mb-4">My Posts</h2>
+        <h2 className="text-2xl font-semibold mb-4">{t('userProfile.myPosts')}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {announces.map((post) => (
             <motion.div
@@ -234,7 +231,7 @@ const UserProfilePage = () => {
                       {post.status === 'pending' && <Clock size={16} className="mr-1" />}
                       {post.status === 'accepted' && <Check size={16} className="text-green-500 mr-1" />}
                       {post.status === 'rejected' && <X size={16} className="text-red-500 mr-1" />}
-                      <span className="capitalize">{post.status}</span>
+                      <span className="capitalize">{t(`userProfile.postStatus.${post.status}`)}</span>
                     </div>
                     <div className="flex items-center space-x-2">
                       <motion.button
@@ -262,39 +259,39 @@ const UserProfilePage = () => {
         </div>
       </div>
 
-      <Modal isOpen={isEditModalOpen} onClose={toggleEditModal} title="Edit Profile">
+      <Modal isOpen={isEditModalOpen} onClose={toggleEditModal} title={t('userProfile.editProfileModal.title')}>
         <form className="space-y-4" onSubmit={handleUpdateUser}>
           <Input
             icon={User as IconType}
-            label="Name"
+            label={t('userProfile.editProfileModal.nameLabel')}
             id="name"
             name="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder='Enter your name'
+            placeholder={t('userProfile.editProfileModal.namePlaceholder')}
           />
           <Input
             icon={Mail as IconType}
-            label="Email"
+            label={t('userProfile.editProfileModal.emailLabel')}
             id="email"
             name="email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder='Enter your email'
+            placeholder={t('userProfile.editProfileModal.emailPlaceholder')}
           />
           <div className="flex justify-end space-x-3">
             <Button size="sm" color="gray" variant="outline" onClick={toggleEditModal}>
-              Cancel
+              {t('common.cancel')}
             </Button>
             <Button size="sm" color="green" type="submit">
-              Save Changes
+              {t('common.saveChanges')}
             </Button>
           </div>
         </form>
       </Modal>
 
-      <Modal size="xl" isOpen={isCreatePostModalOpen} onClose={toggleCreatePostModal} title="Create New Post">
+      <Modal size="xl" isOpen={isCreatePostModalOpen} onClose={toggleCreatePostModal} title={t('userProfile.createPostModal.title')}>
         <motion.form
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -305,10 +302,10 @@ const UserProfilePage = () => {
           <div className="md:col-span-2">
             <Input
               icon={Text as IconType}
-              label="Title"
+              label={t('userProfile.createPostModal.titleLabel')}
               id="title"
               name="title"
-              placeholder="Enter post title"
+              placeholder={t('userProfile.createPostModal.titlePlaceholder')}
               value={newPost.title}
               onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
             />
@@ -316,10 +313,10 @@ const UserProfilePage = () => {
           <div>
             <Input
               icon={Text as IconType}
-              label="Country"
+              label={t('userProfile.createPostModal.countryLabel')}
               id="country"
               name="country"
-              placeholder="Enter country"
+              placeholder={t('userProfile.createPostModal.countryPlaceholder')}
               value={newPost.country}
               onChange={(e) => setNewPost({ ...newPost, country: e.target.value })}
             />
@@ -327,21 +324,21 @@ const UserProfilePage = () => {
           <div>
             <Input
               icon={Text as IconType}
-              label="City"
+              label={t('userProfile.createPostModal.cityLabel')}
               id="city"
               name="city"
-              placeholder="Enter city"
+              placeholder={t('userProfile.createPostModal.cityPlaceholder')}
               value={newPost.city}
-              onChange={(e) => setNewPost({ ...newPost, city: e.target.value })}
+              onChange={(e) => setNewPost({...newPost, city: e.target.value })}
             />
           </div>
           <div className="md:col-span-2">
             <Input
               icon={Text as IconType}
-              label="Postal Code"
+              label={t('userProfile.createPostModal.postalCodeLabel')}
               id="postalCode"
               name="postalCode"
-              placeholder="Enter postal code"
+              placeholder={t('userProfile.createPostModal.postalCodePlaceholder')}
               value={newPost.postalCode}
               onChange={(e) => setNewPost({ ...newPost, postalCode: e.target.value })}
             />
@@ -349,16 +346,9 @@ const UserProfilePage = () => {
           <div className="md:col-span-2">
             <Select 
               icon={FolderTree as IconType}
-              label="Category"
-              placeholder="Select a category"
-              options={[
-                { value: 'Indoor Plants', label: 'Indoor Plants' },
-                { value: 'Outdoor Plants', label: 'Outdoor Plants' },
-                { value: 'Succulents & Cacti', label: 'Succulents & Cacti' },
-                { value: 'Herb Garden', label: 'Herb Garden' },
-                { value: 'Flowering Plants', label: 'Flowering Plants' },
-                { value: 'Rare & Exotic Species', label: 'Rare & Exotic Species' },
-              ]}
+              label={t('userProfile.createPostModal.categoryLabel')}
+              placeholder={t('userProfile.createPostModal.categoryPlaceholder')}
+              options={t('userProfile.categories', { returnObjects: true }) as { value: string; label: string }[] }
               value={newPost.category}
               onChange={(value) => setNewPost({ ...newPost, category: value as string })}
             />
@@ -366,8 +356,8 @@ const UserProfilePage = () => {
           <div className="md:col-span-2">
             <TextArea
               icon={Text as IconType}
-              label="Content"
-              placeholder="Write something..."
+              label={t('userProfile.createPostModal.contentLabel')}
+              placeholder={t('userProfile.createPostModal.contentPlaceholder')}
               rows={5}
               id="content"
               name="content"
@@ -377,7 +367,6 @@ const UserProfilePage = () => {
           </div>
           <div className="md:col-span-2">
             <FileUpload
-            
               onFileSelect={(files) => setNewPost({ ...newPost, image: files[0] })}
               acceptedFileTypes="image/*" 
               mode={'single'}            
@@ -385,16 +374,16 @@ const UserProfilePage = () => {
           </div>
           <div className="md:col-span-2 flex justify-end space-x-3">
             <Button size="sm" color="gray" variant="outline" onClick={toggleCreatePostModal}>
-              Cancel
+              {t('common.cancel')}
             </Button>
             <Button size="sm" color="green" type="submit">
-              Create Post
+              {t('userProfile.createPostModal.createButton')}
             </Button>
           </div>
         </motion.form>
       </Modal>
 
-      <Modal size="xl" isOpen={isEditPostModalOpen} onClose={toggleEditPostModal} title="Edit Post">
+      <Modal size="xl" isOpen={isEditPostModalOpen} onClose={toggleEditPostModal} title={t('userProfile.editPostModal.title')}>
         {postToEdit && (
           <motion.form
             initial={{ opacity: 0, y: 20 }}
@@ -406,10 +395,10 @@ const UserProfilePage = () => {
             <div className="md:col-span-2">
               <Input
                 icon={Text as IconType}
-                label="Title"
+                label={t('userProfile.editPostModal.titleLabel')}
                 id="editTitle"
                 name="editTitle"
-                placeholder="Enter post title"
+                placeholder={t('userProfile.editPostModal.titlePlaceholder')}
                 value={postToEdit.title}
                 onChange={(e) => setPostToEdit({ ...postToEdit, title: e.target.value })}
               />
@@ -417,10 +406,10 @@ const UserProfilePage = () => {
             <div>
               <Input
                 icon={Text as IconType}
-                label="Country"
+                label={t('userProfile.editPostModal.countryLabel')}
                 id="editCountry"
                 name="editCountry"
-                placeholder="Enter country"
+                placeholder={t('userProfile.editPostModal.countryPlaceholder')}
                 value={postToEdit.country}
                 onChange={(e) => setPostToEdit({ ...postToEdit, country: e.target.value })}
               />
@@ -428,10 +417,10 @@ const UserProfilePage = () => {
             <div>
               <Input
                 icon={Text as IconType}
-                label="City"
+                label={t('userProfile.editPostModal.cityLabel')}
                 id="editCity"
                 name="editCity"
-                placeholder="Enter city"
+                placeholder={t('userProfile.editPostModal.cityPlaceholder')}
                 value={postToEdit.city}
                 onChange={(e) => setPostToEdit({ ...postToEdit, city: e.target.value })}
               />
@@ -439,10 +428,10 @@ const UserProfilePage = () => {
             <div className="md:col-span-2">
               <Input
                 icon={Text as IconType}
-                label="Postal Code"
+                label={t('userProfile.editPostModal.postalCodeLabel')}
                 id="editPostalCode"
                 name="editPostalCode"
-                placeholder="Enter postal code"
+                placeholder={t('userProfile.editPostModal.postalCodePlaceholder')}
                 value={postToEdit.postal_code}
                 onChange={(e) => setPostToEdit({ ...postToEdit, postal_code: e.target.value })}
               />
@@ -450,25 +439,18 @@ const UserProfilePage = () => {
             <div className="md:col-span-2">
               <Select 
                 icon={FolderTree as IconType}
-                label="Category"
-                placeholder="Select a category"
-                options={[
-                  { value: 'Indoor Plants', label: 'Indoor Plants' },
-                  { value: 'Outdoor Plants', label: 'Outdoor Plants' },
-                  { value: 'Succulents & Cacti', label: 'Succulents & Cacti' },
-                  { value: 'Herb Garden', label: 'Herb Garden' },
-                  { value: 'Flowering Plants', label: 'Flowering Plants' },
-                  { value: 'Rare & Exotic Species', label: 'Rare & Exotic Species' },
-                ]}
+                label={t('userProfile.editPostModal.categoryLabel')}
+                placeholder={t('userProfile.editPostModal.categoryPlaceholder')}
+                options={t('userProfile.categories', { returnObjects: true }) as { value: string; label: string }[]}
                 value={postToEdit.article_category}
-                onChange={(value) => console.log(value)}
+                onChange={(value) => setPostToEdit({ ...postToEdit, article_category: value as string })}
               />
             </div>
             <div className="md:col-span-2">
               <TextArea
                 icon={Text as IconType}
-                label="Content"
-                placeholder="Write something..."
+                label={t('userProfile.editPostModal.contentLabel')}
+                placeholder={t('userProfile.editPostModal.contentPlaceholder')}
                 rows={5}
                 id="editContent"
                 name="editContent"
@@ -479,16 +461,16 @@ const UserProfilePage = () => {
             <div className="md:col-span-2">
               <FileUpload
                 mode='single'
-                onFileSelect={(files) => console.log(files)}
+                onFileSelect={(files) => setPostToEdit({ ...postToEdit, image: files[0] as unknown as string })}
                 acceptedFileTypes="image/*"
               />
             </div>
             <div className="md:col-span-2 flex justify-end space-x-3">
               <Button size="sm" color="gray" variant="outline" onClick={toggleEditPostModal}>
-                Cancel
+                {t('common.cancel')}
               </Button>
               <Button size="sm" color="green" type="submit">
-                Update Post
+                {t('userProfile.editPostModal.updateButton')}
               </Button>
             </div>
           </motion.form>
@@ -498,8 +480,8 @@ const UserProfilePage = () => {
       <DangerModal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
-        title="Delete Post"
-        content="Are you sure you want to delete this post? This action cannot be undone."
+        title={t('userProfile.deletePostModal.title')}
+        content={t('userProfile.deletePostModal.content')}
         onAccept={confirmDeletePost}
         onCancel={() => setIsDeleteModalOpen(false)}
       />

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, Send, MapPin, Calendar, X, Copy, Reply, Trash, Menu, SignpostIcon, Image as ImageIcon, Text } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { getAllConversations } from '../../redux/stores/conversation_store'
 import axiosHttp from '../../utils/axios_client'
@@ -18,6 +19,7 @@ import Input from '../../components/Input'
 import { IconType } from 'react-icons'
 
 const ConversationsPage: React.FC = () => {
+  const { t } = useTranslation()
   const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null)
   const [messages, setMessages] = useState<Message[]>([])
   const [message, setMessage] = useState('')
@@ -44,7 +46,6 @@ const ConversationsPage: React.FC = () => {
   }, [dispatch])
 
   const [uploadedImage, setUploadedImage] = useState<File | null>(null)
-
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -88,7 +89,6 @@ const ConversationsPage: React.FC = () => {
       unsubscribeFromChannel(channel)
     }
   }, [selectedConversation])
-
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -173,7 +173,6 @@ const ConversationsPage: React.FC = () => {
 
   return (
     <div className="flex flex-col md:flex-row h-[calc(100vh-112px)] bg-gray-100">
-      {/* Conversation list */}
       <AnimatePresence>
         {(isConversationListOpen || !isMobile()) && (
           <motion.div
@@ -183,7 +182,7 @@ const ConversationsPage: React.FC = () => {
             transition={{ duration: 0.3 }}
             className="w-full md:w-80 lg:w-96 bg-white border-r border-gray-200 overflow-y-auto flex-shrink-0"
           >
-            <h1 className="text-xl font-bold text-green-800 p-4 border-b border-gray-200">Your Conversations</h1>
+            <h1 className="text-xl font-bold text-green-800 p-4 border-b border-gray-200">{t('conversationsPage.yourConversations')}</h1>
             {conversations.map((conversation) => (
               <motion.div
                 key={conversation.id}
@@ -197,7 +196,7 @@ const ConversationsPage: React.FC = () => {
                   <img src={getFileUrl(conversation.announce?.image)} alt={conversation.announce?.title} className="w-16 h-16 rounded-full object-cover" />
                   <div className="flex-grow">
                     <h2 className="text-sm font-semibold text-green-700">{conversation.announce?.title}</h2>
-                    <p className="text-xs text-gray-600">with {user?.id === conversation.receiver?.id ? conversation.creator?.name : conversation.receiver?.name}</p>
+                    <p className="text-xs text-gray-600">{t('conversationsPage.with')} {user?.id === conversation.receiver?.id ? conversation.creator?.name : conversation.receiver?.name}</p>
                     <p className="text-sm text-gray-800 mt-1 truncate">{conversation.last_message}</p>
                   </div>
                   <div className="text-right">
@@ -210,7 +209,6 @@ const ConversationsPage: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Chat area */}
       <div className="flex-grow flex flex-col">
         {selectedConversation ? (
           <>
@@ -227,7 +225,7 @@ const ConversationsPage: React.FC = () => {
                 <img src={getFileUrl(selectedConversation.announce.image)} alt={selectedConversation.announce.title} className="w-10 h-10 rounded-full object-cover" />
                 <div>
                   <h2 className="text-lg font-semibold text-green-800">{selectedConversation.announce.title}</h2>
-                  <p className="text-sm text-gray-600">with {user?.id == selectedConversation.creator.id ? selectedConversation.receiver.name : selectedConversation.creator.name}</p>
+                  <p className="text-sm text-gray-600">{t('conversationsPage.with')} {user?.id == selectedConversation.creator.id ? selectedConversation.receiver.name : selectedConversation.creator.name}</p>
                 </div>
               </div>
               <Button
@@ -254,9 +252,9 @@ const ConversationsPage: React.FC = () => {
                         <p>{msg.reply_message.content}</p>
                       </div>
                     )}
-                    <p className="font-semibold text-sm">{msg.sender_id == user?.id ? 'You' : msg.sender_id == selectedConversation.creator.id ? selectedConversation.creator.name : selectedConversation.receiver.name}</p>
+                    <p className="font-semibold text-sm">{msg.sender_id == user?.id ? t('conversationsPage.you') : msg.sender_id == selectedConversation.creator.id ? selectedConversation.creator.name : selectedConversation.receiver.name}</p>
                     {msg.message_type == 'image' ? (
-                      <img src={getFileUrl(msg.image_url ?? '')} alt="Uploaded" className="w-full h-auto rounded-lg mt-2 mb-2" />
+                      <img src={getFileUrl(msg.image_url ?? '')} alt={t('conversationsPage.uploadedImage')} className="w-full h-auto rounded-lg mt-2 mb-2" />
                     ) : (
                       <p className="text-sm">{msg.content}</p>
                     )}
@@ -279,7 +277,7 @@ const ConversationsPage: React.FC = () => {
               )}
               {imagePreview && (
                 <div className="relative mb-2">
-                  <img src={imagePreview} alt="Preview" className="w-20 h-20 object-cover rounded" />
+                  <img src={imagePreview} alt={t('conversationsPage.preview')} className="w-20 h-20 object-cover rounded" />
                   <Button
                     variant="outline"
                     className="absolute top-0 right-0"
@@ -296,7 +294,7 @@ const ConversationsPage: React.FC = () => {
                   type="text"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Type your message..."
+                  placeholder={t('conversationsPage.typeYourMessage')}
                 />
                 </div>
                   <Button
@@ -322,15 +320,14 @@ const ConversationsPage: React.FC = () => {
         ) : (
           <div className="flex-grow flex items-center justify-center bg-gray-50">
             <div className="text-center">
-              <img src="/src/assets/green_connect.png" alt="Default Plant" className=" h-32 mx-auto mb-4" />
-              <h2 className="text-2xl font-semibold text-gray-700 mb-2">No conversation selected</h2>
-              <p className="text-gray-500">Choose a conversation from the list to start chatting</p>
+              <img src="/src/assets/green_connect.png" alt={t('conversationsPage.defaultPlant')} className=" h-32 mx-auto mb-4" />
+              <h2 className="text-2xl font-semibold text-gray-700 mb-2">{t('conversationsPage.noConversationSelected')}</h2>
+              <p className="text-gray-500">{t('conversationsPage.chooseConversation')}</p>
             </div>
           </div>
         )}
       </div>
 
-      {/* Side menu */}
       <AnimatePresence>
         {isSideMenuOpen && selectedConversation && (
           <motion.div
@@ -350,10 +347,10 @@ const ConversationsPage: React.FC = () => {
                   <ChevronLeft className="h-6 w-6" />
                 </Button>
               )}
-              <h3 className="text-lg font-semibold mb-4 text-center">Plant Details</h3>
+              <h3 className="text-lg font-semibold mb-4 text-center">{t('conversationsPage.plantDetails')}</h3>
               <img src={getFileUrl(selectedConversation.announce.image)} alt={selectedConversation.announce.title} className="w-full h-48 object-cover rounded-lg mb-4" />
               <h4 className="font-semibold text-center">{selectedConversation.announce.title}</h4>
-              <p className="text-sm text-gray-600 mb-4 text-center">Owner: {selectedConversation.receiver.name}</p>
+              <p className="text-sm text-gray-600 mb-4 text-center">{t('conversationsPage.owner')}: {selectedConversation.receiver.name}</p>
               <div className="mb-4 h-48 rounded-lg overflow-hidden">
                 <ContactMap 
                   city={'paris'}
@@ -379,7 +376,6 @@ const ConversationsPage: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Context menu */}
       {contextMenu.visible && (
         <div
           className="fixed bg-white rounded-lg shadow-lg z-50 context-menu"
@@ -387,13 +383,13 @@ const ConversationsPage: React.FC = () => {
         >
           <ul className="py-2">
             <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center" onClick={() => handleContextMenuAction('copy')}>
-              <Copy size={16} className="mr-2" /> Copy
+              <Copy size={16} className="mr-2" /> {t('conversationsPage.copy')}
             </li>
             <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center" onClick={() => handleContextMenuAction('reply')}>
-              <Reply size={16} className="mr-2" /> Reply
+              <Reply size={16} className="mr-2" /> {t('conversationsPage.reply')}
             </li>
             <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center text-red-600" onClick={() => handleContextMenuAction('delete')}>
-              <Trash size={16} className="mr-2" /> Delete
+              <Trash size={16} className="mr-2" /> {t('conversationsPage.delete')}
             </li>
           </ul>
         </div>

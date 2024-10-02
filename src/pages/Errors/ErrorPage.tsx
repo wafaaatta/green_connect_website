@@ -1,6 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Home, RefreshCcw } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import AppImages from '../../constants/app_images'
 
 interface ErrorPageProps {
@@ -8,12 +9,13 @@ interface ErrorPageProps {
 }
 
 const ErrorPage: React.FC<ErrorPageProps> = ({ statusCode }) => {
+  const { t } = useTranslation()
   const is404 = statusCode === 404
 
-  const title = is404 ? "Oops! Page Not Found" : "Uh-oh! Something went wrong"
+  const title = is404 ? t('errorPage.notFoundTitle') : t('errorPage.serverErrorTitle')
   const description = is404
-    ? "It seems the page you're looking for has withered away."
-    : "Our servers are experiencing some technical difficulties. We're working on fixing it!"
+    ? t('errorPage.notFoundDescription')
+    : t('errorPage.serverErrorDescription')
   const imageSrc = is404
     ? AppImages.errors.notFound
     : AppImages.errors.serverError
@@ -29,7 +31,7 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ statusCode }) => {
           <img
             className="mx-auto h-60 w-auto"
             src={imageSrc}
-            alt={`Error ${statusCode}`}
+            alt={t('errorPage.imageAlt', { statusCode })}
           />
           <h2 className="mt-4 text-3xl font-extrabold text-gray-900">
             {title}
@@ -50,7 +52,7 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ statusCode }) => {
             className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-sm text-white bg-green-700 hover:bg-green-900"
           >
             <Home className="mr-2 h-5 w-5" />
-            Return to Home
+            {t('errorPage.returnHome')}
           </motion.button>
           {!is404 && (
             <motion.button
@@ -59,7 +61,7 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ statusCode }) => {
               className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-green-700 bg-green-100 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
             >
               <RefreshCcw className="mr-2 h-5 w-5" />
-              Try Again
+              {t('errorPage.tryAgain')}
             </motion.button>
           )}
         </motion.div>
@@ -71,14 +73,14 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ statusCode }) => {
           <p className="mt-4 text-sm text-gray-600">
             {is404 ? (
               <>
-                If you believe this is an error, please{' '}
+                {t('errorPage.contactSupportPrefix')}{' '}
                 <a href="/contact" className="font-medium text-green-700 hover:text-green-900">
-                  contact our support team
+                  {t('errorPage.contactSupport')}
                 </a>
-                .
+                {t('errorPage.contactSupportSuffix')}
               </>
             ) : (
-              "We apologize for the inconvenience. Our team has been notified and is working on a solution."
+              t('errorPage.apology')
             )}
           </p>
         </motion.div>

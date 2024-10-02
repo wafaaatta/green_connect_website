@@ -1,7 +1,7 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import Modal from './Modal'
 import CustomButton from './Button'
-
 
 interface ConfirmationModalProps {
   isOpen: boolean
@@ -20,6 +20,8 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   onAccept,
   onCancel,
 }) => {
+  const { t } = useTranslation()
+
   const handleCancel = () => {
     onCancel()
     onClose()
@@ -37,10 +39,10 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
       </div>
       <div className="mt-4 flex justify-end space-x-2">
         <CustomButton variant="outline" color='gray' onClick={handleCancel}>
-          Cancel
+          {t('confirmationModal.cancelButton')}
         </CustomButton>
         <CustomButton color="green" onClick={handleAccept}>
-          Confirm
+          {t('confirmationModal.confirmButton')}
         </CustomButton>
       </div>
     </Modal>
