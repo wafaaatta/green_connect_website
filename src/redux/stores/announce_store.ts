@@ -28,7 +28,10 @@ export const getAllAnnounces = createAsyncThunk(
     }
 )
 
-
+/**
+ * Create a new announce
+ *
+ */
 export const createAnnounce = createAsyncThunk(
     'announce/createAnnounce',
     async (announce: FormData) => {

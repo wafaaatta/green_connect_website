@@ -1,0 +1,145 @@
+{
+	"info": {
+		"_postman_id": "474cb678-e065-4ae0-84f2-31030fe56843",
+		"name": "Announce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38405195",
+		"_collection_link": "https://lawfirm-5692.postman.co/workspace/Green-Connect~8aafc03e-e4b1-45a6-b61c-bf0446adfb39/collection/21672068-474cb678-e065-4ae0-84f2-31030fe56843?action=share&source=collection_link&creator=38405195"
+	},
+	"item": [
+		{
+			"name": "get_announces",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "get_user_announces",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "create_announce",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "6|L4FZc92P9575upipVPWgupcDtr3F2pAtt9SWvqmx5f6defc1",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "test plant title",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+							"type": "text"
+						},
+						{
+							"key": "country",
+							"value": "France",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/wafaa/Downloads/GreenConnect Use_case_diagramm_v2 (1).jpg"
+						},
+						{
+							"key": "city",
+							"value": "CLERMONT FERRAND",
+							"type": "text"
+						},
+						{
+							"key": "postal_code",
+							"value": "63000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URL}}/announces",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"announces"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_accepted_announces",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "14|zzzPAX88FlAwCXKSFxTjR87Dm4rZljnaeP7LUSMdd14f374f",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/announces/accepted",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"announces",
+						"accepted"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_other_user_announces",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"announce_id\": 203\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/users/announces/other",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"users",
+						"announces",
+						"other"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

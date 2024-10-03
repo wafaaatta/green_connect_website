@@ -1,5 +1,6 @@
 import { i18n } from "i18next";
 
+
 export const getLanguage = (): string => {
     return localStorage.getItem('language') ?? 'fr';
 }
