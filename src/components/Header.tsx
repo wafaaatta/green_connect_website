@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Leaf, LogIn, Menu, User, LogOut, MessageCircle, Globe } from "lucide-react"
 import { useNavigate } from "react-router-dom"
@@ -36,24 +36,7 @@ const Header: React.FC = () => {
     i18n.changeLanguage(i18n.language === 'en' ? 'fr' : 'en')
   }
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const header = document.getElementById('main-header')
-      if (header) {
-        if (window.scrollY > 0) {
-          header.classList.add('shadow-md')
-        } else {
-          header.classList.remove('shadow-md')
-        }
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll)
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
+  
 
   return (
     <header id="main-header" className="bg-[#f3ecd6] sticky top-0 z-10 transition-shadow duration-300">
@@ -63,12 +46,12 @@ const Header: React.FC = () => {
             <a href="/" className="flex-shrink-0">
               <img src={AppImages.logo} className="h-28 w-auto" alt={t('header.logoAlt')} />
             </a>
-            <nav className="hidden md:ml-10 md:flex md:space-x-8">
+            <nav className="hidden lg:ml-10 lg:flex lg:space-x-8">
               {sidebarItems.map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
-                  className="text-lg font-medium text-green-800 hover:text-green-600 transition-colors duration-300"
+                  className="text-md font-medium text-green-800 hover:text-green-600 transition-colors duration-300"
                 >
                   {item.label}
                 </a>
@@ -78,9 +61,9 @@ const Header: React.FC = () => {
           <div className="flex items-center space-x-2">
             <Button
               leftIcon={Globe as IconType}
-              variant="outline"
+              variant="text"
               color="green"
-              size="sm"
+              size="md"
               onClick={toggleLanguage}
               className="hidden md:flex"
             >
@@ -89,9 +72,9 @@ const Header: React.FC = () => {
               <>
                 <Button
                   leftIcon={MessageCircle as IconType}
-                  variant="outline"
+                  variant="text"
                   color="green"
-                  size="sm"
+                  size="md"
                   onClick={() => navigate(Routes.PAGES.CONVERSATIONS)}
                   className="hidden md:flex"
                 >
@@ -99,9 +82,9 @@ const Header: React.FC = () => {
                 </Button>
                 <Button
                   leftIcon={User as IconType}
-                  variant="outline"
+                  variant="text"
                   color="green"
-                  size="sm"
+                  size="md"
                   onClick={() => navigate(Routes.PAGES.PROFILE)}
                   className="hidden md:flex"
                 >
@@ -109,9 +92,9 @@ const Header: React.FC = () => {
                 </Button>
                 <Button
                   leftIcon={LogOut as IconType}
-                  variant='link'
+                  variant='text'
                   color="red"
-                  size="sm"
+                  size="md"
                   onClick={handleLogout}
                   className="hidden md:flex"
                 >
@@ -122,9 +105,9 @@ const Header: React.FC = () => {
               <>
                 <Button
                   leftIcon={LogIn as IconType}
-                  variant="outline"
+                  variant="text"
                   color="green"
-                  size="sm"
+                  size="md"
                   onClick={() => navigate(Routes.AUTH.LOGIN)}
                   className="hidden md:flex"
                 >
@@ -132,9 +115,9 @@ const Header: React.FC = () => {
                 </Button>
                 <Button
                   leftIcon={Leaf as IconType}
-                  variant="outline"
+                  variant="text"
                   color="blue"
-                  size="sm"
+                  size="md"
                   onClick={() => navigate(Routes.AUTH.REGISTER)}
                   className="hidden md:flex"
                 >

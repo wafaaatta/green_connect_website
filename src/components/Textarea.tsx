@@ -15,15 +15,15 @@ const TextArea: React.FC<CustomTextAreaProps> = ({ icon: Icon, label, ...props }
         {label}
       </label>
       <div
-        className="relative rounded border-2 border-gray-300 focus-within:border-[#0096c7]"
-        style={ref.current && ref.current === document.activeElement ? { borderColor: '#0096c7' } : {}}
+        className="relative rounded border-2 border-gray-300 focus-within:border-[#065F46]"
+        style={ref.current && ref.current === document.activeElement ? { borderColor: '#065F46' } : {}}
       >
         <div className="absolute top-3 left-3 flex items-center pointer-events-none">
           <Icon className="h-5 w-5 text-gray-400" />
         </div>
         <textarea
           ref={ref}
-          className="block w-full pl-10 pr-3 py-2 rounded focus:outline-none border-gray-300 focus:ring-[#0096c7] focus:border-[#0096c7] sm:text-sm transition duration-150 ease-in-out"
+          className="block w-full pl-10 pr-3 py-2 rounded focus:outline-none border-gray-300 focus:ring-[#065F46] focus:border-[#0096c7] sm:text-sm transition duration-150 ease-in-out"
           {...props}
         />
       </div>

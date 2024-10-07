@@ -13,7 +13,6 @@ import Input from '../../components/Input'
 import Select from '../../components/Select'
 import Badge from '../../components/Badge'
 import { IconType } from 'react-icons'
-import { getFileUrl } from '../../utils/laravel_storage'
 
 const ITEMS_PER_PAGE = 15
 
@@ -69,11 +68,11 @@ const AnnouncesPage: React.FC = () => {
 
   return (
     <div className="w-full">
-      <Card className="sticky top-32 z-10 mb-8 mx-4 sm:mx-6 lg:mx-8 bg-white">
-        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">
-          <h1 className="text-3xl font-bold text-green-800 mb-4 md:mb-0">{t('postsPage.title')}</h1>
-          <div className="flex flex-wrap justify-end items-center gap-4">
-            <div className="w-full md:w-60">
+      <Card className=" z-10 mb-8 mx-0 sm:mx-4 lg:mx-8 bg-white">
+        <div className="flex flex-col md:flex-row justify-between  space-y-4 md:space-y-0 md:space-x-4">
+          <h1 className="text-3xl max-sm:text-xl max-md:text-2xl font-bold text-green-800 mb-4 md:mb-0">{t('postsPage.title')}</h1>
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 ">
+            <div className="w-full">
               <Input
                 icon={Search as IconType}
                 placeholder={t('postsPage.searchPlaceholder')}
@@ -81,7 +80,7 @@ const AnnouncesPage: React.FC = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <div className="w-full md:w-40">
+            <div className="w-full">
               <Select
                 icon={Filter as IconType}
                 value={categoryFilter}
@@ -97,7 +96,7 @@ const AnnouncesPage: React.FC = () => {
                 ]}
               />
             </div>
-            <div className="w-full md:w-40">
+            <div className="w-full">
               <Select
                 icon={Calendar as IconType}
                 value={sortBy}
@@ -121,13 +120,13 @@ const AnnouncesPage: React.FC = () => {
           className="text-center py-12"
         >
           <p className="text-xl text-gray-700">{t('postsPage.noPlants')}</p>
-          <Button className="mt-4 bg-green-600 hover:bg-green-700 text-white" onClick={resetFilters}>{t('postsPage.resetFilters')}</Button>
+          <Button className="mt-4 bg-green-800 rounded px-2 py-2 hover:bg-green-700 text-white" onClick={resetFilters}>{t('postsPage.resetFilters')}</Button>
         </motion.div>
       ) : (
         <AnimatePresence>
           <motion.div
             layout
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 px-4 sm:px-6 lg:px-8"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 px-4 sm:px-6 lg:px-8"
           >
             {paginatedAnnounces.map((announce, index) => (
               <motion.div
@@ -140,15 +139,18 @@ const AnnouncesPage: React.FC = () => {
                 onClick={() => navigateToAnnounceDetails(announce)}
               >
                 <Card 
-                  className="h-full cursor-pointer transition-shadow duration-300 bg-white"
+                  className="h-full cursor-pointer transition-shadow duration-300 bg-green-100"
                 >
-                  <img 
-                    src={getFileUrl(announce.image)} 
-                    alt={announce.title} 
-                    className="w-full h-48 object-contain rounded-t" 
+                  <div 
+                    style={{
+                      backgroundImage: `url('/src/assets/images/plants/dracaena.png')`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }}
+                    className="w-full h-48 rounded-t"
                   />
                   <div className="mt-2">
-                    <h2 className="text-xl font-semibold mb-2 text-gray-800">{announce.title}</h2>
+                    <h2 className="text-2xl font-semibold mb-2 text-gray-800">{announce.title}</h2>
                     <div className="flex items-center mb-2 text-green-800">
                       <MapPin size={16} className="mr-1" />
                       <span>{announce.city}, {announce.postal_code}</span>

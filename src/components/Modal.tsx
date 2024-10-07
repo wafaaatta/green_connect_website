@@ -61,7 +61,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, title, size = 
             >
               <div className="bg-white p-3 rounded-lg overflow-y-auto custom-scroll max-h-[calc(100vh-90px)]">
                 <div className="sm:flex sm:items-start ">
-                  <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                  <div className="mt-3 text-left sm:mt-0 w-full">
                     {
                       title && (
                         <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-title">

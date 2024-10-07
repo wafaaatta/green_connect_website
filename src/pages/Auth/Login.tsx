@@ -89,7 +89,7 @@ export default function Login() {
         </button>
         <div className="flex flex-col md:flex-row">
           {/* Left Column - Image */}
-          <div className="md:w-1/2 relative">
+          <div className="md:w-1/2 relative max-md:hidden ">
             <img 
               src="/assets/images/plants-workshop/workshop-house.png" 
               alt={t('login.imageAlt')}
@@ -100,9 +100,9 @@ export default function Login() {
           </div>
 
           {/* Right Column - Login Form */}
-          <div className="md:w-1/2 w-full p-8 bg-white">
+          <div className="md:w-1/2 w-full p-4 bg-white">
             <div className="flex justify-center">
-              <img src={AppImages.logo} alt={t('common.logoAlt')} className="w-60" />
+              <img src={AppImages.logo} alt={t('common.logoAlt')} className="w-60 max-md:w-40" />
             </div>
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
@@ -153,7 +153,7 @@ export default function Login() {
                   </button>
                 </div>
               </div>
-              <div className="flex items-center justify-between">
+              {/* <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <input
                     id="remember-me"
@@ -170,13 +170,15 @@ export default function Login() {
                     {t('login.forgotPassword')}
                   </a>
                 </div>
+              </div> */}
+              <div className='w-full flex justify-center items-center'>
+                <button
+                  type="submit"
+                  className="flex justify-center py-2 px-6 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-green-800 hover:bg-green-700 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                >
+                  {loading ? t('login.loading') : t('login.loginButton')}
+                </button>
               </div>
-              <button
-                type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-green-800 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-              >
-                {loading ? t('login.loading') : t('login.loginButton')}
-              </button>
             </form>
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">

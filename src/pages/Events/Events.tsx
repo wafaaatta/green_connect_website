@@ -58,13 +58,13 @@ const EventsPage: React.FC = () => {
   }
 
   return (
-    <div className="w-full min-h-screen bg-gray-50">
-      <div className="sticky top-28 z-10 bg-white border-b border-gray-200">
+    <div className="w-full min-h-screen">
+      <div className="z-10 bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">
-            <h1 className="text-3xl font-bold text-green-800">{t('eventsPage.title')}</h1>
-            <div className="flex flex-wrap items-center gap-4">
-              <div className="w-full md:w-64">
+          <div className="flex flex-col md:flex-row justify-between items-center max-md:items-start  space-y-4 md:space-y-0 md:space-x-4">
+            <h1 className="text-3xl font-bold text-green-800 max-md:text-center max-md:w-full">{t('eventsPage.title')}</h1>
+            <div className="flex justify-between flex-grow items-center gap-4 max-md:w-full">
+              <div className="w-full">
                 <Input
                   icon={Search as IconType}
                   placeholder={t('eventsPage.searchPlaceholder')}
@@ -72,7 +72,7 @@ const EventsPage: React.FC = () => {
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
-              <div className="w-full md:w-48">
+              <div className="w-full">
                 <Select
                   icon={Filter as IconType}
                   value={sortBy}
@@ -102,16 +102,16 @@ const EventsPage: React.FC = () => {
                 onClick={() => openEventDetails(event)}
               >
                 <Card 
-                  className="shadow transition-shadow duration-300"
+                  className="shadow transition-shadow duration-300 bg-green-100"
                 >
-                  <div className="flex flex-col md:flex-row">
+                  <div className="flex flex-col md:flex-row ">
                     <img 
                       src={'/assets/images/plants-workshop/workshop-group.jpg'} 
                       alt={event.title} 
                       className="w-full md:w-48 h-48 object-cover rounded-t md:rounded-l md:rounded-t-none" 
                     />
-                    <div className="p-6 flex-grow">
-                      <h2 className="text-2xl font-semibold mb-2 text-green-800">{event.title}</h2>
+                    <div className="flex-grow md:ml-4 max-md:mt-4">
+                      <h2 className="text-3xl font-semibold mb-2 text-green-800">{event.title}</h2>
                       <p className="text-gray-600 mb-4 line-clamp-2">{event.description}</p>
                       <div className="flex flex-wrap items-center gap-4">
                         <div className="flex items-center text-green-800">
@@ -124,7 +124,7 @@ const EventsPage: React.FC = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="p-4 flex items-center">
+                    <div className="mt-4 flex items-center justify-end">
                       <Button className="bg-green-800 hover:bg-green-700 text-white">{t('eventsPage.viewDetails')}</Button>
                     </div>
                   </div>

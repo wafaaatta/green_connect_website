@@ -11,8 +11,8 @@ interface InfoCardProps {
 const InfoCard: React.FC<InfoCardProps> = ({ title, description, icon }) => (
   <div className="p-4 rounded shadow bg-green-100">
     {icon}
-    <h3 className="text-xl font-semibold mt-4 mb-2">{title}</h3>
-    <p className="text-gray-600">{description}</p>
+    <h3 className="text-2xl heading-font font-semibold mt-4 mb-2">{title}</h3>
+    <p className="text-gray-600 body-font">{description}</p>
   </div>
 );
 
@@ -20,15 +20,15 @@ const About = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="bg-gray-100 py-16">
-      <div className="container mx-auto px-4">
+    <section className="py-12 p-4">
+      <div className="container mx-auto">
         <div className="flex flex-col md:flex-row items-start mb-16">
           <div className="md:w-1/2 pr-8">
-            <h1 className="text-6xl font-bold mb-6">{t('about.title')}</h1>
-            <p className="text-xl mb-4">
+            <h1 className="text-5xl text-green-800 font-bold mb-6 heading-font">{t('about.title')}</h1>
+            <p className="text-2xl mb-4 heading-font">
               {t('about.description1')}
             </p>
-            <p className="text-gray-600">
+            <p className="text-gray-600 body-font">
               {t('about.description2')}
             </p>
           </div>
@@ -38,10 +38,10 @@ const About = () => {
         </div>
 
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-6">
+          <h2 className="text-4xl font-bold mb-6 text-green-800 heading-font">
             {t('about.tagline')}
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto body-font">
             {t('about.taglineDescription')}
           </p>
         </div>

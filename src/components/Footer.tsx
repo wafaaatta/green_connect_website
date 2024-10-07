@@ -26,7 +26,7 @@ export default function Footer() {
               <img src={AppImages.logo} className="h-32" alt={t('footer.logoAlt')} />
             </Link>
           </div>
-          <nav className="flex flex-grow flex-wrap justify-center space-x-8" aria-label={t('footer.quickLinksAriaLabel')}>
+          <nav className="flex flex-grow flex-wrap max-md:grid max-md:grid-cols-2 max-md:gap-4 justify-center md:space-x-8 " aria-label={t('footer.quickLinksAriaLabel')}>
             {quickLinks.map((item) => (
               <Link key={item.path} to={item.path} className="text-xl hover:underline focus:outline-none rounded">
                 {item.name}
@@ -35,7 +35,7 @@ export default function Footer() {
           </nav>
         </div>
         <div className="mt-8 pt-6 border-t border-[#2c7a51] flex flex-col md:flex-row justify-between items-center text-base">
-          <p className="mb-4 md:mb-0">
+          <p className="mb-4 md:mb-0 max-md:text-center">
             {t('footer.copyright', { year: new Date().getFullYear() })}
           </p>
           <nav className="flex flex-wrap justify-center space-x-6" aria-label={t('footer.legalLinksAriaLabel')}>

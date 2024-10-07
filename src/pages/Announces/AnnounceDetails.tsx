@@ -8,7 +8,6 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { createConversation } from '../../redux/stores/conversation_store'
 import { unwrapResult } from '@reduxjs/toolkit'
 import moment from 'moment'
-import { getFileUrl } from '../../utils/laravel_storage'
 import { ConfirmationModal } from '../../components/ConfirmationDialog'
 import { getOtherUserAcceptedAnnounces, setCurrentAnnounce } from '../../redux/stores/announce_store'
 import Announce from '../../interfaces/Announce'
@@ -73,14 +72,14 @@ export default function AnnounceDetails() {
         className="bg-white rounded border shadow overflow-hidden"
       >
         <img 
-          src={getFileUrl(currentAnnounce?.image || '')}
+          src={'/src/assets/images/plants/spider-plant.png'}
           alt={currentAnnounce?.title}
-          className="w-full h-96 object-contain"
+          className="w-full h-96 object-cover"
         />
         <div className="p-6">
           <div className="flex justify-between items-start mb-4">
             <div>
-              <h1 className="text-3xl font-bold text-green-800 mb-2">{currentAnnounce?.title}</h1>
+              <h1 className="text-3xl font-bold text-green-800 mb-2 heading-font">{currentAnnounce?.title}</h1>
             </div>
             <div className="text-right">
               <p className="text-gray-600 flex items-center justify-end">
@@ -101,19 +100,19 @@ export default function AnnounceDetails() {
               </div>
             </div>
             <div>
-              <h2 className="text-xl font-semibold">{currentAnnounce?.user.name}</h2>
+              <h2 className="text-xl font-semibold heading-font">{currentAnnounce?.user.name}</h2>
             </div>
           </div>
 
           <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-2">{t('postDetails.aboutPlant')}</h3>
-            <p className="text-gray-700">{currentAnnounce?.description}</p>
+            <h3 className="text-xl font-semibold mb-2 heading-font">{t('postDetails.aboutPlant')}</h3>
+            <p className="text-gray-700 body-font">{currentAnnounce?.description}</p>
           </div>
 
           <div className="mb-6 bg-green-50 p-4 rounded-lg">
             <p className="text-lg text-gray-800">
               {t('postDetails.policyReminder')} 
-              <Link to={Routes.PAGES.PRIVACY_POLICY} className="ml-1 text-green-800 hover:underline">
+              <Link to={Routes.PAGES.PRIVACY_POLICY} className="ml-1 text-green-800 text-xl hover:underline">
                 {t('postDetails.seePolicy')}
               </Link>
             </p>
@@ -130,14 +129,14 @@ export default function AnnounceDetails() {
                   transition={{ duration: 0.3 }}
                   className="bg-white rounded shadow overflow-hidden border flex flex-col"
                 >
-                  <img src={getFileUrl(announce.image)} alt={announce.title} className="w-full h-40 object-contain" />
+                  <img src={'/src/assets/images/plants/sunflower.png'} alt={announce.title} className="w-full h-40 object-cover" />
                   <div className="p-3 flex-grow">
                     <h4 className="text-lg font-semibold mb-1">{announce.title}</h4>
                     <p className="text-gray-600 text-sm mb-2">{`${announce.city} . ${announce.postal_code}`}</p>
                     <div className='flex justify-end'>
                       <button
                         onClick={() => navigateToAnnounceDetails(announce)}
-                        className="mt-auto bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition duration-300 flex items-center justify-center"
+                        className="mt-auto bg-green-800 text-white py-2 px-4 rounded hover:bg-green-700 transition duration-300 flex items-center justify-center"
                       >
                         {t('postDetails.seeDetails')}
                         <ArrowRight className="ml-2 w-4 h-4" />
@@ -154,7 +153,7 @@ export default function AnnounceDetails() {
       <div className="flex items-center justify-end fixed bottom-0 left-0 right-0 p-4 shadow-md z-50">
         <button
           onClick={handleConnect}
-          className="bg-green-700 text-white py-2 px-6 rounded hover:bg-green-900 transition duration-300"
+          className="bg-green-800 text-white py-2 px-6 rounded hover:bg-green-900 transition duration-300"
         >
           {t('postDetails.connectWith', { name: currentAnnounce?.user.name })}
         </button>

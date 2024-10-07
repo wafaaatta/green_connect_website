@@ -160,47 +160,49 @@ const UserProfilePage = () => {
   }
 
   return (
-    <div className="p-4 max-w-7xl mx-auto">
-      <Card className="mb-4">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+    <div className="max-w-7xl max-md:max-w-8xl max-md:p-0 mx-auto">
+      <Card>
+        <div className="flex md:flex-row justify-between items-start md:items-center mb-4">
           <div>
-            <h1 className="text-3xl font-bold text-green-800">{user?.name}</h1>
+            <h1 className="text-3xl font-bold text-green-800 heading-font">{user?.name}</h1>
           </div>
-          <div className="flex mt-4 md:mt-0 space-x-2">
+          <div className="flex space-x-2">
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors duration-300 flex items-center"
+              aria-label="Edit Profile"
+              className="bg-green-800 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors duration-300 flex items-center"
               onClick={toggleEditModal}
             >
-              <Edit size={20} className="mr-2" /> {t('userProfile.editProfile')}
+              <Edit size={20} /> <span className='max-sm:hidden ml-2'>
+              {t('userProfile.editProfile')}  
+              </span> 
             </motion.button>
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-300 flex items-center"
+              aria-label="Create Post"
+              className="bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-300 flex items-center"
               onClick={toggleCreatePostModal}
             >
-              <Plus size={20} className="mr-2" /> {t('userProfile.createPost')}
+              <Plus size={20} /> <span className='max-sm:hidden md:ml-2'>
+                {t('userProfile.createPost')}
+              </span>
             </motion.button>
           </div>
         </div>
         <div className="flex flex-col space-y-4 mb-4">
-          <div className="flex items-center text-gray-600">
+          <div className="flex items-center text-gray-600 body-font">
             <Mail size={20} className="mr-2" />
             {user?.email}
           </div>
-          <div className="flex items-center text-gray-600">
+          <div className="flex items-center text-gray-600 body-font">
             <Calendar size={20} className="mr-2" /> {t('userProfile.joined', { date: new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(user?.created_at ?? '')) })}
           </div>
         </div>
-        <div className="flex items-center text-gray-600">
+        <div className="flex items-center text-gray-600 body-font">
           <Podcast size={20} className="mr-2" /> {t('userProfile.postCount', { count: announces.length })}
         </div>
       </Card>
 
-      <div className="mt-8">
-        <h2 className="text-2xl font-semibold mb-4">{t('userProfile.myPosts')}</h2>
+      <div className="p-4">
+        <h2 className="text-2xl font-semibold mb-4 heading-font text-green-800">{t('userProfile.myPosts')}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {announces.map((post) => (
             <motion.div

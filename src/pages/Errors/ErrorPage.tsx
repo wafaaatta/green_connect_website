@@ -3,9 +3,11 @@ import { motion } from 'framer-motion'
 import { Home, RefreshCcw } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import AppImages from '../../constants/app_images'
+import { useNavigate } from 'react-router-dom'
+import Routes from '../../constants/routes'
 
 interface ErrorPageProps {
-  statusCode: 404 | 500
+  statusCode: 404 
 }
 
 const ErrorPage: React.FC<ErrorPageProps> = ({ statusCode }) => {
@@ -19,6 +21,8 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ statusCode }) => {
   const imageSrc = is404
     ? AppImages.errors.notFound
     : AppImages.errors.serverError
+
+  const navigate = useNavigate()
 
   return (
     <div className="min-h-screen bg-green-100 flex items-center justify-center px-4 sm:px-6 lg:px-8">
@@ -47,18 +51,16 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ statusCode }) => {
           className="mt-8 space-y-4"
         >
           <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-sm text-white bg-green-700 hover:bg-green-900"
+            onClick={() => navigate(Routes.HOME)}
+            className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-sm text-white bg-green-800 hover:bg-green-900"
           >
             <Home className="mr-2 h-5 w-5" />
             {t('errorPage.returnHome')}
           </motion.button>
           {!is404 && (
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-green-700 bg-green-100 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            
+              className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-green-800 bg-green-100 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
             >
               <RefreshCcw className="mr-2 h-5 w-5" />
               {t('errorPage.tryAgain')}

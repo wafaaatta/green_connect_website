@@ -2,7 +2,7 @@
     "homePage": {
         "heroTitle": "Green Connect",
         "heroSubtitle": "Cultivate connections, share the joy of plants, and grow together in our vibrant community.",
-        "joinCommunity": "Join our community",
+        "joinCommunity": "Discover more",
         "heroImageAlt": "Green Connect Community",
         "featuresTitle": "Discover the Green Connect Experience",
         "feature1Title": "Plant Adoption",
@@ -91,7 +91,8 @@
         "loadMore": "Load More Articles",
         "modal": {
             "close": "Close"
-        }
+        },
+        "noResults": "No results found"
     },
 
     "conversationsPage": {

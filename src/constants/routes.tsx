@@ -1,30 +1,29 @@
-class Routes {
-    public static HOME = '/';
+const Routes = Object.freeze({
+    HOME: '/',
 
-    public static PAGES = class {
-        public static ANNOUNCEMENTS = '/announcements'
-        public static ANNOUNCE_DETAILS = '/announcements/:id/details'
-        public static EVENTS = '/events'
-        public static EVENT_DETAILS = '/events/:id'
-        public static ARTICLES = '/articles'
-        public static PROFILE = '/profile'
-        public static CONVERSATIONS = '/conversations'
-        public static ABOUT = '/about'
+    PAGES: Object.freeze({
+        ANNOUNCEMENTS: '/announcements',
+        ANNOUNCE_DETAILS: '/announcements/:id/details',
+        EVENTS: '/events',
+        EVENT_DETAILS: '/events/:id',
+        ARTICLES: '/articles',
+        PROFILE: '/profile',
+        CONVERSATIONS: '/conversations',
+        ABOUT: '/about',
 
 
-        public static CHAT_ROOMS = '/chats'
-        public static PRIVACY_POLICY = '/privacy-policy'
-    }
+        CHAT_ROOMS: '/chats',
+        PRIVACY_POLICY: '/privacy-policy',
+    }),
 
-    public static AUTH = class {
-        public static LOGIN = '/auth/login'
-        public static REGISTER = '/auth/register'
-    }
+    AUTH: Object.freeze({
+        LOGIN: '/auth/login',
+        REGISTER: '/auth/register',
+    }),
 
-    public static ERRORS = class {
-        public static NOT_FOUND = '/404'
-    }
+    ERRORS: Object.freeze({
+        NOT_FOUND: '/404',
+    }),
+});
 
-}
-
-export default Routes
+export default Routes;

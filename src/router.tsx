@@ -5,7 +5,6 @@ import Home from "./pages/Home/Home";
 import ArticlesPage from "./pages/Articles/Articles.tsx";
 import EventsPage from "./pages/Events/Events";
 import AnnouncesPage from "./pages/Announces/Announces.tsx";
-import Custom404 from "./pages/Errors/404";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import AnnounceDetails from "./pages/Announces/AnnounceDetails.tsx";
@@ -15,6 +14,7 @@ import ConversationsPage from "./pages/conversations/Conversations.tsx";
 import UserProfilePage from "./pages/User/UserProfile.tsx";
 import UserLayout from "./layouts/UserLayout.tsx";
 import RequireAuth from "./components/RequireAuth.tsx";
+import ErrorPage from "./pages/Errors/ErrorPage.tsx";
 
 const router =  createBrowserRouter([
     {
@@ -85,7 +85,7 @@ const router =  createBrowserRouter([
     },
     {
         path: '*',
-        element: <Custom404 />
+        element: <ErrorPage statusCode={404} />
     }
 ]);
 

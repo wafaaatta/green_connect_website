@@ -13,7 +13,6 @@ import { getFileUrl } from '../../utils/laravel_storage'
 import Conversation from '../../interfaces/Conversation'
 import moment from 'moment'
 import Message from '../../interfaces/Message'
-import ContactMap from '../Announces/ContactMap'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
 import { IconType } from 'react-icons'
@@ -172,7 +171,7 @@ const ConversationsPage: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row h-[calc(100vh-112px)] bg-gray-100">
+    <div className="flex flex-col md:flex-row h-[calc(100vh-112px)]">
       <AnimatePresence>
         {(isConversationListOpen || !isMobile()) && (
           <motion.div
@@ -182,8 +181,8 @@ const ConversationsPage: React.FC = () => {
             transition={{ duration: 0.3 }}
             className="w-full md:w-80 lg:w-96 bg-white border-r border-gray-200 overflow-y-auto flex-shrink-0"
           >
-            <h1 className="text-xl font-bold text-green-800 p-4 border-b border-gray-200">{t('conversationsPage.yourConversations')}</h1>
-            {conversations.map((conversation) => (
+            <h1 className="text-xl heading-font font-bold text-green-800 p-4 border-b border-gray-200">{t('conversationsPage.yourConversations')}</h1>
+            {conversations.map((conversation: Conversation) => (
               <motion.div
                 key={conversation.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -321,8 +320,8 @@ const ConversationsPage: React.FC = () => {
           <div className="flex-grow flex items-center justify-center bg-gray-50">
             <div className="text-center">
               <img src="/assets/green_connect.png" alt={t('conversationsPage.defaultPlant')} className=" h-32 mx-auto mb-4" />
-              <h2 className="text-2xl font-semibold text-gray-700 mb-2">{t('conversationsPage.noConversationSelected')}</h2>
-              <p className="text-gray-500">{t('conversationsPage.chooseConversation')}</p>
+              <h2 className="text-2xl font-semibold text-gray-700 mb-2 heading-font">{t('conversationsPage.noConversationSelected')}</h2>
+              <p className="text-gray-500 body-font">{t('conversationsPage.chooseConversation')}</p>
             </div>
           </div>
         )}
@@ -351,12 +350,6 @@ const ConversationsPage: React.FC = () => {
               <img src={getFileUrl(selectedConversation.announce.image)} alt={selectedConversation.announce.title} className="w-full h-48 object-cover rounded-lg mb-4" />
               <h4 className="font-semibold text-center">{selectedConversation.announce.title}</h4>
               <p className="text-sm text-gray-600 mb-4 text-center">{t('conversationsPage.owner')}: {selectedConversation.receiver.name}</p>
-              <div className="mb-4 h-48 rounded-lg overflow-hidden">
-                <ContactMap 
-                  city={'paris'}
-                  country={'france'}
-                />
-              </div>
               <div className="space-y-2 mb-4">
                 <div className="flex items-center">
                   <MapPin size={16} className="mr-2 text-green-600" />

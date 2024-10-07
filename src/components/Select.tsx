@@ -69,7 +69,7 @@ const Select: React.FC<CustomSelectProps> = ({
       <div className="relative">
         <button
           type="button"
-          className="relative w-full bg-white rounded border border-gray-400 pl-10 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-[#0096c7] focus:border-[#0096c7] sm:text-sm"
+          className="relative w-full bg-white rounded border border-gray-400 pl-10 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-[#065F46] focus:border-[#065F46] sm:text-sm"
           onClick={() => setIsOpen(!isOpen)}
         >
           <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -100,7 +100,7 @@ const Select: React.FC<CustomSelectProps> = ({
               <div className="px-3 py-2">
                 <input
                   type="text"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-[#0096c7] focus:border-[#0096c7]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-[#065F46] focus:border-[#065F46]"
                   placeholder="Search..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
@@ -125,7 +125,7 @@ const Select: React.FC<CustomSelectProps> = ({
                       key={option.value}
                       className={`cursor-pointer select-none relative py-2 pl-3 pr-9 ${
                         isSelected
-                          ? 'text-white bg-[#0096c7]'
+                          ? 'text-white bg-[#065F46]'
                           : 'text-gray-900 hover:bg-gray-100'
                       }`}
                       role="option"

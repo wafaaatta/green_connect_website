@@ -75,12 +75,12 @@ export default function Register() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-400 flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-white rounded shadow overflow-hidden w-full max-w-6xl relative"
+        className="bg-white rounded shadow border overflow-hidden w-full max-w-6xl relative"
       >
         <button
           onClick={toggleLanguage}
@@ -90,7 +90,7 @@ export default function Register() {
         </button>
         <div className="flex flex-col md:flex-row">
           {/* Left Column - Image */}
-          <div className="md:w-1/2 relative">
+          <div className="md:w-1/2 relative max-md:hidden">
             <img 
               src="/assets/images/plants-workshop/workshop-house.png" 
               alt={t('register.imageAlt')}
@@ -103,7 +103,7 @@ export default function Register() {
           {/* Right Column - Register Form */}
           <div className="md:w-1/2 w-full p-4 bg-white">
             <div className="flex justify-center">
-              <img src={AppImages.logo} alt={t('common.logoAlt')} className="w-52" />
+              <img src={AppImages.logo} alt={t('common.logoAlt')} className="w-52 max-md:w-40" />
             </div>
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
@@ -212,22 +212,24 @@ export default function Register() {
                 />
                 <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">
                   {t('register.termsAgreement')} {" "}
-                  <a href="#" className="text-green-700 hover:text-green-900">
+                  <a href={Routes.PAGES.PRIVACY_POLICY} className="text-green-700 hover:text-green-900">
                     {t('register.termsLink')}
                   </a>
                 </label>
               </div>
-              <button
-                type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-green-700 hover:bg-green-900 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-green-500"
-              >
-                {t('register.createAccount')}
-              </button>
+              <div className='w-full flex justify-center items-center'>
+                <button
+                  type="submit"
+                  className="text-md flex justify-center py-2 px-6 border border-transparent rounded shadow-sm font-medium text-white bg-green-800 hover:bg-green-700 transition duration-200 ease-in-out focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-green-500"
+                >
+                  {t('register.createAccount')}
+                </button>
+              </div>
             </form>
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
                 {t('register.alreadyHaveAccount')} {" "}
-                <Link to="/login" className="font-medium text-green-700 hover:text-green-900">
+                <Link to={Routes.AUTH.LOGIN} replace  className="font-medium text-green-700 hover:text-green-900">
                   {t('register.signIn')}
                 </Link>
               </p>

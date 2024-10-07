@@ -9,7 +9,6 @@ import Button from '../../components/Button'
 import Input from '../../components/Input'
 import { IconType } from 'react-icons'
 import Modal from '../../components/Modal'
-import { getFileUrl } from '../../utils/laravel_storage'
 
 const ITEMS_PER_PAGE = 12
 
@@ -49,10 +48,10 @@ const ArticlesPage: React.FC = () => {
   const hasMore = displayedArticles.length < filteredArticles.length
 
   return (
-    <div className="w-full bg-gray-50">
-      <Card className='sticky top-32 shadow'>
+    <div className="w-full">
+      <Card className='shadow'>
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">
-          <h1 className="text-3xl font-bold text-green-800">{t('articlesPage.title')}</h1>
+          <h1 className="text-3xl max-md:text-2xl font-bold text-green-800">{t('articlesPage.title')}</h1>
           <div className="w-full md:w-64">
             <Input
               icon={Search as IconType}
@@ -68,9 +67,16 @@ const ArticlesPage: React.FC = () => {
         <AnimatePresence>
           <motion.div
             layout
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols2 gap-4"
+            className="grid  max-xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4"
           >
-            {displayedArticles.map((article, index) => (
+            {
+              filteredArticles.length === 0 && (
+                <div className="text-center">
+                  <h1 className="text-3xl font-bold text-green-800">{t('articlesPage.noResults')}</h1>
+                </div>
+              )
+            }
+            {filteredArticles.map((article, index) => (
               <motion.div
                 key={article.id}
                 layout
@@ -80,15 +86,15 @@ const ArticlesPage: React.FC = () => {
                 transition={{ duration: 0.3, delay: index * 0.05 }}
               >
                 <Card 
-                  className="h-[400px] cursor-pointer transition-shadow duration-300 bg-white flex flex-col"
+                  className="min-h-[420px] cursor-pointer transition-shadow duration-300 bg-green-100 flex flex-col"
                 >
                   <img 
-                    src={getFileUrl(article.image)} 
+                    src={'/src/assets/images/plants/rosemary.png'} 
                     alt={article.title} 
-                    className="w-full h-48 object-contain rounded-t" 
+                    className="w-full h-48 object-cover rounded-t" 
                   />
                   <div className="mt-4 flex flex-col flex-grow">
-                    <h2 className="text-xl font-semibold mb-2 text-green-800">{article.title}</h2>
+                    <h2 className="text-2xl font-semibold mb-2 text-green-800">{article.title}</h2>
                     <div className="flex items-center mb-2 text-green-800">
                       <Calendar size={16} className="mr-1" />
                       <span>{new Date(article.created_at).toLocaleDateString()}</span>
@@ -99,7 +105,7 @@ const ArticlesPage: React.FC = () => {
                     <p className="text-gray-600 mb-4 flex-grow overflow-hidden">
                       {article.content.slice(0, 100)}...
                     </p>
-                    <div className="flex items-center justify-between mt-auto">
+                    <div className="flex items-center justify-end mt-auto">
                       <Button 
                         size="sm" 
                         className="bg-green-800 hover:bg-green-700 text-white"
@@ -161,9 +167,9 @@ const ArticlesPage: React.FC = () => {
                 <div className="mb-4 ">
                   {selectedArticle.image && (
                     <img
-                      src={getFileUrl(selectedArticle.image)}
+                      src={'/src/assets/images/plants/rosemary.png'}
                       alt={selectedArticle.title}
-                      className="object-contain rounded  w-full h-64 mb-4 shadow border"
+                      className="object-cover rounded  w-full h-80 mb-4 shadow border"
                       
                     />
                   )}
