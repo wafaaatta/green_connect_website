@@ -89,11 +89,11 @@ const ArticlesPage: React.FC = () => {
                   />
                   <div className="mt-4 flex flex-col flex-grow">
                     <h2 className="text-xl font-semibold mb-2 text-green-800">{article.title}</h2>
-                    <div className="flex items-center mb-2 text-green-600">
+                    <div className="flex items-center mb-2 text-green-800">
                       <Calendar size={16} className="mr-1" />
                       <span>{new Date(article.created_at).toLocaleDateString()}</span>
                     </div>
-                    <div className="flex items-center mb-2 text-green-600">
+                    <div className="flex items-center mb-2 text-green-800">
                       <span>{article.article_category.name}</span>
                     </div>
                     <p className="text-gray-600 mb-4 flex-grow overflow-hidden">
@@ -102,7 +102,7 @@ const ArticlesPage: React.FC = () => {
                     <div className="flex items-center justify-between mt-auto">
                       <Button 
                         size="sm" 
-                        className="bg-green-600 hover:bg-green-700 text-white"
+                        className="bg-green-800 hover:bg-green-700 text-white"
                         onClick={() => setSelectedArticle(article)}
                       >
                         {t('articlesPage.readMore')}
@@ -120,7 +120,7 @@ const ArticlesPage: React.FC = () => {
             <Button
               size="lg"
               onClick={loadMore}
-              className="px-8 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-full shadow transition-all duration-300"
+              className="px-8 py-3 bg-green-800 hover:bg-green-700 text-white font-semibold rounded-full shadow transition-all duration-300"
             >
               {t('articlesPage.loadMore')}
             </Button>
@@ -154,7 +154,7 @@ const ArticlesPage: React.FC = () => {
                     <X size={24} />
                   </button>
                 </div>
-                <div className="flex items-center mb-4 text-green-600">
+                <div className="flex items-center mb-4 text-green-800">
                   <Calendar size={16} className="mr-1" />
                   <span>{new Date(selectedArticle.created_at).toLocaleDateString()}</span>
                 </div>
@@ -169,7 +169,7 @@ const ArticlesPage: React.FC = () => {
                   )}
                 </div>
                 <div className="mb-4">
-                  <span className="text-green-600 font-semibold">{selectedArticle.article_category.name}</span>
+                  <span className="text-green-800 font-semibold">{selectedArticle.article_category.name}</span>
                 </div>
                 <div className="prose max-w-none">
                   {selectedArticle.content.split('\n').map((paragraph, index) => (

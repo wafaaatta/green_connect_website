@@ -109,7 +109,7 @@ const Header: React.FC = () => {
                 </Button>
                 <Button
                   leftIcon={LogOut as IconType}
-                  variant="outline"
+                  variant='link'
                   color="red"
                   size="sm"
                   onClick={handleLogout}

@@ -114,18 +114,18 @@ const EventsPage: React.FC = () => {
                       <h2 className="text-2xl font-semibold mb-2 text-green-800">{event.title}</h2>
                       <p className="text-gray-600 mb-4 line-clamp-2">{event.description}</p>
                       <div className="flex flex-wrap items-center gap-4">
-                        <div className="flex items-center text-green-600">
+                        <div className="flex items-center text-green-800">
                           <Calendar size={18} className="mr-2" />
                           <span>{new Date(event.event_date).toLocaleDateString()}</span>
                         </div>
-                        <div className="flex items-center text-green-600">
+                        <div className="flex items-center text-green-800">
                           <MapPin size={18} className="mr-2" />
                           <span>{event.location}</span>
                         </div>
                       </div>
                     </div>
                     <div className="p-4 flex items-center">
-                      <Button className="bg-green-600 hover:bg-green-700 text-white">{t('eventsPage.viewDetails')}</Button>
+                      <Button className="bg-green-800 hover:bg-green-700 text-white">{t('eventsPage.viewDetails')}</Button>
                     </div>
                   </div>
                 </Card>
@@ -139,7 +139,7 @@ const EventsPage: React.FC = () => {
             <Button
               size="lg"
               onClick={loadMore}
-              className="px-8 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              className="px-8 py-3 bg-green-800 hover:bg-green-700 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
             >
               {t('eventsPage.loadMore')}
             </Button>
@@ -179,19 +179,19 @@ const EventsPage: React.FC = () => {
               <div className="p-6">
                 <h2 className="text-3xl font-bold mb-4 text-green-800">{selectedEvent.title}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                  <div className="flex items-center text-green-600">
+                  <div className="flex items-center text-green-800">
                     <Calendar size={20} className="mr-2" />
                     <span>{new Date(selectedEvent.event_date).toLocaleDateString()}</span>
                   </div>
-                  <div className="flex items-center text-green-600">
+                  <div className="flex items-center text-green-800">
                     <MapPin size={20} className="mr-2" />
                     <span>{selectedEvent.location}</span>
                   </div>
-                  <div className="flex items-center text-green-600">
+                  <div className="flex items-center text-green-800">
                     <User size={20} className="mr-2" />
                     <span>{selectedEvent.organized_by}</span>
                   </div>
-                  <div className="flex items-center text-green-600">
+                  <div className="flex items-center text-green-800">
                     <Mail size={20} className="mr-2" />
                     <span>{selectedEvent.organizer_email}</span>
                   </div>

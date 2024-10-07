@@ -71,7 +71,7 @@ const AnnouncesPage: React.FC = () => {
     <div className="w-full">
       <Card className="sticky top-32 z-10 mb-8 mx-4 sm:mx-6 lg:mx-8 bg-white">
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">
-          <h1 className="text-3xl font-bold text-green-600 mb-4 md:mb-0">{t('postsPage.title')}</h1>
+          <h1 className="text-3xl font-bold text-green-800 mb-4 md:mb-0">{t('postsPage.title')}</h1>
           <div className="flex flex-wrap justify-end items-center gap-4">
             <div className="w-full md:w-60">
               <Input
@@ -149,7 +149,7 @@ const AnnouncesPage: React.FC = () => {
                   />
                   <div className="mt-2">
                     <h2 className="text-xl font-semibold mb-2 text-gray-800">{announce.title}</h2>
-                    <div className="flex items-center mb-2 text-green-600">
+                    <div className="flex items-center mb-2 text-green-800">
                       <MapPin size={16} className="mr-1" />
                       <span>{announce.city}, {announce.postal_code}</span>
                     </div>
@@ -158,7 +158,7 @@ const AnnouncesPage: React.FC = () => {
                       <span className="text-sm text-gray-600">
                         {new Date(announce.created_at).toLocaleDateString()}
                       </span>
-                      <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">{t('postsPage.viewDetails')}</Button>
+                      <Button size="sm" className="bg-green-800 hover:bg-green-700 text-white">{t('postsPage.viewDetails')}</Button>
                     </div>
                   </div>
                 </Card>
@@ -173,7 +173,7 @@ const AnnouncesPage: React.FC = () => {
           <Button
             size="lg"
             onClick={loadMore}
-            className="px-8 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-full  shadow duration-300"
+            className="px-8 py-3 bg-green-800 hover:bg-green-700 text-white font-semibold rounded-full  shadow duration-300"
           >
             {t('postsPage.loadMore')}
           </Button>

@@ -9,7 +9,7 @@ interface InfoCardProps {
 }
 
 const InfoCard: React.FC<InfoCardProps> = ({ title, description, icon }) => (
-  <div className="p-4 rounded shadow bg-green-50">
+  <div className="p-4 rounded shadow bg-green-100">
     {icon}
     <h3 className="text-xl font-semibold mt-4 mb-2">{title}</h3>
     <p className="text-gray-600">{description}</p>

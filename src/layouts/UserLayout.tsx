@@ -4,7 +4,7 @@ import Notification from '../components/Notification'
 
 const UserLayout = () => {
   return (
-    <div className="flex flex-col min-h-screen bg-slate-100 custom-scroll">
+    <div className="flex flex-col min-h-screen custom-scroll">
       <Header />
       {/* Main content */}
       <main className="flex-grow">
