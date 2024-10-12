@@ -8,7 +8,7 @@ const initialState = {
   type: 'info', // Default type
 };
 
-const notificationSlice = createSlice({
+const mockupNotificationSlice = createSlice({
   name: 'notification',
   initialState,
   reducers: {
@@ -20,12 +20,9 @@ const notificationSlice = createSlice({
     },
     hideNotification: (state) => {
       state.visible = false;
-      state.message = '';
-      state.description = '';
-      state.type = 'info';
     },
   },
 });
 
-export const { showNotification, hideNotification } = notificationSlice.actions;
-export default notificationSlice.reducer;
+export const { showNotification, hideNotification } = mockupNotificationSlice.actions;
+export default mockupNotificationSlice.reducer;

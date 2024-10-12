@@ -14,12 +14,12 @@ const initialState: AnnounceState = {
 
 export const getAllAnnounces = createAsyncThunk(
     'announce/getAllAnnounces',
-    async () => {
+    async (size?: number) => {
         try{
             const response = await axiosHttp.get('/announces/accepted', {
-                // params: {
-                //     size
-                // }
+                params: {
+                    size
+                }
             })
             return response.data
         }catch(error){

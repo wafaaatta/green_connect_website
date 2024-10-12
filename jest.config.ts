@@ -1,21 +1,13 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} **/
 export default {
-  collectCoverage: true,
-  collectCoverageFrom: ['src/**/*.{ts,tsx}', '!src/**/*.d.ts',
-    '!**/vendor/**'],
-  coverageDirectory: 'coverage',
+  preset: 'ts-jest', // Use 'ts-jest' if using TypeScript
   testEnvironment: 'jsdom',
   transform: {
-    ".(ts|tsx)": "ts-jest"
+    "^.+\\.[jt]sx?$": "ts-jest"
   },
-
-  coveragePathIgnorePatterns: [
-    "/node_modules/",
-    "/coverage",
-    "package.json",
-    "package-lock.json",
-    "reportWebVitals.ts",
-    "setupTests.ts",
-    "index.tsx"
+  moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json', 'node'],
+  extensionsToTreatAsEsm: ['.tsx', '.ts'], // Add extensions to treat as ESM
+  transformIgnorePatterns: [
+    "node_modules/(?!your-module-name)", // If needed
   ],
 };

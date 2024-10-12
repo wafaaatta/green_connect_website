@@ -37,8 +37,9 @@ export default function Login() {
 
   const {loading} = useAppSelector((state) => state.auth_store)
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const handleSubmit = async () => {
+    console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxddddddd');
+    
 
     await dispatch(
       loginUser({
@@ -104,13 +105,14 @@ export default function Login() {
             <div className="flex justify-center">
               <img src={AppImages.logo} alt={t('common.logoAlt')} className="w-60 max-md:w-40" />
             </div>
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <div className="space-y-6">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                   {t('login.email')}
                 </label>
                 <div className="relative">
                   <input
+                    name='email'
                     id="email"
                     type="email"
                     value={email}
@@ -173,13 +175,13 @@ export default function Login() {
               </div> */}
               <div className='w-full flex justify-center items-center'>
                 <button
-                  type="submit"
+                  onClick={handleSubmit}
                   className="flex justify-center py-2 px-6 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-green-800 hover:bg-green-700 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 >
                   {loading ? t('login.loading') : t('login.loginButton')}
                 </button>
               </div>
-            </form>
+            </div>
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
                 {t('login.noAccount')} {" "}

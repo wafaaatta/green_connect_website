@@ -1,7 +1,7 @@
 import Pusher from 'pusher-js';
 
 // Create a Pusher instance
-const pusher = new Pusher('5f950ee8879a3ee4e0ea', {
+const pusher = new Pusher('c54be6c2bdbc371de2e5', {
   cluster: 'mt1',
 });
 

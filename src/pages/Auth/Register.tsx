@@ -24,9 +24,7 @@ export default function Register() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-
+  const handleSubmit = async () => {
     if (password !== confirmPassword) {
       dispatch(
         showNotification({
@@ -35,6 +33,39 @@ export default function Register() {
         })
       )
       return
+    }
+    
+    // Validate each condition individually
+    const errors: string[] = [];
+    
+    if (password.length < 6) {
+      errors.push(t('register.errors.passwordTooShort'));  // Password too short
+    }
+    if (password.length > 16) {
+      errors.push(t('register.errors.passwordTooLong'));   // Password too long
+    }
+    if (!(/[A-Z]/.test(password))) {
+      errors.push(t('register.errors.passwordNeedsCapital'));  // Needs uppercase letter
+    }
+    if (!/\d/.test(password)) {
+      errors.push(t('register.errors.passwordNeedsNumber'));   // Needs a number
+    }
+    if (!/[a-z]/.test(password)) {
+      errors.push(t('register.errors.passwordNeedsChar'));     // Needs lowercase letter
+    }
+    if (!/[!@#$%^&*]/.test(password)) {
+      errors.push(t('register.errors.passwordNeedsSpecialChar'));  // Needs a special character
+    }
+    
+    // If there are errors, show them in the notification
+    if (errors.length > 0) {
+      dispatch(
+        showNotification({
+          message: errors.join('\n'),
+          type: 'error',
+        })
+      );
+      return;
     }
 
     await dispatch(
@@ -105,7 +136,7 @@ export default function Register() {
             <div className="flex justify-center">
               <img src={AppImages.logo} alt={t('common.logoAlt')} className="w-52 max-md:w-40" />
             </div>
-            <form className="space-y-4" onSubmit={handleSubmit}>
+            <div className="space-y-4">
               <div>
                 <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
                   {t('register.username')}
@@ -219,13 +250,13 @@ export default function Register() {
               </div>
               <div className='w-full flex justify-center items-center'>
                 <button
-                  type="submit"
+                onClick={handleSubmit}
                   className="text-md flex justify-center py-2 px-6 border border-transparent rounded shadow-sm font-medium text-white bg-green-800 hover:bg-green-700 transition duration-200 ease-in-out focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-green-500"
                 >
                   {t('register.createAccount')}
                 </button>
               </div>
-            </form>
+            </div>
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
                 {t('register.alreadyHaveAccount')} {" "}
