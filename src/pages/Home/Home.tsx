@@ -130,7 +130,7 @@ const HomePage = () => {
       {/* Community Posts Section */}
       <section className="bg-green-800 py-12">
         <div className=" mx-auto px-4">
-          <h2 className="text-4xl text-white font-bold text-center mb-12">{t('homePage.Plant Sharing Corner')}</h2>
+          <h2 className="text-4xl text-white font-bold text-center mb-12">{t('homePage.plant_sharing')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {announces.slice(0, 4).map((post, index) => (
               <motion.div

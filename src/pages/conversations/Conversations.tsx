@@ -152,7 +152,7 @@ const ConversationsPage: React.FC = () => {
     const channel = PusherBroadcasts.channels.conversations
     const event = PusherBroadcasts.events.conversations.created
 
-    subscribeToChannel(channel, event, () => {
+    subscribeToChannel(channel, event, (data) => {
       dispatch(getAllConversations())
     })
 

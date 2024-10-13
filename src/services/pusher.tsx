@@ -1,7 +1,7 @@
 import Pusher from 'pusher-js';
 
 // Create a Pusher instance
-const pusher = new Pusher('c54be6c2bdbc371de2e5', {
+const pusher = new Pusher(process.env.PUSHER_API_KEY as string, {
   cluster: 'mt1',
 });
 
@@ -34,4 +34,3 @@ export const unsubscribeFromChannel = (channelName: string): void => {
 window.addEventListener('beforeunload', () => {
   pusher.disconnect();
 });
-

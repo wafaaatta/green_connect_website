@@ -13,7 +13,7 @@
       "feature3Description": "Participez à des ateliers, séminaires, et échanges de plantes",
       "feature4Title": "Centre de Connaissances",
       "feature4Description": "Accédez à une mine de conseils sur les soins des plantes et le jardinage",
-      "Plant Sharing Corner ": "Coin Partage de Plantes",
+      "plant_sharing": "Découvrez les plantes des utilisateurs",
       "by": "Par",
       "explorePosts": "Explorer d'autres publications",
       "latestInsights": "Dernières perspectives écologiques",
@@ -367,7 +367,13 @@
         "alreadyHaveAccount": "Vous avez déjà un compte ?",
         "signIn": "Se connecter",
         "errors": {
-            "passwordMismatch": "Les mots de passe ne correspondent pas"
+            "passwordMismatch": "Les mots de passe ne correspondent pas",
+            "passwordTooShort": "Mot de pas trop court",
+            "passwordTooLong": "Mot de passe trop long",
+            "passwordNeedsCapital": "Mot de passe doit contenir au moins une majuscule",
+            "passwordNeedsNumber": "Mot de passe doit contenir au moins un chiffre",
+            "passwordNeedsChar": "Mot de passe doit contenir un caractères",
+            "passwordNeedsSpecialChar": "Mot de passe needs un caractère spécial"
         },
         "success": "Inscription réussie"
     },

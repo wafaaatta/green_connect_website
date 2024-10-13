@@ -13,7 +13,7 @@
         "feature3Description": "Participate in workshops, seminars, and plant exchanges",
         "feature4Title": "Knowledge Center",
         "feature4Description": "Access a wealth of plant care and gardening advice",
-        "Plant Sharing Corner ": "Plant Sharing Corner ",
+        "plant_sharing ": "Discover user's plants",
         "by": "By",
         "explorePosts": "Explore more posts",
         "latestInsights": "Latest Green Insights",
@@ -368,7 +368,14 @@
         "alreadyHaveAccount": "Already have an account?",
         "signIn": "Sign in",
         "errors": {
-            "passwordMismatch": "Passwords do not match"
+            "passwordMismatch": "Passwords do not match",
+            "passwordTooShort": "Password is too short",
+            "passwordTooLong": "Password is too long",
+            "passwordNeedsCapital": "Password needs a capital letter",
+            "passwordNeedsNumber": "Password needs a number",
+            "passwordNeedsChar": "Password needs a special character",
+            "passwordNeedsSpecialChar": "Password needs a special character"
+
         },
         "success": "Registration successful"
     },

@@ -7,6 +7,8 @@ const PusherBroadcasts = Object.freeze({
     events: {
         conversations: {
             created: 'conversation.created',
+            updated: 'conversation.updated',
+            deleted: 'conversation.deleted',
         },
 
         messages: {

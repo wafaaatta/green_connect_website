@@ -22,13 +22,6 @@ i18n
     resources,
     lng: getLanguage(), 
     fallbackLng: "fr",
-
-    interpolation: {
-      escapeValue: false,
-    },
-    react:{
-
-    }
   },() => {
     console.log('i18next is ready');
     

@@ -1,4 +1,3 @@
-import '../i18n'
 import '@testing-library/jest-dom'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
@@ -10,6 +9,7 @@ import Announce from '../interfaces/Announce';
 import React from 'react';
 import i18next, { I18nextProvider } from 'react-i18next';
 import i18nextMock from './utils/mock_i18next';
+
 describe('Announces Component', () => {
     test('renders announces page', async () => {
         jest.mock('../utils/axios_client')

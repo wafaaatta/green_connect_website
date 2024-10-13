@@ -25,12 +25,14 @@ describe('Register Component', () => {
             </Provider>
         )
 
+        expect(screen.getByLabelText('register.username')).toBeInTheDocument();
         expect(screen.getByLabelText('register.email')).toBeInTheDocument();
         expect(screen.getByLabelText('register.password')).toBeInTheDocument();
+        expect(screen.getByLabelText('register.confirmPassword')).toBeInTheDocument();
         expect(screen.getByText('register.createAccount')).toBeInTheDocument();
     })
 
-    test('should tell user if email already exists', async () => {
+    it('should tell user if email already exists', async () => {
         jest.mock('../utils/axios_client')
         jest.spyOn(axiosHttp, 'post').mockImplementation((url, data) => {
             const payload = data as { name: string, email: string, password: string }
@@ -49,9 +51,9 @@ describe('Register Component', () => {
                 data: {
                     token: 'token',
                     user: {
-                        email: 'test@example.com',
+                        email: payload.email,
                         id: 1,
-                        name: 'test',
+                        name: payload.name,
                         created_at: '2020-01-01 00:00:00',
                         email_verified_at: '2020-01-01 00:00:00'
                     } as User
@@ -74,17 +76,22 @@ describe('Register Component', () => {
         const submitButton = screen.getByText(/register.createAccount/i);
 
         await userEvent.type(emailInput, 'test@example.com');
-        await userEvent.type(passwordInput, 'password');
-        await userEvent.type(confirmPasswordInput, 'password');
+        await userEvent.type(passwordInput, 'Password123!@#');
+        await userEvent.type(confirmPasswordInput, 'Password123!@#');
         await userEvent.click(submitButton);
 
         await waitFor(() => {
             expect(screen.getByText('Email already exists')).toBeInTheDocument();
         })
 
+        await userEvent.clear(emailInput);
         await userEvent.type(emailInput, 'new@example.com');
-        await userEvent.type(passwordInput, 'password');
-        await userEvent.type(confirmPasswordInput, 'password');
+
+        await userEvent.clear(passwordInput);
+        await userEvent.type(passwordInput, 'Password123!@#');
+
+        await userEvent.clear(confirmPasswordInput);
+        await userEvent.type(confirmPasswordInput, 'Password123!@#');
         await userEvent.click(submitButton);
 
         await waitFor(() => {
@@ -154,6 +161,7 @@ describe('Register Component', () => {
         const invalidPasswordNoNumber = 'Password!@#'
         const invalidPasswordNoSpecial = 'Password123'
         const invalidPasswordNoChar = '123!@#'
+        const invalidPasswordTooLong = 'Password123!@#1234567890'
 
         await userEvent.type(emailInput, 'test@example.com');
 
@@ -166,7 +174,6 @@ describe('Register Component', () => {
             expect(screen.getByText('register.errors.passwordTooShort')).toBeInTheDocument();
         })
 
-        const invalidPasswordTooLong = 'Password123!@#1234567890'
         await userEvent.clear(passwordInput);
         await userEvent.type(passwordInput, invalidPasswordTooLong);
         await userEvent.clear(confirmPasswordInput);
