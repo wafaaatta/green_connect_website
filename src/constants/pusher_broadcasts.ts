@@ -1,7 +1,8 @@
 const PusherBroadcasts = Object.freeze({
     channels: {
         conversations: 'conversations-channel', 
-        message_creation: 'message-creation-channel', 
+        message_creation: 'message-creation-channel',
+        email_verification: 'email-verification-channel',
     },
 
     events: {
@@ -13,6 +14,10 @@ const PusherBroadcasts = Object.freeze({
 
         messages: {
             created: 'message.created',
+        },
+
+        email_verification: {
+            success: 'email-verification.success',
         }
     }
 })

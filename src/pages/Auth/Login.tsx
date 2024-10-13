@@ -35,11 +35,9 @@ export default function Login() {
     }
   }, [dispatch, searchParams, t]);
 
-  const {loading} = useAppSelector((state) => state.auth_store)
+  const {loading, user} = useAppSelector((state) => state.auth_store)
 
-  const handleSubmit = async () => {
-    console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxddddddd');
-    
+  const handleSubmit = async () => {    
 
     await dispatch(
       loginUser({
@@ -55,10 +53,13 @@ export default function Login() {
         })
       )
 
-      setTimeout(() => {
-        const redirectTo = searchParams.get("redirected_from") || '/';
-        navigate(redirectTo)
-      }, 2000)
+      if(user?.email_verified_at == null){
+        navigate(Routes.AUTH.EMAIL_VERIFICATION_REQUIRED)
+        return
+      }
+
+      const redirectTo = searchParams.get("redirected_from") || '/';
+      navigate(redirectTo)
     }).catch((error) => {
       dispatch(
         showNotification({

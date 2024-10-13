@@ -15,11 +15,16 @@ import UserProfilePage from "./pages/User/UserProfile.tsx";
 import UserLayout from "./layouts/UserLayout.tsx";
 import RequireAuth from "./components/RequireAuth.tsx";
 import ErrorPage from "./pages/Errors/ErrorPage.tsx";
+import EmailVerificationRequired from "./pages/Auth/EmailVerificationRequired.tsx";
 
 const router =  createBrowserRouter([
     {
         path: Routes.AUTH.LOGIN,
         element: <Login />
+    },
+    {
+        path: Routes.AUTH.EMAIL_VERIFICATION_REQUIRED,
+        element: <EmailVerificationRequired />
     },
     {
         path: Routes.AUTH.REGISTER,

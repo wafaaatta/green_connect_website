@@ -18,6 +18,7 @@ const Routes = Object.freeze({
 
     AUTH: Object.freeze({
         LOGIN: '/auth/login',
+        EMAIL_VERIFICATION_REQUIRED: '/auth/email-verification-required',
         REGISTER: '/auth/register',
     }),
 
