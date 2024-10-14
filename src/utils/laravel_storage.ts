@@ -1,4 +1,5 @@
+import { baseUrl } from "../constants/app_constants"
 
 export const getFileUrl = (endpoint: string) => {
-    return `http://localhost:8000/${endpoint}`
+    return `${baseUrl}/${endpoint}`
 }

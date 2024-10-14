@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { EyeIcon, EyeOffIcon, Mail, Lock, User, Globe } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -114,6 +114,7 @@ export default function Register() {
         className="bg-white rounded shadow border overflow-hidden w-full max-w-6xl relative"
       >
         <button
+          aria-label="Toggle Language"
           onClick={toggleLanguage}
           className="absolute top-4 right-4 p-2 bg-green-700 text-white rounded-full hover:bg-green-800 transition-colors duration-200"
         >
@@ -123,6 +124,7 @@ export default function Register() {
           {/* Left Column - Image */}
           <div className="md:w-1/2 relative max-md:hidden">
             <img 
+              aria-hidden="true"
               loading='lazy'
               src="/assets/images/plants-workshop/workshop-house.png" 
               alt={t('register.imageAlt')}
@@ -135,7 +137,7 @@ export default function Register() {
           {/* Right Column - Register Form */}
           <div className="md:w-1/2 w-full p-4 bg-white">
             <div className="flex justify-center">
-              <img loading='lazy' src={AppImages.logo} alt={t('common.logoAlt')} className="w-52 max-md:w-40" />
+              <img aria-hidden="true" loading='lazy' src={AppImages.logo} alt={t('common.logoAlt')} className="w-52 max-md:w-40" />
             </div>
             <div className="space-y-4">
               <div>
@@ -144,6 +146,7 @@ export default function Register() {
                 </label>
                 <div className="relative">
                   <input
+                    aria-label="username"
                     id="username"
                     name="username"
                     value={name}
@@ -162,6 +165,7 @@ export default function Register() {
                 </label>
                 <div className="relative">
                   <input
+                    aria-label="email"
                     id="email"
                     name="email"
                     type="email"
@@ -181,6 +185,7 @@ export default function Register() {
                 </label>
                 <div className="relative">
                   <input
+                    aria-label="password"
                     id="password"
                     name="password"
                     data-testid="password-input"
@@ -193,6 +198,7 @@ export default function Register() {
                   />
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
                   <button
+                    aria-label="show password"
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
@@ -211,6 +217,7 @@ export default function Register() {
                 </label>
                 <div className="relative">
                   <input
+                    aria-label="confirmPassword"
                     id="confirmPassword"
                     name='confirmPassword'
                     value={confirmPassword}
@@ -222,6 +229,7 @@ export default function Register() {
                   />
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
                   <button
+                    aria-label="show password"
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
@@ -236,6 +244,7 @@ export default function Register() {
               </div>
               <div className="flex items-center">
                 <input
+                  aria-label="terms"
                   id="terms"
                   name="terms"
                   type="checkbox"
@@ -251,6 +260,7 @@ export default function Register() {
               </div>
               <div className='w-full flex justify-center items-center'>
                 <button
+                  aria-label="create account"
                 onClick={handleSubmit}
                   className="text-md flex justify-center py-2 px-6 border border-transparent rounded shadow-sm font-medium text-white bg-green-800 hover:bg-green-700 transition duration-200 ease-in-out focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-green-500"
                 >
@@ -261,7 +271,7 @@ export default function Register() {
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
                 {t('register.alreadyHaveAccount')} {" "}
-                <Link to={Routes.AUTH.LOGIN} replace  className="font-medium text-green-700 hover:text-green-900">
+                <Link aria-label="sign in" to={Routes.AUTH.LOGIN} replace  className="font-medium text-green-700 hover:text-green-900">
                   {t('register.signIn')}
                 </Link>
               </p>

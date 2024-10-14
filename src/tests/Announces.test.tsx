@@ -1,13 +1,13 @@
 import '@testing-library/jest-dom'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { BrowserRouter, MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import AnnouncesPage from '../pages/Announces/Announces';
 import { store } from '../redux/store';
 import axiosHttp from '../utils/axios_client';
 import Announce from '../interfaces/Announce';
 import React from 'react';
-import i18next, { I18nextProvider } from 'react-i18next';
+import { I18nextProvider } from 'react-i18next';
 import i18nextMock from './utils/mock_i18next';
 
 describe('Announces Component', () => {

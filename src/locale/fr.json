@@ -182,9 +182,8 @@
             "Évitez le contenu promotionnel ou spam qui ne contribue pas à des discussions significatives.",
             "Signalez tout comportement inapproprié, harcèlement ou contenu qui viole nos directives.",
             "Soyez patient, solidaire et encourageant, en particulier avec les nouveaux amateurs de plantes.",
-            "Utilisez un langage inclusif et évitez les commentaires ou les publications discriminatoires.",
-            "Donnez crédit lorsque vous partagez le contenu ou les photos d'autres personnes.",
-            "Engagez-vous dans des discussions constructives et fournissez des commentaires utiles lorsque possible."
+            "Utilisez un langage inclusif et évitez les publications discriminatoires."
+            
         ]
         },
         "privacyPolicy": {
@@ -193,11 +192,9 @@
             "Nous collectons les informations personnelles minimales nécessaires à la création de compte et à la fonctionnalité de la plateforme.",
             "Vos données sur les plantes et vos informations personnelles sont gardées confidentielles et ne sont jamais vendues à des tiers.",
             "Vous pouvez demander la suppression de votre compte et des données associées à tout moment via nos canaux de support.",
-            "Nous utilisons des cookies pour améliorer votre expérience de navigation et fournir du contenu personnalisé.",
-            "Nous pouvons envoyer des emails occasionnels concernant des mises à jour importantes, de nouvelles fonctionnalités ou des événements communautaires. Vous pouvez vous désabonner à tout moment.",
             "Vos informations de profil sont visibles par défaut pour les autres utilisateurs, mais vous pouvez ajuster vos paramètres de confidentialité.",
-            "Nous utilisons des mesures de sécurité standard de l'industrie pour protéger vos données contre tout accès non autorisé.",
-            "En cas de violation de données, nous informerons rapidement les utilisateurs concernés et prendrons les mesures nécessaires pour sécuriser la plateforme."
+            "Nous utilisons des mesures de sécurité standard de l'industrie pour protéger vos données contre tout accès non autorisé."
+           
         ]
         },
         "rightsObligations": {
@@ -209,15 +206,14 @@
             "Obligation de ne pas utiliser la plateforme à des fins illégales ou nuisibles.",
             "Droit de contester toute décision automatisée vous concernant et de demander une intervention humaine.",
             "Obligation de maintenir la confidentialité de vos informations de connexion.",
-            "Droit à la portabilité de vos données vers d'autres services, dans la mesure du possible.",
             "Obligation de signaler tout contenu inapproprié ou violation des conditions d'utilisation."
         ]
         },
         "sustainabilityCommitment": {
         "title": "Engagement en faveur du développement durable",
         "content": [
-            "Nous utilisons des solutions d'hébergement écologiques alimentées à 100% par des énergies renouvelables pour nos serveurs.",
-            "Nos opérations de bureau sont neutres en carbone, utilisant des équipements et des pratiques écoénergétiques.",
+            "Nous utilisons des solutions d'hébergement écologiques.",
+            "Nos opérations de bureau sont neutres en carbone, utilisant des pratiques écoénergétiques.",
             "Nous organisons des événements annuels de plantation d'arbres dans les communautés locales pour compenser notre empreinte carbone.",
             "Nous promouvons activement des pratiques de jardinage durables à travers du contenu éducatif et des ateliers.",
             "Nous nous associons à des organisations dédiées à la conservation de la biodiversité et à la protection de l'environnement.",

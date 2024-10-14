@@ -8,7 +8,7 @@ import AnnouncesPage from "./pages/Announces/Announces.tsx";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import AnnounceDetails from "./pages/Announces/AnnounceDetails.tsx";
-import PolicyPage from "./pages/Privacy/PrivacyPolicy";
+import PolicyPage from "./pages/Privacy/GreenConnectInfo.tsx";
 import About from "./pages/About/About.tsx";
 import ConversationsPage from "./pages/conversations/Conversations.tsx";
 import UserProfilePage from "./pages/User/UserProfile.tsx";

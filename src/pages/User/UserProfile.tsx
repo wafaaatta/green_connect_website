@@ -30,11 +30,12 @@ const UserProfilePage = () => {
     title: '', 
     content: '', 
     category: '', 
-    image: null as File | null,
     city: '',
     country: '',
     postalCode: ''
   })
+
+  const [image, setImage] = useState<File | null>(null)
 
   const toggleEditModal = () => setIsEditModalOpen(!isEditModalOpen)
   const toggleCreatePostModal = () => setIsCreatePostModalOpen(!isCreatePostModalOpen)
@@ -71,7 +72,7 @@ const UserProfilePage = () => {
 
   const handleCreatePost = async () => {
     const formData = new FormData()
-    formData.append('image', newPost.image as File)
+    formData.append('image', image as File)
     formData.append('title', newPost.title)
     formData.append('description', newPost.content)
     formData.append('category', newPost.category)
@@ -85,7 +86,7 @@ const UserProfilePage = () => {
         message: t('userProfile.notifications.announceCreateSuccess'),
         type: 'success',
       }))
-      setNewPost({ title: '', content: '', image: null, category: '', city: '', country: '', postalCode: '' })
+      setNewPost({ title: '', content: '', category: '', city: '', country: '', postalCode: '' })
       toggleCreatePostModal()
     } catch (error) {
       console.error(error)
@@ -212,7 +213,7 @@ const UserProfilePage = () => {
               transition={{ duration: 0.3 }}
             >
               <Card className="overflow-hidden p-0 h-full flex flex-col">
-                <img loading='lazy' src={getFileUrl(post.image)} alt={post.title} className="w-full h-48 object-cover" />
+                <img aria-hidden="true" loading='lazy' src={getFileUrl(post.image)} alt={post.title} className="w-full h-48 object-cover" />
                 <div className="p-2 flex-grow">
                   <h3 className="font-semibold text-lg mb-2">{post.title}</h3>
                   <p className="text-sm text-gray-600 mb-2">{post.description.substring(0, 100)}...</p>
@@ -237,6 +238,7 @@ const UserProfilePage = () => {
                     </div>
                     <div className="flex items-center space-x-2">
                       <motion.button
+                        aria-label="Edit Post"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={() => handleEditPost(post)}
@@ -245,6 +247,7 @@ const UserProfilePage = () => {
                         <Edit size={16} />
                       </motion.button>
                       <motion.button
+                        aria-label="Delete Post"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={() => handleDeletePost(post.id)}
@@ -264,6 +267,7 @@ const UserProfilePage = () => {
       <Modal isOpen={isEditModalOpen} onClose={toggleEditModal} title={t('userProfile.editProfileModal.title')}>
         <form className="space-y-4" onSubmit={handleUpdateUser}>
           <Input
+            aria-label={t('userProfile.editProfileModal.nameLabel')}
             icon={User as IconType}
             label={t('userProfile.editProfileModal.nameLabel')}
             id="name"
@@ -273,6 +277,7 @@ const UserProfilePage = () => {
             placeholder={t('userProfile.editProfileModal.namePlaceholder')}
           />
           <Input
+            aria-label={t('userProfile.editProfileModal.emailLabel')}
             icon={Mail as IconType}
             label={t('userProfile.editProfileModal.emailLabel')}
             id="email"
@@ -283,10 +288,10 @@ const UserProfilePage = () => {
             placeholder={t('userProfile.editProfileModal.emailPlaceholder')}
           />
           <div className="flex justify-end space-x-3">
-            <Button size="sm" color="gray" variant="outline" onClick={toggleEditModal}>
+            <Button aria-label={t('common.cancel')} size="sm" color="gray" variant="outline" onClick={toggleEditModal}>
               {t('common.cancel')}
             </Button>
-            <Button size="sm" color="green" type="submit">
+            <Button   aria-label={t('common.saveChanges')} size="sm" color="green" type="submit">
               {t('common.saveChanges')}
             </Button>
           </div>
@@ -369,7 +374,7 @@ const UserProfilePage = () => {
           </div>
           <div className="md:col-span-2">
             <FileUpload
-              onFileSelect={(files) => setNewPost({ ...newPost, image: files[0] })}
+              onFileSelect={(files) => setImage(files[0])}
               acceptedFileTypes="image/*" 
               mode={'single'}            
             />

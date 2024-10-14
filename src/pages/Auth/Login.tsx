@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { EyeIcon, EyeOffIcon, Mail, Lock, Globe } from 'lucide-react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { unwrapResult } from '@reduxjs/toolkit'
 import { loginUser } from '../../redux/stores/auth_store'
 import { showNotification } from '../../redux/stores/notification_store'
+import User from '../../interfaces/User'
 
 export default function Login() {
   const { t, i18n } = useTranslation()
@@ -35,7 +36,7 @@ export default function Login() {
     }
   }, [dispatch, searchParams, t]);
 
-  const {loading, user} = useAppSelector((state) => state.auth_store)
+  const { loading } = useAppSelector((state) => state.auth_store)
 
   const handleSubmit = async () => {    
 
@@ -45,7 +46,7 @@ export default function Login() {
         password,
       })
     ).then(unwrapResult)
-    .then(() => {
+    .then((data) => {
       dispatch(
         showNotification({
           message: t('login.notifications.loginSuccess'),
@@ -53,7 +54,8 @@ export default function Login() {
         })
       )
 
-      if(user?.email_verified_at == null){
+      if(!(data.user as User).email_verified_at){
+        
         navigate(Routes.AUTH.EMAIL_VERIFICATION_REQUIRED)
         return
       }
@@ -84,6 +86,7 @@ export default function Login() {
         className="bg-white rounded shadow overflow-hidden w-full max-w-6xl relative"
       >
         <button
+          aria-label="Toggle Language"
           onClick={toggleLanguage}
           className="absolute top-4 right-4 p-2 bg-green-700 text-white rounded-full hover:bg-green-800 transition-colors duration-200"
         >
@@ -92,7 +95,8 @@ export default function Login() {
         <div className="flex flex-col md:flex-row">
           {/* Left Column - Image */}
           <div className="md:w-1/2 relative max-md:hidden ">
-            <img 
+            <img
+              aria-hidden="true" 
               loading='lazy'
               src="/assets/images/plants-workshop/workshop-house.png" 
               alt={t('login.imageAlt')}
@@ -105,7 +109,7 @@ export default function Login() {
           {/* Right Column - Login Form */}
           <div className="md:w-1/2 w-full p-4 bg-white">
             <div className="flex justify-center">
-              <img loading='lazy' src={AppImages.logo} alt={t('common.logoAlt')} className="w-60 max-md:w-40" />
+              <img aria-hidden="true" loading='lazy' src={AppImages.logo} alt={t('common.logoAlt')} className="w-60 max-md:w-40" />
             </div>
             <div className="space-y-6">
               <div>
@@ -114,6 +118,7 @@ export default function Login() {
                 </label>
                 <div className="relative">
                   <input
+                    aria-label="Email"
                     name='email'
                     id="email"
                     type="email"
@@ -132,6 +137,7 @@ export default function Login() {
                 </label>
                 <div className="relative">
                   <input
+                    aria-label="Password"
                     id="password"
                     name='password'
                     value={password}
@@ -145,6 +151,7 @@ export default function Login() {
                   />
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
                   <button
+                    aria-label="Show Password"
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
@@ -177,6 +184,7 @@ export default function Login() {
               </div> */}
               <div className='w-full flex justify-center items-center'>
                 <button
+                  aria-label="Login"
                   onClick={handleSubmit}
                   className="flex justify-center py-2 px-6 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-green-800 hover:bg-green-700 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 >
@@ -187,7 +195,7 @@ export default function Login() {
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
                 {t('login.noAccount')} {" "}
-                <Link to={Routes.AUTH.REGISTER} className="font-medium text-green-700 hover:text-green-900">
+                <Link aria-label="Register" to={Routes.AUTH.REGISTER} className="font-medium text-green-700 hover:text-green-900">
                   {t('login.joinGreenConnect')}
                 </Link>
               </p>

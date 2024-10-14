@@ -1,11 +1,9 @@
 import '@testing-library/jest-dom'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
-import { persistor, store } from '../redux/store';
+import {  store } from '../redux/store';
 import Login from '../pages/Auth/Login';
-import { setupMockupStore } from '../redux/mockup_store';
-import { createMemoryHistory } from "history";
 import React from 'react';
 import { I18nextProvider } from 'react-i18next';
 import i18next from './utils/mock_i18next'
@@ -32,7 +30,7 @@ describe('Login Component', () => {
 
     test('should login successfully and redirect to home', async () => {
         jest.mock('../utils/axios_client')
-        jest.spyOn(axiosHttp, 'post').mockImplementation((url, data) => {
+        jest.spyOn(axiosHttp, 'post').mockImplementation(() => {
             
             return Promise.resolve({
                 data: {
@@ -101,7 +99,7 @@ describe('Login Component', () => {
 
     test('should show if email is incorrect', async () => {
         jest.mock('../utils/axios_client')
-        jest.spyOn(axiosHttp, 'post').mockImplementation((url, data) => {
+        jest.spyOn(axiosHttp, 'post').mockImplementation(() => {
             
             return Promise.reject({
                 response: {
@@ -141,7 +139,7 @@ describe('Login Component', () => {
 
     test('should show if password is incorrect', async () => {
         jest.mock('../utils/axios_client')
-        jest.spyOn(axiosHttp, 'post').mockImplementation((url, data) => {
+        jest.spyOn(axiosHttp, 'post').mockImplementation(() => {
             
             return Promise.reject({
                 response: {

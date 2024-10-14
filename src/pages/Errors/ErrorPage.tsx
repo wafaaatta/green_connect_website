@@ -33,6 +33,7 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ statusCode }) => {
           transition={{ duration: 0.5 }}
         >
           <img
+            aria-hidden="true"
             loading='lazy'
             className="mx-auto h-60 w-auto"
             src={imageSrc}
@@ -52,6 +53,7 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ statusCode }) => {
           className="mt-8 space-y-4"
         >
           <motion.button
+            aria-label="Home"
             onClick={() => navigate(Routes.HOME)}
             className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-sm text-white bg-green-800 hover:bg-green-900"
           >
@@ -60,7 +62,7 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ statusCode }) => {
           </motion.button>
           {!is404 && (
             <motion.button
-            
+              aria-label="Try again"
               className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-green-800 bg-green-100 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
             >
               <RefreshCcw className="mr-2 h-5 w-5" />

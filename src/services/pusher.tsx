@@ -1,5 +1,7 @@
 import Pusher from 'pusher-js';
 
+console.log(import.meta.env.VITE_PUSHER_API_KEY);
+
 // Create a Pusher instance
 const pusher = new Pusher(import.meta.env.VITE_PUSHER_API_KEY as string, {
   cluster: 'mt1',

@@ -72,6 +72,7 @@ export default function AnnounceDetails() {
         className="bg-white rounded border shadow overflow-hidden"
       >
         <img 
+          aria-hidden="true"
           loading='lazy'
           src={'/src/assets/images/plants/spider-plant.png'}
           alt={currentAnnounce?.title}
@@ -113,7 +114,7 @@ export default function AnnounceDetails() {
           <div className="mb-6 bg-green-50 p-4 rounded-lg">
             <p className="text-lg text-gray-800">
               {t('postDetails.policyReminder')} 
-              <Link to={Routes.PAGES.PRIVACY_POLICY} className="ml-1 text-green-800 text-xl hover:underline">
+              <Link aria-label="See policy" to={Routes.PAGES.PRIVACY_POLICY} className="ml-1 text-green-800 text-xl hover:underline">
                 {t('postDetails.seePolicy')}
               </Link>
             </p>
@@ -130,12 +131,13 @@ export default function AnnounceDetails() {
                   transition={{ duration: 0.3 }}
                   className="bg-white rounded shadow overflow-hidden border flex flex-col"
                 >
-                  <img loading='lazy' src={'/src/assets/images/plants/sunflower.png'} alt={announce.title} className="w-full h-40 object-cover" />
+                  <img aria-hidden="true" loading='lazy' src={'/src/assets/images/plants/sunflower.png'} alt={announce.title} className="w-full h-40 object-cover" />
                   <div className="p-3 flex-grow">
                     <h4 className="text-lg font-semibold mb-1">{announce.title}</h4>
                     <p className="text-gray-600 text-sm mb-2">{`${announce.city} . ${announce.postal_code}`}</p>
                     <div className='flex justify-end'>
                       <button
+                        aria-label="See details"
                         onClick={() => navigateToAnnounceDetails(announce)}
                         className="mt-auto bg-green-800 text-white py-2 px-4 rounded hover:bg-green-700 transition duration-300 flex items-center justify-center"
                       >

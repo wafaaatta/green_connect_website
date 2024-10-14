@@ -182,9 +182,8 @@
             "Avoid promotional or spam content that doesn't contribute to meaningful discussions.",
             "Report any inappropriate behavior, harassment, or content that violates our guidelines.",
             "Be patient, supportive, and encouraging, especially with new plant enthusiasts.",
-            "Use inclusive language and avoid discriminatory comments or posts.",
-            "Give credit when sharing others' content or photos.",
-            "Engage in constructive discussions and provide helpful feedback when possible."
+            "Use inclusive language and avoid discriminatory comments or posts."
+            
         ]
         },
         "privacyPolicy": {
@@ -193,11 +192,9 @@
             "We collect minimal personal information necessary for account creation and platform functionality.",
             "Your plant data and personal information are kept confidential and never sold to third parties.",
             "You can request the deletion of your account and associated data at any time through our support channels.",
-            "We use cookies to enhance your browsing experience and provide personalized content.",
-            "We may send occasional emails about important updates, new features, or community events. You can opt-out at any time.",
             "Your profile information is visible to other users by default, but you can adjust your privacy settings.",
-            "We use industry-standard security measures to protect your data from unauthorized access.",
-            "In case of a data breach, we will notify affected users promptly and take necessary steps to secure the platform."
+            "We use industry-standard security measures to protect your data from unauthorized access."
+           
         ]
         },
         "rightsObligations": {
@@ -209,15 +206,14 @@
             "Obligation not to use the platform for illegal or harmful purposes.",
             "Right to contest any automated decision concerning you and request human intervention.",
             "Obligation to maintain the confidentiality of your login information.",
-            "Right to data portability to other services, where possible.",
             "Obligation to report any inappropriate content or violation of terms of use."
         ]
         },
         "sustainabilityCommitment": {
         "title": "Sustainability Commitment",
         "content": [
-            "We use eco-friendly hosting solutions powered by 100% renewable energy for our servers.",
-            "Our office operations are carbon-neutral, utilizing energy-efficient equipment and practices.",
+            "We use eco-friendly hosting solutions .",
+            "Our office operations are carbon-neutral, utilizing energy-efficient practices.",
             "We organize annual tree-planting events in local communities to offset our carbon footprint.",
             "We actively promote sustainable gardening practices through educational content and workshops.",
             "We partner with organizations dedicated to biodiversity conservation and environmental protection.",

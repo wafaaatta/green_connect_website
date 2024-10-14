@@ -1,20 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { Search, Filter, MapPin, Calendar } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { getAllAnnounces, setCurrentAnnounce } from '../../redux/stores/announce_store'
 import Routes from '../../constants/routes'
 import Announce from '../../interfaces/Announce'
-import { Card } from '../../components/Card'
 import Button from '../../components/Button'
-import Input from '../../components/Input'
-import Select from '../../components/Select'
-import Badge from '../../components/Badge'
-import { IconType } from 'react-icons'
-
-const ITEMS_PER_PAGE = 15
+import AnnouncesActionbar from './components/AnnouncesActionbar'
+import NoAnnounceComponent from './components/NoAnnouncesComponent'
+import AnnounceComponent from './components/AnnounceComponent'
+import PaginationSettings from '../../constants/pagination_settings'
 
 const AnnouncesPage: React.FC = () => {
   const { t } = useTranslation()
@@ -34,7 +30,7 @@ const AnnouncesPage: React.FC = () => {
   const filteredAnnounces = announces.filter(announce =>
     (categoryFilter === 'all' || announce.article_category === categoryFilter) &&
     (announce.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     announce.description.toLowerCase().includes(searchTerm.toLowerCase()))
+      announce.description.toLowerCase().includes(searchTerm.toLowerCase()))
   )
 
   const sortedAnnounces = [...filteredAnnounces].sort((a, b) => {
@@ -44,7 +40,7 @@ const AnnouncesPage: React.FC = () => {
     return 0
   })
 
-  const paginatedAnnounces = sortedAnnounces.slice(0, page * ITEMS_PER_PAGE)
+  const paginatedAnnounces = sortedAnnounces.slice(0, page * PaginationSettings.articles.ITEMS_PER_PAGE)
 
   useEffect(() => {
     setHasMore(paginatedAnnounces.length < sortedAnnounces.length)
@@ -55,6 +51,10 @@ const AnnouncesPage: React.FC = () => {
     navigate(Routes.PAGES.ANNOUNCE_DETAILS.replace(':id', announce.id.toString()))
   }, [dispatch, navigate])
 
+  const loadMore = () => {
+    setPage(prevPage => prevPage + 1)
+  }
+
   const resetFilters = () => {
     setSearchTerm('')
     setCategoryFilter('all')
@@ -62,110 +62,26 @@ const AnnouncesPage: React.FC = () => {
     setPage(1)
   }
 
-  const loadMore = () => {
-    setPage(prevPage => prevPage + 1)
-  }
-
   return (
     <div className="w-full">
-      <Card className=" z-10 mb-8 mx-0 sm:mx-4 lg:mx-8 bg-white">
-        <div className="flex flex-col md:flex-row justify-between  space-y-4 md:space-y-0 md:space-x-4">
-          <h1 className="text-3xl max-sm:text-xl max-md:text-2xl font-bold text-green-800 mb-4 md:mb-0">{t('postsPage.title')}</h1>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 ">
-            <div className="w-full">
-              <Input
-                icon={Search as IconType}
-                placeholder={t('postsPage.searchPlaceholder')}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-            <div className="w-full">
-              <Select
-                icon={Filter as IconType}
-                value={categoryFilter}
-                onChange={(value) => setCategoryFilter(value as string)}
-                options={[
-                  { value: 'all', label: t('postsPage.allCategories') },
-                  { value: 'Indoor Plants', label: t('postsPage.indoorPlants') },
-                  { value: 'Outdoor Plants', label: t('postsPage.outdoorPlants') },
-                  { value: 'Succulents & Cacti', label: t('postsPage.succulentsCacti') },
-                  { value: 'Herb Garden', label: t('postsPage.herbGarden') },
-                  { value: 'Flowering Plants', label: t('postsPage.floweringPlants') },
-                  { value: 'Rare & Exotic Species', label: t('postsPage.rareExoticSpecies') },
-                ]}
-              />
-            </div>
-            <div className="w-full">
-              <Select
-                icon={Calendar as IconType}
-                value={sortBy}
-                onChange={(value) => setSortBy(value as string)}
-                options={[
-                  { value: 'latest', label: t('postsPage.latest') },
-                  { value: 'oldest', label: t('postsPage.oldest') },
-                  { value: 'alphabetical', label: t('postsPage.alphabetical') },
-                ]}
-              />
-            </div>
-          </div>
-        </div>
-      </Card>
+      <AnnouncesActionbar
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+        categoryFilter={categoryFilter}
+        setCategoryFilter={setCategoryFilter}
+      />
 
       {paginatedAnnounces.length === 0 ? (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="text-center py-12"
-        >
-          <p className="text-xl text-gray-700">{t('postsPage.noPlants')}</p>
-          <Button className="mt-4 bg-green-800 rounded px-2 py-2 hover:bg-green-700 text-white" onClick={resetFilters}>{t('postsPage.resetFilters')}</Button>
-        </motion.div>
+        <NoAnnounceComponent resetFilters={resetFilters} />
       ) : (
         <AnimatePresence>
           <motion.div
             layout
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 px-4 sm:px-6 lg:px-8"
           >
-            {paginatedAnnounces.map((announce, index) => (
-              <motion.div
-                key={announce.id}
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-                onClick={() => navigateToAnnounceDetails(announce)}
-              >
-                <Card 
-                  className="h-full cursor-pointer transition-shadow duration-300 bg-green-100"
-                >
-                  <div 
-                    style={{
-                      backgroundImage: `url('/src/assets/images/plants/dracaena.png')`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                    }}
-                    className="w-full h-48 rounded-t"
-                  />
-                  <div className="mt-2">
-                    <h2 className="text-2xl font-semibold mb-2 text-gray-800">{announce.title}</h2>
-                    <div className="flex items-center mb-2 text-green-800">
-                      <MapPin size={16} className="mr-1" />
-                      <span>{announce.city}, {announce.postal_code}</span>
-                    </div>
-                    <Badge className="mb-2 bg-green-100 text-green-800">{announce?.article_category}</Badge>
-                    <div className="flex items-center justify-between mt-2">
-                      <span className="text-sm text-gray-600">
-                        {new Date(announce.created_at).toLocaleDateString()}
-                      </span>
-                      <Button size="sm" className="bg-green-800 hover:bg-green-700 text-white">{t('postsPage.viewDetails')}</Button>
-                    </div>
-                  </div>
-                </Card>
-              </motion.div>
-            ))}
+            {paginatedAnnounces.map((announce) => <AnnounceComponent announce={announce} navigateToAnnounceDetails={navigateToAnnounceDetails} />)}
           </motion.div>
         </AnimatePresence>
       )}
@@ -173,6 +89,7 @@ const AnnouncesPage: React.FC = () => {
       {hasMore && (
         <div className="flex justify-center mt-8 mb-8">
           <Button
+            aria-label="Load more announces"
             size="lg"
             onClick={loadMore}
             className="px-8 py-3 bg-green-800 hover:bg-green-700 text-white font-semibold rounded-full  shadow duration-300"

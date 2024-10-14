@@ -1,6 +1,6 @@
 // Register.test.tsx
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import userEvent, { UserEvent } from '@testing-library/user-event';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import Register from '../pages/Auth/Register';
 import '@testing-library/jest-dom'
@@ -34,7 +34,7 @@ describe('Register Component', () => {
 
     it('should tell user if email already exists', async () => {
         jest.mock('../utils/axios_client')
-        jest.spyOn(axiosHttp, 'post').mockImplementation((url, data) => {
+        jest.spyOn(axiosHttp, 'post').mockImplementation((_, data) => {
             const payload = data as { name: string, email: string, password: string }
             
             if(payload.email == 'test@example.com') {

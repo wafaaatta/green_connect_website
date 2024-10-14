@@ -13,8 +13,8 @@ import { useTranslation } from 'react-i18next'
 import Notification from '../../components/Notification'
 
 export default function EmailVerificationRequired() {
-  const [isResending, setIsResending] = useState(false)
-  const [resendSuccess, setResendSuccess] = useState(false)
+  const [isResending] = useState(false)
+  const [resendSuccess] = useState(false)
   const email = useAppSelector((state) => state.auth_store).user?.email
 
   const { t } = useTranslation()
@@ -51,12 +51,18 @@ export default function EmailVerificationRequired() {
     navigate(Routes.AUTH.LOGIN)
   }
 
+  const { user } = useAppSelector((state) => state.auth_store)
+
   useEffect(() => {
     subscribeToChannel(
       PusherBroadcasts.channels.email_verification,
       PusherBroadcasts.events.email_verification.success,
       (data) => {
+        const activated_user_id = (data as { user_id: number }).user_id
 
+        if (activated_user_id === user?.id) {
+          navigate(Routes.HOME, { replace: true })
+        }
       }
     )
 
@@ -66,7 +72,7 @@ export default function EmailVerificationRequired() {
   return (
     <div className="min-h-screen bg-green-50 flex items-center justify-center p-4">
       <div className="bg-white rounded shadow border w-full max-w-md overflow-hidden">
-        <div className="bg-green-600 p-4">
+        <div className="bg-green-800 p-4">
           <h2 className="text-2xl font-bold text-center text-white">Email Verification Required</h2>
           <p className="text-center text-green-100 mt-2">
             Let's grow our GreenConnect community together!
@@ -75,7 +81,7 @@ export default function EmailVerificationRequired() {
         <div className="p-6">
           <div className="flex flex-col items-center space-y-4">
             <div className="bg-green-100 rounded-full p-3">
-              <Mail className="h-12 w-12 text-green-600" />
+              <Mail className="h-12 w-12 text-green-800" />
             </div>
             <p className="text-center text-sm text-gray-600">
               We've planted a verification seed in your inbox. Water it by clicking the link in the email to help your GreenConnect account flourish!
@@ -83,15 +89,19 @@ export default function EmailVerificationRequired() {
           </div>
           <div className="mt-6 space-y-4">
             <Button 
+              aria-label="Resend Verification Seed"
+              color='green'
+              className='w-full'
               onClick={handleResendVerification} 
               disabled={isResending || resendSuccess}
-              className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-300"
             >
               {isResending ? "Replanting..." : resendSuccess ? "Seed Replanted!" : "Resend Verification Seed"}
             </Button>
             <Button 
+              aria-label="Logout and Continue as Guest"
+              color='red'
+              className='w-full'
               onClick={handleLogout}
-              className="w-full bg-white hover:bg-gray-100 text-black font-semibold py-2 px-4 border border-green-600 rounded transition duration-300 flex items-center justify-center"
             >
               <LogOut className="h-5 w-5 mr-2" />
               Logout and Continue as Guest

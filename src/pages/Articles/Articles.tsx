@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Calendar, X } from 'lucide-react'
+import { Calendar, X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { getAllArticles } from '../../redux/stores/article_store'
-import { Card } from '../../components/Card'
 import Button from '../../components/Button'
-import Input from '../../components/Input'
-import { IconType } from 'react-icons'
 import Modal from '../../components/Modal'
+import ArticleComponent from './components/ArticleComponent'
+import NoArticlesComponent from './components/NoArticlesComponent'
+import ArticlesActionbar from './components/ArticlesActionbar'
 
 const ITEMS_PER_PAGE = 12
 
@@ -49,19 +49,7 @@ const ArticlesPage: React.FC = () => {
 
   return (
     <div className="w-full">
-      <Card className='shadow'>
-        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">
-          <h1 className="text-3xl max-md:text-2xl font-bold text-green-800">{t('articlesPage.title')}</h1>
-          <div className="w-full md:w-64">
-            <Input
-              icon={Search as IconType}
-              placeholder={t('articlesPage.searchPlaceholder')}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-        </div>
-      </Card>
+      <ArticlesActionbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
       <div className="mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <AnimatePresence>
@@ -71,60 +59,17 @@ const ArticlesPage: React.FC = () => {
           >
             {
               filteredArticles.length === 0 && (
-                <div className="text-center">
-                  <h1 className="text-3xl font-bold text-green-800">{t('articlesPage.noResults')}</h1>
-                </div>
+                <NoArticlesComponent />
               )
             }
-            {filteredArticles.map((article, index) => (
-              <motion.div
-                key={article.id}
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-              >
-                <Card 
-                  className="min-h-[420px] cursor-pointer transition-shadow duration-300 bg-green-100 flex flex-col"
-                >
-                  <img 
-                    loading='lazy'
-                    src={'/src/assets/images/plants/rosemary.png'} 
-                    alt={article.title} 
-                    className="w-full h-48 object-cover rounded-t" 
-                  />
-                  <div className="mt-4 flex flex-col flex-grow">
-                    <h2 className="text-2xl font-semibold mb-2 text-green-800">{article.title}</h2>
-                    <div className="flex items-center mb-2 text-green-800">
-                      <Calendar size={16} className="mr-1" />
-                      <span>{new Date(article.created_at).toLocaleDateString()}</span>
-                    </div>
-                    <div className="flex items-center mb-2 text-green-800">
-                      <span>{article.article_category.name}</span>
-                    </div>
-                    <p className="text-gray-600 mb-4 flex-grow overflow-hidden">
-                      {article.content.slice(0, 100)}...
-                    </p>
-                    <div className="flex items-center justify-end mt-auto">
-                      <Button 
-                        size="sm" 
-                        className="bg-green-800 hover:bg-green-700 text-white"
-                        onClick={() => setSelectedArticle(article)}
-                      >
-                        {t('articlesPage.readMore')}
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
-              </motion.div>
-            ))}
+            {filteredArticles.map((article) => <ArticleComponent article={article} setSelectedArticle={setSelectedArticle} />)}
           </motion.div>
         </AnimatePresence>
 
         {hasMore && (
           <div className="flex justify-center mt-8">
             <Button
+              aria-label="Load more"
               size="lg"
               onClick={loadMore}
               className="px-8 py-3 bg-green-800 hover:bg-green-700 text-white font-semibold rounded-full shadow transition-all duration-300"
@@ -155,6 +100,7 @@ const ArticlesPage: React.FC = () => {
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-2xl font-bold text-green-800">{selectedArticle.title}</h2>
                   <button
+                    aria-label="Close modal"
                     onClick={() => setSelectedArticle(null)}
                     className="text-gray-500 hover:text-gray-700"
                   >
@@ -168,6 +114,7 @@ const ArticlesPage: React.FC = () => {
                 <div className="mb-4 ">
                   {selectedArticle.image && (
                     <img
+                      aria-hidden="true"
                       loading='lazy'
                       src={'/src/assets/images/plants/rosemary.png'}
                       alt={selectedArticle.title}
