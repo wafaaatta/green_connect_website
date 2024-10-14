@@ -123,6 +123,7 @@ export default function Register() {
           {/* Left Column - Image */}
           <div className="md:w-1/2 relative max-md:hidden">
             <img 
+              loading='lazy'
               src="/assets/images/plants-workshop/workshop-house.png" 
               alt={t('register.imageAlt')}
               className="object-cover h-full w-full"
@@ -134,7 +135,7 @@ export default function Register() {
           {/* Right Column - Register Form */}
           <div className="md:w-1/2 w-full p-4 bg-white">
             <div className="flex justify-center">
-              <img src={AppImages.logo} alt={t('common.logoAlt')} className="w-52 max-md:w-40" />
+              <img loading='lazy' src={AppImages.logo} alt={t('common.logoAlt')} className="w-52 max-md:w-40" />
             </div>
             <div className="space-y-4">
               <div>

@@ -93,6 +93,7 @@ export default function Login() {
           {/* Left Column - Image */}
           <div className="md:w-1/2 relative max-md:hidden ">
             <img 
+              loading='lazy'
               src="/assets/images/plants-workshop/workshop-house.png" 
               alt={t('login.imageAlt')}
               className="object-cover h-full w-full"
@@ -104,7 +105,7 @@ export default function Login() {
           {/* Right Column - Login Form */}
           <div className="md:w-1/2 w-full p-4 bg-white">
             <div className="flex justify-center">
-              <img src={AppImages.logo} alt={t('common.logoAlt')} className="w-60 max-md:w-40" />
+              <img loading='lazy' src={AppImages.logo} alt={t('common.logoAlt')} className="w-60 max-md:w-40" />
             </div>
             <div className="space-y-6">
               <div>

@@ -33,6 +33,7 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ statusCode }) => {
           transition={{ duration: 0.5 }}
         >
           <img
+            loading='lazy'
             className="mx-auto h-60 w-auto"
             src={imageSrc}
             alt={t('errorPage.imageAlt', { statusCode })}

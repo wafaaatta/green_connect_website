@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, Send, MapPin, Calendar, X, Copy, Reply, Trash, Menu, SignpostIcon, Image as ImageIcon, Text } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
-import { getAllConversations } from '../../redux/stores/conversation_store'
+import { getAllConversations, pushConversation } from '../../redux/stores/conversation_store'
 import axiosHttp from '../../utils/axios_client'
 import ApiError from '../../interfaces/ApiError'
 import { AxiosError } from 'axios'
@@ -153,7 +153,9 @@ const ConversationsPage: React.FC = () => {
     const event = PusherBroadcasts.events.conversations.created
 
     subscribeToChannel(channel, event, (data) => {
-      dispatch(getAllConversations())
+      dispatch(pushConversation(
+        (data as {message: Conversation}).message
+      ))
     })
 
     return () => unsubscribeFromChannel(channel)
@@ -192,7 +194,7 @@ const ConversationsPage: React.FC = () => {
                 onClick={() => loadConversationMessages(conversation)}
               >
                 <div className="flex items-center space-x-3">
-                  <img src={getFileUrl(conversation.announce?.image)} alt={conversation.announce?.title} className="w-16 h-16 rounded-full object-cover" />
+                  <img loading='lazy' src={getFileUrl(conversation.announce?.image)} alt={conversation.announce?.title} className="w-16 h-16 rounded-full object-cover" />
                   <div className="flex-grow">
                     <h2 className="text-sm font-semibold text-green-700">{conversation.announce?.title}</h2>
                     <p className="text-xs text-gray-600">{t('conversationsPage.with')} {user?.id === conversation.receiver?.id ? conversation.creator?.name : conversation.receiver?.name}</p>
@@ -221,7 +223,7 @@ const ConversationsPage: React.FC = () => {
                 </Button>
               )}
               <div className="flex items-center space-x-3">
-                <img src={getFileUrl(selectedConversation.announce.image)} alt={selectedConversation.announce.title} className="w-10 h-10 rounded-full object-cover" />
+                <img loading='lazy' src={getFileUrl(selectedConversation.announce.image)} alt={selectedConversation.announce.title} className="w-10 h-10 rounded-full object-cover" />
                 <div>
                   <h2 className="text-lg font-semibold text-green-800">{selectedConversation.announce.title}</h2>
                   <p className="text-sm text-gray-600">{t('conversationsPage.with')} {user?.id == selectedConversation.creator.id ? selectedConversation.receiver.name : selectedConversation.creator.name}</p>
@@ -253,7 +255,7 @@ const ConversationsPage: React.FC = () => {
                     )}
                     <p className="font-semibold text-sm">{msg.sender_id == user?.id ? t('conversationsPage.you') : msg.sender_id == selectedConversation.creator.id ? selectedConversation.creator.name : selectedConversation.receiver.name}</p>
                     {msg.message_type == 'image' ? (
-                      <img src={getFileUrl(msg.image_url ?? '')} alt={t('conversationsPage.uploadedImage')} className="w-full h-auto rounded-lg mt-2 mb-2" />
+                      <img loading='lazy' src={getFileUrl(msg.image_url ?? '')} alt={t('conversationsPage.uploadedImage')} className="w-full h-auto rounded-lg mt-2 mb-2" />
                     ) : (
                       <p className="text-sm">{msg.content}</p>
                     )}
@@ -276,7 +278,7 @@ const ConversationsPage: React.FC = () => {
               )}
               {imagePreview && (
                 <div className="relative mb-2">
-                  <img src={imagePreview} alt={t('conversationsPage.preview')} className="w-20 h-20 object-cover rounded" />
+                  <img loading='lazy' src={imagePreview} alt={t('conversationsPage.preview')} className="w-20 h-20 object-cover rounded" />
                   <Button
                     variant="outline"
                     className="absolute top-0 right-0"
@@ -319,7 +321,7 @@ const ConversationsPage: React.FC = () => {
         ) : (
           <div className="flex-grow flex items-center justify-center bg-gray-50">
             <div className="text-center">
-              <img src="/assets/green_connect.png" alt={t('conversationsPage.defaultPlant')} className=" h-32 mx-auto mb-4" />
+              <img loading='lazy' src="/assets/green_connect.png" alt={t('conversationsPage.defaultPlant')} className=" h-32 mx-auto mb-4" />
               <h2 className="text-2xl font-semibold text-gray-700 mb-2 heading-font">{t('conversationsPage.noConversationSelected')}</h2>
               <p className="text-gray-500 body-font">{t('conversationsPage.chooseConversation')}</p>
             </div>
@@ -347,7 +349,7 @@ const ConversationsPage: React.FC = () => {
                 </Button>
               )}
               <h3 className="text-lg font-semibold mb-4 text-center">{t('conversationsPage.plantDetails')}</h3>
-              <img src={getFileUrl(selectedConversation.announce.image)} alt={selectedConversation.announce.title} className="w-full h-48 object-cover rounded-lg mb-4" />
+              <img loading='lazy' src={getFileUrl(selectedConversation.announce.image)} alt={selectedConversation.announce.title} className="w-full h-48 object-cover rounded-lg mb-4" />
               <h4 className="font-semibold text-center">{selectedConversation.announce.title}</h4>
               <p className="text-sm text-gray-600 mb-4 text-center">{t('conversationsPage.owner')}: {selectedConversation.receiver.name}</p>
               <div className="space-y-2 mb-4">

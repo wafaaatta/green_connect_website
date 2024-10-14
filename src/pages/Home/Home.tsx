@@ -91,6 +91,7 @@ const HomePage = () => {
               transition={{ duration: 0.8 }}
             >
               <img
+                loading='lazy'
                 src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
                 alt={t('homePage.heroImageAlt')}
                 className="rounded shadow"
@@ -140,7 +141,7 @@ const HomePage = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="bg-white rounded overflow-hidden shadow border border-shadow duration-300"
               >
-                <img src={'/src/assets/images/plants/bamboo.png'} alt={post.title} className="w-full h-48 object-cover" />
+                <img loading='lazy' src={'/src/assets/images/plants/bamboo.png'} alt={post.title} className="w-full h-48 object-cover" />
                 <div className="p-4">
                   <h3 className="text-2xl font-semibold mb-2">{post.title}</h3>
                   <p className="text-gray-600">{t('homePage.by')} {post?.user?.name}</p>
@@ -173,7 +174,7 @@ const HomePage = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="bg-green-100 rounded overflow-hidden shadow border  transition-shadow duration-300"
               >
-                <img src={'/src/assets/images/plants/bonsai.png'} alt={article.title} className="w-full h-48 object-cover" />
+                <img loading='lazy' src={'/src/assets/images/plants/bonsai.png'} alt={article.title} className="w-full h-48 object-cover" />
                 <div className="p-4">
                   <h3 className="text-2xl font-semibold mb-2">{article.title}</h3>
                   <p className="text-gray-500 ">{article.content.substring(0, 100)}</p>
@@ -206,7 +207,7 @@ const HomePage = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="bg-green-100 rounded overflow-hidden shadow border transition-shadow duration-300"
               >
-                <img src={'/src/assets/images/plants/dracaena.png'} alt={event.title} className="w-full h-48 object-cover" />
+                <img loading='lazy' src={'/src/assets/images/plants/dracaena.png'} alt={event.title} className="w-full h-48 object-cover" />
                 <div className="p-4">
                   <h3 className="text-2xl font-semibold mb-4">{event.title}</h3>
                   <p className="text-gray-600 mb-2 flex items-center">

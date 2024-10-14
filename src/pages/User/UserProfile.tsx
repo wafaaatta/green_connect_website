@@ -212,7 +212,7 @@ const UserProfilePage = () => {
               transition={{ duration: 0.3 }}
             >
               <Card className="overflow-hidden p-0 h-full flex flex-col">
-                <img src={getFileUrl(post.image)} alt={post.title} className="w-full h-48 object-cover" />
+                <img loading='lazy' src={getFileUrl(post.image)} alt={post.title} className="w-full h-48 object-cover" />
                 <div className="p-2 flex-grow">
                   <h3 className="font-semibold text-lg mb-2">{post.title}</h3>
                   <p className="text-sm text-gray-600 mb-2">{post.description.substring(0, 100)}...</p>

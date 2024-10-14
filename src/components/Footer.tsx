@@ -23,7 +23,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center space-y-6 md:space-y-0">
           <div className="flex items-center space-x-4">
             <Link to="/" className="flex items-center space-x-2" aria-label={t('footer.homeAriaLabel')}>
-              <img src={AppImages.logo} className="h-32" alt={t('footer.logoAlt')} />
+              <img loading='lazy' src={AppImages.logo} className="h-32" alt={t('footer.logoAlt')} />
             </Link>
           </div>
           <nav className="flex flex-grow flex-wrap max-md:grid max-md:grid-cols-2 max-md:gap-4 justify-center md:space-x-8 " aria-label={t('footer.quickLinksAriaLabel')}>

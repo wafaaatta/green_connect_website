@@ -89,6 +89,7 @@ const ArticlesPage: React.FC = () => {
                   className="min-h-[420px] cursor-pointer transition-shadow duration-300 bg-green-100 flex flex-col"
                 >
                   <img 
+                    loading='lazy'
                     src={'/src/assets/images/plants/rosemary.png'} 
                     alt={article.title} 
                     className="w-full h-48 object-cover rounded-t" 
@@ -167,6 +168,7 @@ const ArticlesPage: React.FC = () => {
                 <div className="mb-4 ">
                   {selectedArticle.image && (
                     <img
+                      loading='lazy'
                       src={'/src/assets/images/plants/rosemary.png'}
                       alt={selectedArticle.title}
                       className="object-cover rounded  w-full h-80 mb-4 shadow border"

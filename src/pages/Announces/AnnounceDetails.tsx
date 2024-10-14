@@ -72,6 +72,7 @@ export default function AnnounceDetails() {
         className="bg-white rounded border shadow overflow-hidden"
       >
         <img 
+          loading='lazy'
           src={'/src/assets/images/plants/spider-plant.png'}
           alt={currentAnnounce?.title}
           className="w-full h-96 object-cover"
@@ -129,7 +130,7 @@ export default function AnnounceDetails() {
                   transition={{ duration: 0.3 }}
                   className="bg-white rounded shadow overflow-hidden border flex flex-col"
                 >
-                  <img src={'/src/assets/images/plants/sunflower.png'} alt={announce.title} className="w-full h-40 object-cover" />
+                  <img loading='lazy' src={'/src/assets/images/plants/sunflower.png'} alt={announce.title} className="w-full h-40 object-cover" />
                   <div className="p-3 flex-grow">
                     <h4 className="text-lg font-semibold mb-1">{announce.title}</h4>
                     <p className="text-gray-600 text-sm mb-2">{`${announce.city} . ${announce.postal_code}`}</p>

@@ -162,6 +162,7 @@ function FileUpload({
                   <div className="w-full  bg-gray-100 rounded overflow-hidden">
                     {file.type.startsWith('image') ? (
                       <img
+                        loading='lazy'
                         src={URL.createObjectURL(file)}
                         alt={file.name}
                         className="w-full h-full object-cover"

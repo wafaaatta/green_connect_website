@@ -40,7 +40,11 @@ const initialState: ConversationState = {
 const conversationSlice = createSlice({
     name: 'conversation',
     initialState,
-    reducers: {},
+    reducers: {
+        pushConversation: (state, action) => {
+            state.conversations.push(action.payload)
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(getAllConversations.fulfilled, (state, action) => {
             state.conversations = action.payload
@@ -64,4 +68,5 @@ const conversationSlice = createSlice({
     }
 });
 
+export const { pushConversation } = conversationSlice.actions
 export default conversationSlice.reducer;

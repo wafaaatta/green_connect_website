@@ -44,7 +44,7 @@ const Header: React.FC = () => {
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <a href="/" className="flex-shrink-0">
-              <img src={AppImages.logo} className="h-28 w-auto" alt={t('header.logoAlt')} />
+              <img loading='lazy' src={AppImages.logo} className="h-28 w-auto" alt={t('header.logoAlt')} />
             </a>
             <nav className="hidden lg:ml-10 lg:flex lg:space-x-8">
               {sidebarItems.map((item) => (
@@ -148,7 +148,7 @@ const Header: React.FC = () => {
             <nav className="relative max-w-xs w-full bg-white shadow-xl h-full overflow-y-auto">
               <div className="px-6 pt-6 pb-4 flex items-center justify-between">
                 <a href="/" className="-m-1.5 p-1.5">
-                  <img src={AppImages.logo} className="h-12 w-auto" alt={t('header.logoAlt')} />
+                  <img loading='lazy' src={AppImages.logo} className="h-12 w-auto" alt={t('header.logoAlt')} />
                 </a>
                 <button
                   onClick={toggleSidebar}
@@ -202,7 +202,7 @@ const Header: React.FC = () => {
                     <>
                       <div className="flex items-center mb-4">
                         <div className="flex-shrink-0">
-                          <img src="https://via.placeholder.com/40" alt={t('header.userAvatarAlt')} className="w-10 h-10 rounded-full" />
+                          <img loading='lazy' src="https://via.placeholder.com/40" alt={t('header.userAvatarAlt')} className="w-10 h-10 rounded-full" />
                         </div>
                         <div className="ml-3">
                           <p className="text-base font-medium text-gray-800">{user?.name}</p>
