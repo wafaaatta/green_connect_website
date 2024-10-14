@@ -14,7 +14,7 @@ import User from '../interfaces/User';
 
 describe('Register Component', () => {
 
-    test('renders the register page', async () => {
+    test('renders the register page', async () => { //Test de Rendu
         render(
             <Provider store={store}>
                 <I18nextProvider i18n={i18next}>
@@ -99,7 +99,7 @@ describe('Register Component', () => {
         })
     })
 
-    test('should inform user when passwords do not match ', async () => {
+    test('should inform user when passwords do not match ', async () => { //Test Unitaire 
         render(
             <Provider store={store}>
                 <I18nextProvider i18n={i18next}>
@@ -125,7 +125,7 @@ describe('Register Component', () => {
         })
     })
 
-    test('if password does not meet requirements', async () => {
+    test('if password does not meet requirements', async () => { //Test Unitaire
         jest.mock('../utils/axios_client')
         jest.spyOn(axiosHttp, 'post').mockImplementation(() => Promise.resolve({
             data: {

@@ -1,6 +1,10 @@
 const PaginationSettings = Object.freeze({
-    articles: {
+    announces: {
         ITEMS_PER_PAGE: 15,
+    },
+
+    articles: {
+        ITEMS_PER_PAGE: 12,
     }
 })
 

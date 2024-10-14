@@ -11,7 +11,7 @@ import { I18nextProvider } from 'react-i18next';
 import i18nextMock from './utils/mock_i18next';
 
 describe('Announces Component', () => {
-    test('renders announces page', async () => {
+    test('renders announces page', async () => { //Test de rendu //Test d'intégration
         jest.mock('../utils/axios_client')
         jest.spyOn(axiosHttp, 'get').mockImplementation(() => Promise.resolve({
             data: [
@@ -50,7 +50,7 @@ describe('Announces Component', () => {
         })
     })
 
-    test('should render empty message when there is no data', async () => {
+    test('should render empty message when there is no data', async () => { //Test Unitaire //Test de Rendu
         jest.mock('../utils/axios_client')
         jest.spyOn(axiosHttp, 'get').mockImplementation(() => Promise.resolve({
             data: []

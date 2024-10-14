@@ -9,8 +9,9 @@ import Modal from '../../components/Modal'
 import ArticleComponent from './components/ArticleComponent'
 import NoArticlesComponent from './components/NoArticlesComponent'
 import ArticlesActionbar from './components/ArticlesActionbar'
+import { getFileUrl } from '../../utils/laravel_storage'
+import PaginationSettings from '../../constants/pagination_settings'
 
-const ITEMS_PER_PAGE = 12
 
 const ArticlesPage: React.FC = () => {
   const { t } = useTranslation()
@@ -19,14 +20,11 @@ const ArticlesPage: React.FC = () => {
   const [displayedArticles, setDisplayedArticles] = useState<typeof articles>([])
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedArticle, setSelectedArticle] = useState<typeof articles[0] | null>(null)
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
     dispatch(getAllArticles())
   }, [dispatch])
-
-  useEffect(() => {
-    setDisplayedArticles(articles.slice(0, ITEMS_PER_PAGE))
-  }, [articles])
 
   const filteredArticles = useMemo(() => {
     if (!searchTerm) return articles
@@ -38,11 +36,12 @@ const ArticlesPage: React.FC = () => {
     )
   }, [articles, searchTerm])
 
+  useEffect(() => {
+    setDisplayedArticles(filteredArticles.slice(0, PaginationSettings.articles.ITEMS_PER_PAGE * currentPage))
+  }, [filteredArticles, currentPage])
+
   const loadMore = () => {
-    setDisplayedArticles(prevArticles => [
-      ...prevArticles,
-      ...filteredArticles.slice(prevArticles.length, prevArticles.length + ITEMS_PER_PAGE)
-    ])
+    setCurrentPage(prevPage => prevPage + 1)
   }
 
   const hasMore = displayedArticles.length < filteredArticles.length
@@ -55,21 +54,21 @@ const ArticlesPage: React.FC = () => {
         <AnimatePresence>
           <motion.div
             layout
-            className="grid  max-xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4"
+            className="grid max-xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4"
           >
-            {
-              filteredArticles.length === 0 && (
-                <NoArticlesComponent />
-              )
-            }
-            {filteredArticles.map((article) => <ArticleComponent article={article} setSelectedArticle={setSelectedArticle} />)}
+            {filteredArticles.length === 0 && (
+              <NoArticlesComponent />
+            )}
+            {displayedArticles.map((article) => (
+              <ArticleComponent key={article.id} article={article} setSelectedArticle={setSelectedArticle} />
+            ))}
           </motion.div>
         </AnimatePresence>
 
         {hasMore && (
           <div className="flex justify-center mt-8">
             <Button
-              aria-label="Load more"
+              aria-label="Load more articles"
               size="lg"
               onClick={loadMore}
               className="px-8 py-3 bg-green-800 hover:bg-green-700 text-white font-semibold rounded-full shadow transition-all duration-300"
@@ -81,7 +80,7 @@ const ArticlesPage: React.FC = () => {
       </div>
 
       <Modal isOpen={!!selectedArticle} onClose={() => setSelectedArticle(null)} title='Article'>
-      {selectedArticle && (
+        {selectedArticle && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -111,15 +110,14 @@ const ArticlesPage: React.FC = () => {
                   <Calendar size={16} className="mr-1" />
                   <span>{new Date(selectedArticle.created_at).toLocaleDateString()}</span>
                 </div>
-                <div className="mb-4 ">
+                <div className="mb-4">
                   {selectedArticle.image && (
                     <img
                       aria-hidden="true"
                       loading='lazy'
-                      src={'/src/assets/images/plants/rosemary.png'}
+                      src={getFileUrl(selectedArticle.image)}
                       alt={selectedArticle.title}
-                      className="object-cover rounded  w-full h-80 mb-4 shadow border"
-                      
+                      className="object-cover rounded w-full h-80 mb-4 shadow border"
                     />
                   )}
                 </div>

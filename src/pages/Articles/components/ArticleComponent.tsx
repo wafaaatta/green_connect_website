@@ -5,6 +5,7 @@ import { Card } from '../../../components/Card'
 import Article from '../../../interfaces/Article'
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import { getFileUrl } from '../../../utils/laravel_storage'
 
 interface ArticleComponentProps {
     article: Article
@@ -30,7 +31,7 @@ const ArticleComponent: FC<ArticleComponentProps> = ({
                   <img 
                     aria-hidden="true"
                     loading='lazy'
-                    src={'/src/assets/images/plants/rosemary.png'} 
+                    src={getFileUrl(article.image)} 
                     alt={article.title} 
                     className="w-full h-48 object-cover rounded-t" 
                   />

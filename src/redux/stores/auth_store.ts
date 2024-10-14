@@ -73,6 +73,18 @@ export const updateUser = createAsyncThunk(
     }
 )
 
+export const getLoggedUserData = createAsyncThunk(
+    'auth/getLoggedUserData',
+    async () => {
+        try{
+            const response = await axiosHttp.get('/user')
+            return response.data
+        }catch(error){
+            throw ApiError.from(error as AxiosError)
+        }
+    }
+)
+
 const authSlice = createSlice({
     name: 'auth',
     initialState,
@@ -127,6 +139,33 @@ const authSlice = createSlice({
                 
             })
             .addCase(validateToken.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.error.message || 'Something went wrong'
+            })
+
+
+        builder
+            .addCase(getLoggedUserData.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(getLoggedUserData.fulfilled, (state, action) => {
+                state.loading = false
+                state.user = action.payload
+            })
+            .addCase(getLoggedUserData.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.error.message || 'Something went wrong'
+            })
+
+            builder
+            .addCase(updateUser.pending, (state) => {                
+                state.loading = true
+            })
+            .addCase(updateUser.fulfilled, (state, action) => {
+                state.loading = false
+                state.user = action.payload
+            })
+            .addCase(updateUser.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.error.message || 'Something went wrong'
             })

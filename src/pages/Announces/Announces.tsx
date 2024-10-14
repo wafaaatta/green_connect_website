@@ -40,7 +40,7 @@ const AnnouncesPage: React.FC = () => {
     return 0
   })
 
-  const paginatedAnnounces = sortedAnnounces.slice(0, page * PaginationSettings.articles.ITEMS_PER_PAGE)
+  const paginatedAnnounces = sortedAnnounces.slice(0, page * PaginationSettings.announces.ITEMS_PER_PAGE)
 
   useEffect(() => {
     setHasMore(paginatedAnnounces.length < sortedAnnounces.length)

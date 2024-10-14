@@ -14,7 +14,7 @@ import { createAnnounce, deleteAnnounce, getUserAnnounces, updateAnnounce } from
 import { showNotification } from '../../redux/stores/notification_store'
 import { getFileUrl } from '../../utils/laravel_storage'
 import { useState, useEffect } from 'react'
-import { updateUser } from '../../redux/stores/auth_store'
+import { getLoggedUserData, updateUser } from '../../redux/stores/auth_store'
 import Announce from '../../interfaces/Announce'
 import { IconType } from 'react-icons'
 
@@ -61,6 +61,7 @@ const UserProfilePage = () => {
         message: t('userProfile.notifications.userUpdateSuccess'),
         type: 'success',
       }))
+      setIsEditModalOpen(false)
     } catch (error) {
       console.error(error)
       dispatch(showNotification({
@@ -159,6 +160,10 @@ const UserProfilePage = () => {
       }
     }
   }
+
+  /* useEffect(() => {
+    dispatch(getLoggedUserData())
+  }, [dispatch]) */
 
   return (
     <div className="max-w-7xl max-md:max-w-8xl max-md:p-0 mx-auto">
@@ -264,7 +269,7 @@ const UserProfilePage = () => {
         </div>
       </div>
 
-      <Modal isOpen={isEditModalOpen} onClose={toggleEditModal} title={t('userProfile.editProfileModal.title')}>
+      <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} title={t('userProfile.editProfileModal.title')}>
         <form className="space-y-4" onSubmit={handleUpdateUser}>
           <Input
             aria-label={t('userProfile.editProfileModal.nameLabel')}
