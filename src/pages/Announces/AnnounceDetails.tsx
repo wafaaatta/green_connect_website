@@ -11,6 +11,7 @@ import moment from 'moment'
 import { ConfirmationModal } from '../../components/ConfirmationDialog'
 import { getOtherUserAcceptedAnnounces, setCurrentAnnounce } from '../../redux/stores/announce_store'
 import Announce from '../../interfaces/Announce'
+import { getFileUrl } from '../../utils/laravel_storage'
 
 export default function AnnounceDetails() {
   const { t } = useTranslation()
@@ -131,7 +132,7 @@ export default function AnnounceDetails() {
                   transition={{ duration: 0.3 }}
                   className="bg-white rounded shadow overflow-hidden border flex flex-col"
                 >
-                  <img aria-hidden="true" loading='lazy' src={'/src/assets/images/plants/sunflower.png'} alt={announce.title} className="w-full h-40 object-cover" />
+                  <img aria-hidden="true" loading='lazy' src={getFileUrl(announce.image)} alt={announce.title} className="w-full h-40 object-cover" />
                   <div className="p-3 flex-grow">
                     <h4 className="text-lg font-semibold mb-1">{announce.title}</h4>
                     <p className="text-gray-600 text-sm mb-2">{`${announce.city} . ${announce.postal_code}`}</p>

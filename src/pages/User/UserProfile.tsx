@@ -14,7 +14,7 @@ import { createAnnounce, deleteAnnounce, getUserAnnounces, updateAnnounce } from
 import { showNotification } from '../../redux/stores/notification_store'
 import { getFileUrl } from '../../utils/laravel_storage'
 import { useState, useEffect } from 'react'
-import { getLoggedUserData, updateUser } from '../../redux/stores/auth_store'
+import { updateUser } from '../../redux/stores/auth_store'
 import Announce from '../../interfaces/Announce'
 import { IconType } from 'react-icons'
 
