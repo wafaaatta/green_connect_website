@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -93,11 +93,7 @@
 <a name='L28'></a><a href='#L28'>28</a>
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L31'></a><a href='#L31'>31</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -114,56 +110,57 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">class Routes {
-    public static <span class="cstat-no" title="statement not covered" >HOME = '/';</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const Routes = Object.freeze({
+    HOME: '/',
 &nbsp;
-    public static <span class="cstat-no" title="statement not covered" >PAGES = class {</span>
-        public static POSTS = '/posts'
-        public static POST_DETAILS = '/posts/:id/details'
-        public static EVENTS = '/events'
-        public static EVENT_DETAILS = '/events/:id'
-        public static BLOGS = '/blogs'
-        public static PROFILE = '/profile'
-        public static CONVERSATIONS = '/conversations'
-        public static ABOUT = '/about'
+    PAGES: Object.freeze({
+        ANNOUNCEMENTS: '/announcements',
+        ANNOUNCE_DETAILS: '/announcements/:id/details',
+        EVENTS: '/events',
+        EVENT_DETAILS: '/events/:id',
+        ARTICLES: '/articles',
+        PROFILE: '/profile',
+        CONVERSATIONS: '/conversations',
+        ABOUT: '/about',
 &nbsp;
-        public static PLANTS_WIKI = '/plants-wiki'
-        public static PLANT_DETAILS = '/plants-wiki/:id'
 &nbsp;
-        public static CHAT_ROOMS = '/chats'
-        public static PRIVACY_POLICY = '/privacy-policy'
-    }
+        CHAT_ROOMS: '/chats',
+        PRIVACY_POLICY: '/privacy-policy',
+    }),
 &nbsp;
-    public static <span class="cstat-no" title="statement not covered" >AUTH = class {</span>
-        public static LOGIN = '/auth/login'
-        public static REGISTER = '/auth/register'
-    }
+    AUTH: Object.freeze({
+        LOGIN: '/auth/login',
+        EMAIL_VERIFICATION_REQUIRED: '/auth/email-verification-required',
+        REGISTER: '/auth/register',
+    }),
 &nbsp;
-    public static <span class="cstat-no" title="statement not covered" >ERRORS = class {</span>
-        public static NOT_FOUND = '/404'
-    }
+    ERRORS: Object.freeze({
+        NOT_FOUND: '/404',
+    }),
+});
 &nbsp;
-}
-&nbsp;
-<span class="cstat-no" title="statement not covered" >export default Routes</span></pre></td></tr></table></pre>
+export default Routes;
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-10-01T18:32:53.930Z
+                at 2024-10-15T18:21:02.866Z
             </div>
         <script src="../prettify.js"></script>
         <script>

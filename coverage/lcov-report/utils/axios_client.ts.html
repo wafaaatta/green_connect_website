@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/15</span>
+                <span class='fraction'>10/15</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">25% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>1/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/15</span>
+                <span class='fraction'>10/15</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -91,24 +91,24 @@
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -119,24 +119,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import axios, { AxiosError } from "axios";</span>
-<span class="cstat-no" title="statement not covered" >import { getAuthenticationToken } from "./authentication";</span>
-<span class="cstat-no" title="statement not covered" >import { apiUrl } from "../constants/app_constants";</span>
+<span class="cline-any cline-yes">4x</span></td><td class="text"><pre class="prettyprint lang-js">import axios, { AxiosError } from "axios";
+import { getAuthenticationToken } from "./authentication";
+import { apiUrl } from "../constants/app_constants";
 &nbsp;
-const axiosHttp = <span class="cstat-no" title="statement not covered" >axios.create({</span>
+const axiosHttp = axios.create({
     baseURL: apiUrl,
 });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >axiosHttp.interceptors.request.use(<span class="fstat-no" title="function not covered" >(c</span>onfig) =&gt; {</span>
-    const auth_token = <span class="cstat-no" title="statement not covered" >getAuthenticationToken()</span>
-<span class="cstat-no" title="statement not covered" >    config.headers['Authorization'] = `Bearer ${auth_token}`</span>
+axiosHttp.interceptors.request.use((config) =&gt; {
+    const auth_token = getAuthenticationToken()
+    config.headers['Authorization'] = `Bearer ${auth_token}`
     
-<span class="cstat-no" title="statement not covered" >    return config;</span>
+    return config;
 },<span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; {
 <span class="cstat-no" title="statement not covered" >    return Promise.reject(error);</span>
 })
 &nbsp;
-<span class="cstat-no" title="statement not covered" >axiosHttp.interceptors.response.use(<span class="fstat-no" title="function not covered" >(r</span>esponse) =&gt; {    </span>
+axiosHttp.interceptors.response.use(<span class="fstat-no" title="function not covered" >(r</span>esponse) =&gt; {    
 <span class="cstat-no" title="statement not covered" >    return response</span>
 }, <span class="fstat-no" title="function not covered" >(e</span>rror: AxiosError) =&gt; {
 <span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if(error.response?.status === 403) {</span>
@@ -147,14 +147,14 @@ const axiosHttp = <span class="cstat-no" title="statement not covered" >axios.cr
 })
 &nbsp;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export default axiosHttp</span></pre></td></tr></table></pre>
+export default axiosHttp</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-10-01T18:32:53.930Z
+                at 2024-10-15T18:21:02.866Z
             </div>
         <script src="../prettify.js"></script>
         <script>

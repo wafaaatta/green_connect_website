@@ -24,7 +24,7 @@ const AnnouncesPage: React.FC = () => {
   const [hasMore, setHasMore] = useState(true)
 
   useEffect(() => {
-    dispatch(getAllAnnounces())
+    dispatch(getAllAnnounces(undefined))
   }, [dispatch])
 
   const filteredAnnounces = announces.filter(announce =>

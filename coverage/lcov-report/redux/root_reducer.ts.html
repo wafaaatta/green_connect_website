@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/9</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/9</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -81,33 +81,33 @@
 <a name='L16'></a><a href='#L16'>16</a>
 <a name='L17'></a><a href='#L17'>17</a>
 <a name='L18'></a><a href='#L18'>18</a>
-<a name='L19'></a><a href='#L19'>19</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L19'></a><a href='#L19'>19</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import { combineReducers } from '@reduxjs/toolkit';</span>
-<span class="cstat-no" title="statement not covered" >import notification_store from './stores/notification_store';</span>
-<span class="cstat-no" title="statement not covered" >import article_store from './stores/article_store';</span>
-<span class="cstat-no" title="statement not covered" >import announce_store from './stores/announce_store';</span>
-<span class="cstat-no" title="statement not covered" >import auth_store from './stores/auth_store';</span>
-<span class="cstat-no" title="statement not covered" >import event_store from './stores/event_store';</span>
-<span class="cstat-no" title="statement not covered" >import conversation_store from './stores/conversation_store';</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { combineReducers } from '@reduxjs/toolkit';
+import notification_store from './stores/notification_store';
+import article_store from './stores/article_store';
+import announce_store from './stores/announce_store';
+import auth_store from './stores/auth_store';
+import event_store from './stores/event_store';
+import conversation_store from './stores/conversation_store';
 &nbsp;
-const rootReducer = <span class="cstat-no" title="statement not covered" >combineReducers({</span>
+const rootReducer = combineReducers({
     notification_store: notification_store,
     article_store: article_store,
     announce_store: announce_store,
@@ -116,7 +116,7 @@ const rootReducer = <span class="cstat-no" title="statement not covered" >combin
     event_store: event_store
 });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export default rootReducer;</span>
+export default rootReducer;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -124,7 +124,7 @@ const rootReducer = <span class="cstat-no" title="statement not covered" >combin
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-10-01T18:32:53.930Z
+                at 2024-10-15T18:21:02.866Z
             </div>
         <script src="../prettify.js"></script>
         <script>
