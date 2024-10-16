@@ -28,7 +28,7 @@ const AnnouncesPage: React.FC = () => {
   }, [dispatch])
 
   const filteredAnnounces = announces.filter(announce =>
-    (categoryFilter === 'all' || announce.article_category === categoryFilter) &&
+    (categoryFilter === 'all' || announce.category === categoryFilter) &&
     (announce.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       announce.description.toLowerCase().includes(searchTerm.toLowerCase()))
   )

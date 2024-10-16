@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { MapPin, Badge, FolderTree } from 'lucide-react'
+import { MapPin, FolderTree } from 'lucide-react'
 import Button from '../../../components/Button'
 import { Card } from '../../../components/Card'
 import { useTranslation } from 'react-i18next'

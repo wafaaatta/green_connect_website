@@ -25,7 +25,7 @@ describe('Announces Component', () => {
                     image: 'https://example.com/image1.jpg',
                     status: 'pending',
                     created_at: '2022-01-01T00:00:00.000Z',
-                    article_category: 'category 1',
+                    category: 'category 1',
                     user: {
                         id: 1,
                         name: 'User 1',

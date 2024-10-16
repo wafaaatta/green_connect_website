@@ -135,7 +135,7 @@ const UserProfilePage = () => {
         const formData = new FormData()
         formData.append('title', postToEdit.title)
         formData.append('description', postToEdit.description)
-        formData.append('category', postToEdit.article_category)
+        formData.append('category', postToEdit.category)
         formData.append('city', postToEdit.city)
         formData.append('country', postToEdit.country)
         formData.append('postal_code', postToEdit.postal_code)
@@ -454,8 +454,8 @@ const UserProfilePage = () => {
                 label={t('userProfile.editPostModal.categoryLabel')}
                 placeholder={t('userProfile.editPostModal.categoryPlaceholder')}
                 options={t('userProfile.categories', { returnObjects: true }) as { value: string; label: string }[]}
-                value={postToEdit.article_category}
-                onChange={(value) => setPostToEdit({ ...postToEdit, article_category: value as string })}
+                value={postToEdit.category}
+                onChange={(value) => setPostToEdit({ ...postToEdit, category: value as string })}
               />
             </div>
             <div className="md:col-span-2">
