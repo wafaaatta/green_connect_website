@@ -29,7 +29,12 @@ const AnnouncesPage: React.FC = () => {
 
   const filteredAnnounces = announces.filter(announce =>
     (categoryFilter === 'all' || announce.category === categoryFilter) &&
-    (announce.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    announce.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    announce.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    announce.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    announce.country.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    announce.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (announce.postal_code.toLowerCase().includes(searchTerm.toLowerCase()) ||
       announce.description.toLowerCase().includes(searchTerm.toLowerCase()))
   )
 
