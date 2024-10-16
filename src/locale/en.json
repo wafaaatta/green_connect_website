@@ -330,7 +330,7 @@
         "dragDropText_single": "Drag and drop your file here, or",
         "dragDropText_multi": "Drag and drop your files here, or",
         "browse": "browse",
-        "acceptedTypes": "Accepted file types: {{types}}",
+        "acceptedTypes": "Accepted file types: svg, webp",
         "allTypesAccepted": "All file types accepted",
         "maxFileSize": "Max file size: {{size}}MB",
         "maxFiles": " | Max files: {{max}}",

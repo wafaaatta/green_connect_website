@@ -217,8 +217,8 @@ const UserProfilePage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <Card className="overflow-hidden p-0 h-full flex flex-col">
-                <img aria-hidden="true" loading='lazy' src={getFileUrl(post.image)} alt={post.title} className="w-full h-48 object-cover" />
+              <Card className="overflow-hidden p-0 h-full flex flex-col border shadow">
+                <img aria-hidden="true" loading='lazy' src={getFileUrl(post.image)} alt={post.title} className="w-full object-cover" />
                 <div className="p-2 flex-grow">
                   <h3 className="font-semibold text-lg mb-2">{post.title}</h3>
                   <p className="text-sm text-gray-600 mb-2">{post.description.substring(0, 100)}...</p>
@@ -232,7 +232,7 @@ const UserProfilePage = () => {
                   </div>
                   <div className="flex items-center text-sm text-gray-500 mb-2">
                     <FolderTree size={16} className="mr-1" />
-                    {post.article_category}
+                    {post.category}
                   </div>
                   <div className="flex items-center justify-between text-sm text-gray-500 mt-2">
                     <div className="flex items-center">

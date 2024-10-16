@@ -33,7 +33,7 @@ const ArticleComponent: FC<ArticleComponentProps> = ({
                     loading='lazy'
                     src={getFileUrl(article.image)} 
                     alt={article.title} 
-                    className="w-full h-48 object-cover rounded-t" 
+                    className="w-full  object-cover rounded-t" 
                   />
                   <div className="mt-4 flex flex-col flex-grow">
                     <h2 className="text-2xl font-semibold mb-2 text-green-800">{article.title}</h2>

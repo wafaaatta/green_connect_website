@@ -13,8 +13,8 @@ interface FileUploadProps {
 
 function FileUpload({
   onFileSelect,
-  acceptedFileTypes = 'image/*',
-  maxFileSize = 5 * 1024 * 1024, // 5MB default
+  acceptedFileTypes = 'image/svg+xml; image/webp',
+  maxFileSize = 5 * 1024 * 1024, // 5MB default 
   maxFiles = 5,
   mode = 'multi'
 }: FileUploadProps) {
@@ -122,7 +122,7 @@ function FileUpload({
           type="file"
           className="hidden"
           onChange={handleChange}
-          accept={acceptedFileTypes}
+          accept={'.svg, .webp'}
           multiple={mode === 'multi'}
           disabled={isUploadDisabled}
         />

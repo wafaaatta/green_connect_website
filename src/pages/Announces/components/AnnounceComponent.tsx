@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { MapPin, Badge } from 'lucide-react'
+import { MapPin, Badge, FolderTree } from 'lucide-react'
 import Button from '../../../components/Button'
 import { Card } from '../../../components/Card'
 import { useTranslation } from 'react-i18next'
@@ -29,13 +29,10 @@ const AnnounceComponent: FC<AnnounceComponentProps> = ({
             <Card
                 className="h-full cursor-pointer transition-shadow duration-300 bg-green-100"
             >
-                <div
-                    style={{
-                        backgroundImage: `url('${getFileUrl(announce.image)}')`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                    }}
-                    className="w-full h-48 rounded-t"
+                <img
+                    src={getFileUrl(announce.image)}
+                    alt={announce.title}
+                    className="w-full rounded-t object-cover"
                 />
                 <div className="mt-2">
                     <h2 className="text-2xl font-semibold mb-2 text-gray-800">{announce.title}</h2>
@@ -43,7 +40,12 @@ const AnnounceComponent: FC<AnnounceComponentProps> = ({
                         <MapPin size={16} className="mr-1" />
                         <span>{announce.city}, {announce.postal_code}</span>
                     </div>
-                    <Badge className="mb-2 bg-green-100 text-green-800">{announce?.article_category}</Badge>
+                    
+                    <div className="flex items-center mb-2 text-green-800">
+                        <FolderTree size={16} className="mr-1" />
+                        <span> {announce.category}</span>
+                    </div>
+                    
                     <div className="flex items-center justify-between mt-2">
                         <span className="text-sm text-gray-600">
                             {new Date(announce.created_at).toLocaleDateString()}

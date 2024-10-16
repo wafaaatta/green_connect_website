@@ -41,7 +41,7 @@
     },
 
     "header": {
-        "home": "Acceuil",
+        "home": "Accueil",
         "announcements": "Annonces",
         "articles": "Articles",
         "events": "Événements",
@@ -329,7 +329,7 @@
         "dragDropText_single": "Glissez et déposez votre fichier ici, ou",
         "dragDropText_multi": "Glissez et déposez vos fichiers ici, ou",
         "browse": "parcourir",
-        "acceptedTypes": "Types de fichiers acceptés : {{types}}",
+        "acceptedTypes": "Types de fichiers acceptés : svg, webp",
         "allTypesAccepted": "Tous les types de fichiers sont acceptés",
         "maxFileSize": "Taille maximale du fichier : {{size}}MB",
         "maxFiles": " | Nombre maximum de fichiers : {{max}}",

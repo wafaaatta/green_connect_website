@@ -10,7 +10,7 @@ interface Announce {
     image: string
     status: 'pending' | 'accepted' | 'rejected'
     created_at: string
-    article_category: string
+    category: string
 
     user: User
 }

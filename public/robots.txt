@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /announcements
+Allow: /articles
+Allow: /events
+Allow: /
+Allow: /about

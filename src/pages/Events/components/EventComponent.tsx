@@ -33,7 +33,7 @@ const EventComponent:FC<EventComponentProps> = ({ event, openEventDetails }) => 
                       loading='lazy'
                       src={getFileUrl(event.image)}
                       alt={event.title}
-                      className="w-full md:w-48 h-48 object-cover rounded-t md:rounded-l md:rounded-t-none"
+                      className="w-full md:w-48  object-cover rounded-t md:rounded-l md:rounded-t-none"
                     />
                     <div className="flex-grow md:ml-4 max-md:mt-4">
                       <h2 className="text-3xl font-semibold mb-2 text-green-800">{event.title}</h2>

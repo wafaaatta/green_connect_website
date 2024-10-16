@@ -75,9 +75,9 @@ export default function AnnounceDetails() {
         <img 
           aria-hidden="true"
           loading='lazy'
-          src={'/src/assets/images/plants/spider-plant.png'}
+          src={getFileUrl(currentAnnounce?.image  as string)}
           alt={currentAnnounce?.title}
-          className="w-full h-96 object-cover"
+          className="w-full h-96 object-contain"
         />
         <div className="p-6">
           <div className="flex justify-between items-start mb-4">
