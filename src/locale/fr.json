@@ -109,7 +109,8 @@
         "owner": "Propriétaire",
         "copy": "Copier",
         "reply": "Répondre",
-        "delete": "Supprimer"
+        "delete": "Supprimer",
+        "noMessageWritten": "Aucun message écrit"
     },
 
     "errorPage": {

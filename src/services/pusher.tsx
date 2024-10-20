@@ -6,6 +6,7 @@ console.log(import.meta.env.VITE_PUSHER_API_KEY);
 //Le cluster détermine la région des serveurs de Pusher qui sera utilisée pour la connexion
 const pusher = new Pusher(import.meta.env.VITE_PUSHER_API_KEY as string, {
   cluster: 'mt1',
+  forceTLS: true,
 });
 
 export type PusherCallback = (data: unknown) => void;

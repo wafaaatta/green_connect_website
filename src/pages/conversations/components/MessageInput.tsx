@@ -40,7 +40,7 @@ export default function MessageInput({
             <Reply size={16} className="mr-2 text-gray-600" />
             <span className="text-sm text-gray-600">{replyTo.content}</span>
           </div>
-          <Button aria-label="Close modal" variant="ghost" onClick={() => setReplyTo(null)}>
+          <Button type="button" aria-label="Close modal" variant="ghost" onClick={() => setReplyTo(null)}>
             <X size={16} />
           </Button>
         </div>
@@ -49,6 +49,7 @@ export default function MessageInput({
         <div className="relative mb-2">
           <img loading='lazy' src={imagePreview} alt={t('conversationsPage.preview')} className="w-20 h-20 object-cover rounded" />
           <Button
+            type="button"
             aria-label="Close modal"
             variant="outline"
             className="absolute top-0 right-0"
@@ -70,6 +71,7 @@ export default function MessageInput({
           />
         </div>
         <Button
+          type="button"
           aria-label="Send message"
           variant="outline"
           size='md'
