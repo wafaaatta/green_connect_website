@@ -13,11 +13,11 @@ import { getFileUrl } from '../../../utils/laravel_storage'
 import User from '../../../interfaces/User'
 import MessageInput from './MessageInput'
 import MessageList from './MessageList'
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
+import { getConversationMessages, pushMessage } from '../../../redux/stores/message_store'
 
 interface ChatAreaProps {
   selectedConversation: Conversation | null
-  messages: Message[]
-  setMessages: React.Dispatch<React.SetStateAction<Message[]>>
   isSideMenuOpen: boolean
   setIsSideMenuOpen: (isOpen: boolean) => void
   isConversationListOpen: boolean
@@ -28,8 +28,6 @@ interface ChatAreaProps {
 
 export default function ChatArea({
   selectedConversation,
-  messages,
-  setMessages,
   isSideMenuOpen,
   setIsSideMenuOpen,
   setIsConversationListOpen,
@@ -45,29 +43,38 @@ export default function ChatArea({
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const [uploadedImage, setUploadedImage] = useState<File | null>(null)
-
+  const dispatch = useAppDispatch()
   useEffect(() => {
-    if (selectedConversation) {
-      const channel = PusherBroadcasts.channels.message_creation
+    const channel = PusherBroadcasts.channels.message_creation
       const event = PusherBroadcasts.events.messages.created
 
       subscribeToChannel(channel, event, (data) => {
+        console.log(data);
+
+        
         if ((data as { message: Message }).message.conversation_id == selectedConversation?.id) {
-          setMessages(prevMessages => [...prevMessages, (data as { message: Message }).message])
+          console.log(data);
+          
+          dispatch(pushMessage((data as { message: Message }).message))
         }
       })
 
       return () => {
         unsubscribeFromChannel(channel)
-      }
-    }
-  }, [selectedConversation, setMessages])
+      } 
+  }, [dispatch, selectedConversation?.id])
 
+  const { messages } = useAppSelector(state => state.message_store)
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
     }
   }, [messages])
+
+
+  useEffect(() => {
+    dispatch(getConversationMessages(selectedConversation?.id as number))
+  }, [dispatch, selectedConversation?.id])
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault()

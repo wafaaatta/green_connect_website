@@ -4,7 +4,6 @@ import { getAllConversations, pushConversation } from '../../redux/stores/conver
 import { subscribeToChannel, unsubscribeFromChannel } from '../../services/pusher'
 import PusherBroadcasts from '../../constants/pusher_broadcasts'
 import Conversation from '../../interfaces/Conversation'
-import Message from '../../interfaces/Message'
 import ConversationList from './components/ConversationList'
 import ChatArea from './components/ChatArea'
 import SideMenu from './components/SideMenu'
@@ -12,7 +11,6 @@ import User from '../../interfaces/User'
 
 export default function Component() {
   const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null)
-  const [messages, setMessages] = useState<Message[]>([])
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
   const [isConversationListOpen, setIsConversationListOpen] = useState(true)
 
@@ -30,7 +28,7 @@ export default function Component() {
 
     subscribeToChannel(channel, event, (data) => {
       dispatch(pushConversation(
-        (data as {message: Conversation}).message
+        (data as { message: Conversation }).message
       ))
     })
 
@@ -53,15 +51,13 @@ export default function Component() {
       />
       <ChatArea
         selectedConversation={selectedConversation}
-        messages={messages}
-        setMessages={setMessages}
         isSideMenuOpen={isSideMenuOpen}
         setIsSideMenuOpen={setIsSideMenuOpen}
         isConversationListOpen={isConversationListOpen}
         setIsConversationListOpen={setIsConversationListOpen}
         isMobile={isMobile}
         user={user as User}
-      /> 
+      />
       <SideMenu
         isOpen={isSideMenuOpen}
         setIsOpen={setIsSideMenuOpen}

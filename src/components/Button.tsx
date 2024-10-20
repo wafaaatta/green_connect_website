@@ -115,21 +115,18 @@ const Button: React.FC<ButtonProps> = ({
     ${className}
   `.trim();
 
-  const buttonClick = new Audio('/src/assets/button_click.mp3')
 
   return (
-    <div onClick={() => buttonClick.play()}>
-      <button
-        className={combinedClassName}
-        disabled={isLoading || disabled}
-        {...props}
-      >
-        {isLoading && <Loader2 className="w-5 h-5 mr-2 animate-spin" />}
-        {!isLoading && LeftIcon && <span className="mr-2">{<LeftIcon className={iconSizeStyles[size]} />}</span>}
-        {children}
-        {!isLoading && RightIcon && <span className="ml-2">{<RightIcon className={iconSizeStyles[size]} />}</span>}
-      </button>
-    </div>
+    <button
+      className={combinedClassName}
+      disabled={isLoading || disabled}
+      {...props}
+    >
+      {isLoading && <Loader2 className="w-5 h-5 mr-2 animate-spin" />}
+      {!isLoading && LeftIcon && <span className="mr-2">{<LeftIcon className={iconSizeStyles[size]} />}</span>}
+      {children}
+      {!isLoading && RightIcon && <span className="ml-2">{<RightIcon className={iconSizeStyles[size]} />}</span>}
+    </button>
   );
 };
 

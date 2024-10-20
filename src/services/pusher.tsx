@@ -3,6 +3,7 @@ import Pusher from 'pusher-js';
 console.log(import.meta.env.VITE_PUSHER_API_KEY);
 
 // Create a Pusher instance
+//Le cluster détermine la région des serveurs de Pusher qui sera utilisée pour la connexion
 const pusher = new Pusher(import.meta.env.VITE_PUSHER_API_KEY as string, {
   cluster: 'mt1',
 });
